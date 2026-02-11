@@ -1,12 +1,15 @@
 <?php
 /**
- * FA USER SYNC - Central Database Mode
- * 
- * This script syncs users from ALL FA instances into ONE central database.
- * 
- * Upload and run: php sync-fa-users.php
- * Or access via browser: https://yourdomain.com/sync-fa-users.php
+ * FA USER SYNC - With sync_all user credentials
  */
+
+// Central Database (where unified_users table will be)
+$MAIN_DB = [
+    'host' => 'localhost',
+    'database' => 'bookkeepingco_00',
+    'user' => 'sync_all',
+    'pass' => 'F@ySync2026!'
+];
 
 // FA Instances Configuration
 $FA_INSTANCES = [
@@ -42,7 +45,6 @@ $FA_INSTANCES = [
     'nidarshini' => ['name' => 'Nidarshini', 'version' => '2.4.18']
 ];
 
-// FA Database Credentials - All on localhost (same server)
 $FA_DATABASES = [
     'northernwarehouse' => ['database' => 'bookkeepingco_fron93', 'user' => 'bookkeepingco_fron93', 'pass' => '5]9fmNS4(p'],
     'madamz' => ['database' => 'bookkeepingco_fron75', 'user' => 'bookkeepingco_fron75', 'pass' => 'p5!.09TS03'],
@@ -76,85 +78,16 @@ $FA_DATABASES = [
     'nidarshini' => ['database' => 'bookkeepingco_fron341', 'user' => 'bookkeepingco_fron341', 'pass' => 'w93p6A(S9']
 ];
 
-// DEFAULT: Use bookkeepingco_00 as central database
-$CENTRAL_DB = [
-    'host' => 'localhost',
-    'database' => 'bookkeepingco_00',
-    'user' => 'bookkeepingco_00',
-    'pass' => '8pS@h41!17'
-];
-
-if (php_sapi_name() === 'cli' || isset($_POST['run'])) {
-    runSync();
-} else {
-    showForm();
-}
-
-function showForm() {
-    global $CENTRAL_DB;
-    ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>FA User Sync</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 min-h-screen py-12 px-4">
-    <div class="max-w-lg mx-auto">
-        <div class="bg-white rounded-xl shadow-lg p-8">
-            <h1 class="text-2xl font-bold mb-2">🔐 FA User Sync</h1>
-            <p class="text-gray-600 mb-6">Sync all FA users into central database</p>
-            <p class="text-sm text-blue-600 mb-6 bg-blue-50 p-3 rounded">
-                <strong>Default:</strong> bookkeepingco_00 (Frays Cottage)
-            </p>
-            <form method="POST">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Database Host</label>
-                        <input type="text" name="host" value="<?= htmlspecialchars($CENTRAL_DB['host']) ?>" class="w-full px-4 py-2 border rounded-lg" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Database Name</label>
-                        <input type="text" name="database" value="<?= htmlspecialchars($CENTRAL_DB['database']) ?>" class="w-full px-4 py-2 border rounded-lg" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Database User</label>
-                        <input type="text" name="user" value="<?= htmlspecialchars($CENTRAL_DB['user']) ?>" class="w-full px-4 py-2 border rounded-lg" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Database Password</label>
-                        <input type="password" name="pass" value="<?= htmlspecialchars($CENTRAL_DB['pass']) ?>" class="w-full px-4 py-2 border rounded-lg">
-                    </div>
-                    <button type="submit" name="run" value="1" class="w-full bg-red-700 text-white py-3 rounded-lg font-semibold hover:bg-red-800">
-                        🚀 Run Sync
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
-    <?php
-    exit;
-}
+runSync();
 
 function runSync() {
-    global $FA_INSTANCES, $FA_DATABASES;
-    
-    // Get credentials
-    $MAIN_DB = [
-        'host' => $_POST['host'] ?: 'localhost',
-        'database' => $_POST['database'] ?: 'bookkeepingco_00',
-        'user' => $_POST['user'] ?: 'bookkeepingco_00',
-        'pass' => $_POST['pass'] ?: '8pS@h41!17'
-    ];
+    global $FA_INSTANCES, $FA_DATABASES, $MAIN_DB;
     
     echo "╔══════════════════════════════════════════════════════════════╗\n";
     echo "║           FA USER SYNC - Central Database Mode             ║\n";
     echo "╚══════════════════════════════════════════════════════════════╝\n";
-    echo "Central DB: {$MAIN_DB['database']} @ {$MAIN_DB['host']}\n\n";
+    echo "Central DB: {$MAIN_DB['database']} @ {$MAIN_DB['host']}\n";
+    echo "User: {$MAIN_DB['user']}\n\n";
     
     $startTime = microtime(true);
     $connected = 0;
@@ -172,7 +105,7 @@ function runSync() {
         echo "✓ Connected: {$MAIN_DB['database']}\n\n";
     } catch (PDOException $e) {
         echo "ERROR: Cannot connect to main database:\n" . $e->getMessage() . "\n\n";
-        echo "Tip: Make sure the user '{$MAIN_DB['user']}' has access to '{$MAIN_DB['database']}' in cPanel → MySQL Databases.\n";
+        echo "Make sure sync_all user is added to {$MAIN_DB['database']} with ALL PRIVILEGES.\n";
         exit(1);
     }
     
@@ -249,7 +182,12 @@ function runSync() {
             
         } catch (PDOException $e) {
             $failed++;
-            $errors[] = $key . ": " . substr($e->getMessage(), 0, 50);
+            $errMsg = $e->getMessage();
+            if (strpos($errMsg, '1045') !== false) {
+                $errors[] = $key . ": Access denied - need sync_all user";
+            } else {
+                $errors[] = $key . ": " . substr($errMsg, 0, 40);
+            }
             echo "✗ ERROR\n";
         }
     }
