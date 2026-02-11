@@ -7,7 +7,7 @@
 $MAIN_DB = [
     'host' => 'localhost',
     'database' => 'bookkeepingco_00',
-    'user' => 'sync_all',
+    'user' => 'bookkeepingco_sync_all',
     'pass' => 'F@ySync2026!'
 ];
 
@@ -105,7 +105,7 @@ function runSync() {
         echo "✓ Connected: {$MAIN_DB['database']}\n\n";
     } catch (PDOException $e) {
         echo "ERROR: Cannot connect to main database:\n" . $e->getMessage() . "\n\n";
-        echo "Make sure sync_all user is added to {$MAIN_DB['database']} with ALL PRIVILEGES.\n";
+        echo "Make sure bookkeepingco_sync_all user is added to {$MAIN_DB['database']} with ALL PRIVILEGES.\n";
         exit(1);
     }
     
@@ -184,7 +184,7 @@ function runSync() {
             $failed++;
             $errMsg = $e->getMessage();
             if (strpos($errMsg, '1045') !== false) {
-                $errors[] = $key . ": Access denied - need sync_all user";
+                $errors[] = $key . ": Access denied - need bookkeepingco_sync_all user";
             } else {
                 $errors[] = $key . ": " . substr($errMsg, 0, 40);
             }
