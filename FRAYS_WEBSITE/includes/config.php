@@ -485,16 +485,28 @@ function cleanupProcessedFiles() {
     $processedDir = DOC_PROCESSED_DIR;
     $uploadsDir = DOC_UPLOAD_DIR;
     
+    // Check if directories exist and are readable
+    if (!is_dir($uploadsDir) || !is_readable($uploadsDir)) {
+        return;
+    }
+    
     // Clean old files from uploads (older than 7 days)
     $cutoff = strtotime('-7 days');
-    $files = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($uploadsDir, RecursiveDirectoryIterator::SKIP_DOTS)
-    );
     
-    foreach ($files as $file) {
-        if ($file->isFile() && $file->getMTime() < $cutoff) {
-            @unlink($file->getPathname());
+    try {
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($uploadsDir, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+        
+        foreach ($files as $file) {
+            if ($file->isFile() && $file->getMTime() < $cutoff) {
+                @unlink($file->getPathname());
+            }
         }
+    } catch (Exception $e) {
+        // Directory iteration failed, skip cleanup
+        error_log("Cleanup error: " . $e->getMessage());
     }
     
     logActivity('cleanup_executed');
