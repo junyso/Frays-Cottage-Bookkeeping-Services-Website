@@ -1,29 +1,12 @@
 <?php
 /**
- * FA USER SYNC - Standalone Script for Server Execution
+ * FA USER SYNC - Server Execution Mode
  * 
- * Upload this file to your server and run:
- * php sync-fa-users.php
- * 
- * Or access via browser: https://yourdomain.com/sync-fa-users.php
+ * Upload and run: php sync-fa-users.php
+ * Or access via browser
  */
 
-// ============================================================
-// CONFIGURE THESE VALUES FOR YOUR SERVER
-// ============================================================
-
-// Main Database (where unified_users table is/will be)
-$MAIN_DB = [
-    'host'     => 'localhost',        // Usually 'localhost' for cPanel
-    'database' => 'frayscottage_bookkeeping',  // Your main database name
-    'user'     => 'YOUR_MAIN_DB_USER',         // Your cPanel username
-    'pass'     => 'YOUR_MAIN_DB_PASSWORD'      // Your database password
-];
-
-// ============================================================
-// FA Instances Configuration (from PDF - already configured)
-// ============================================================
-
+// FA Instances Configuration
 $FA_INSTANCES = [
     'northernwarehouse' => ['name' => 'Northern Warehouse', 'version' => '2.4.18'],
     'madamz' => ['name' => 'Madamz', 'version' => '2.4.18'],
@@ -57,6 +40,7 @@ $FA_INSTANCES = [
     'nidarshini' => ['name' => 'Nidarshini', 'version' => '2.4.18']
 ];
 
+// FA Database Credentials - ALL ON REMOTE SERVER 23.235.220.106
 $FA_DATABASES = [
     'northernwarehouse' => ['database' => 'bookkeepingco_fron93', 'user' => 'bookkeepingco_fron93', 'pass' => '5]9fmNS4(p'],
     'madamz' => ['database' => 'bookkeepingco_fron75', 'user' => 'bookkeepingco_fron75', 'pass' => 'p5!.09TS03'],
@@ -90,7 +74,9 @@ $FA_DATABASES = [
     'nidarshini' => ['database' => 'bookkeepingco_fron341', 'user' => 'bookkeepingco_fron341', 'pass' => 'w93p6A(S9']
 ];
 
-// Check if CLI or form submission
+// Remote FA Server (where all FA databases live)
+define('FA_SERVER', '23.235.220.106');
+
 if (php_sapi_name() === 'cli' || isset($_POST['run'])) {
     runSync();
 } else {
@@ -98,7 +84,7 @@ if (php_sapi_name() === 'cli' || isset($_POST['run'])) {
 }
 
 function showForm() {
-    global $MAIN_DB;
+    global $FA_SERVER;
     ?>
 <!DOCTYPE html>
 <html>
@@ -111,32 +97,28 @@ function showForm() {
 <body class="bg-gray-100 min-h-screen py-12 px-4">
     <div class="max-w-lg mx-auto">
         <div class="bg-white rounded-xl shadow-lg p-8">
-            <h1 class="text-2xl font-bold mb-6">🔐 FA User Sync</h1>
+            <h1 class="text-2xl font-bold mb-2">🔐 FA User Sync</h1>
+            <p class="text-gray-600 mb-6">Connect to remote FA server (<?= htmlspecialchars(FA_SERVER) ?>) and sync all users</p>
             
             <form method="POST">
                 <h3 class="font-semibold mb-4">Main Database Settings</h3>
-                
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium mb-1">Database Host</label>
-                        <input type="text" name="host" value="<?= htmlspecialchars($MAIN_DB['host']) ?>" class="w-full px-4 py-2 border rounded-lg" required>
+                        <input type="text" name="host" value="localhost" class="w-full px-4 py-2 border rounded-lg" required>
                     </div>
-                    
                     <div>
                         <label class="block text-sm font-medium mb-1">Database Name</label>
-                        <input type="text" name="database" value="<?= htmlspecialchars($MAIN_DB['database']) ?>" class="w-full px-4 py-2 border rounded-lg" required>
+                        <input type="text" name="database" placeholder="bookkeepingco_portal" class="w-full px-4 py-2 border rounded-lg" required>
                     </div>
-                    
                     <div>
                         <label class="block text-sm font-medium mb-1">Database User</label>
-                        <input type="text" name="user" value="<?= htmlspecialchars($MAIN_DB['user']) ?>" class="w-full px-4 py-2 border rounded-lg" required>
+                        <input type="text" name="user" class="w-full px-4 py-2 border rounded-lg" required>
                     </div>
-                    
                     <div>
                         <label class="block text-sm font-medium mb-1">Database Password</label>
-                        <input type="password" name="pass" value="" class="w-full px-4 py-2 border rounded-lg">
+                        <input type="password" name="pass" class="w-full px-4 py-2 border rounded-lg">
                     </div>
-                    
                     <button type="submit" name="run" value="1" class="w-full bg-red-700 text-white py-3 rounded-lg font-semibold hover:bg-red-800">
                         🚀 Run Sync
                     </button>
@@ -151,24 +133,24 @@ function showForm() {
 }
 
 function runSync() {
-    global $MAIN_DB, $FA_INSTANCES, $FA_DATABASES;
+    global $FA_INSTANCES, $FA_DATABASES;
     
-    // Get credentials from POST if available
-    if (!empty($_POST['host'])) {
-        $MAIN_DB['host'] = $_POST['host'];
-        $MAIN_DB['database'] = $_POST['database'];
-        $MAIN_DB['user'] = $_POST['user'];
-        $MAIN_DB['pass'] = $_POST['pass'];
-    }
+    // Get credentials
+    $MAIN_DB = [
+        'host' => $_POST['host'] ?: 'localhost',
+        'database' => $_POST['database'],
+        'user' => $_POST['user'],
+        'pass' => $_POST['pass']
+    ];
     
     echo "╔══════════════════════════════════════════════════════════════╗\n";
-    echo "║           FA USER SYNC - Server Execution Mode                ║\n";
-    echo "╚══════════════════════════════════════════════════════════════╝\n\n";
+    echo "║           FA USER SYNC - Remote Server Mode                ║\n";
+    echo "╚══════════════════════════════════════════════════════════════╝\n";
+    echo "FA Server: " . FA_SERVER . "\n\n";
     
     $startTime = microtime(true);
     $connected = 0;
     $failed = 0;
-    $totalUsers = 0;
     $errors = [];
     
     // Connect to main database
@@ -181,48 +163,41 @@ function runSync() {
         );
         echo "✓ Connected to main database: {$MAIN_DB['database']}\n\n";
     } catch (PDOException $e) {
-        echo "╔══════════════════════════════════════════════════════════════╗\n";
-        echo "║                    ERROR                                      ║\n";
-        echo "╚══════════════════════════════════════════════════════════════╝\n";
-        echo "Cannot connect to main database:\n";
-        echo $e->getMessage() . "\n\n";
-        echo "Please check your database credentials and try again.\n";
+        echo "ERROR: Cannot connect to main database:\n" . $e->getMessage() . "\n";
         exit(1);
     }
     
-    // Create table if not exists
+    // Create table
     echo "Creating unified_users table...\n";
-    $sql = "
-        CREATE TABLE IF NOT EXISTS unified_users (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            email VARCHAR(255) NOT NULL UNIQUE,
-            name VARCHAR(255) NOT NULL,
-            fa_instance VARCHAR(100) DEFAULT NULL,
-            fa_user_id VARCHAR(100) DEFAULT NULL,
-            password_hash VARCHAR(255) NOT NULL,
-            role VARCHAR(50) DEFAULT 'client',
-            fa_instances JSON DEFAULT NULL,
-            status ENUM('active', 'inactive', 'suspended') DEFAULT 'active',
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            last_login DATETIME DEFAULT NULL,
-            INDEX idx_email (email),
-            INDEX idx_fa_instance (fa_instance),
-            INDEX idx_status (status)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-    ";
+    $sql = "CREATE TABLE IF NOT EXISTS unified_users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        name VARCHAR(255) NOT NULL,
+        fa_instance VARCHAR(100) DEFAULT NULL,
+        fa_user_id VARCHAR(100) DEFAULT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        role VARCHAR(50) DEFAULT 'client',
+        fa_instances JSON DEFAULT NULL,
+        status ENUM('active','inactive','suspended') DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        last_login DATETIME DEFAULT NULL,
+        INDEX idx_email (email),
+        INDEX idx_fa_instance (fa_instance),
+        INDEX idx_status (status)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
     $mainPDO->exec($sql);
     echo "✓ Table ready.\n\n";
     
-    // Process each FA instance
-    echo "Processing " . count($FA_DATABASES) . " FA instances...\n\n";
+    echo "Processing " . count($FA_DATABASES) . " FA instances on " . FA_SERVER . "...\n\n";
     
     foreach ($FA_DATABASES as $key => $dbConfig) {
         echo "[" . str_pad($key, 20) . "] ";
         
         try {
+            // Connect to FA database on REMOTE SERVER
             $faPDO = new PDO(
-                "mysql:host=localhost;dbname={$dbConfig['database']};charset=utf8mb4",
+                "mysql:host=" . FA_SERVER . ";dbname={$dbConfig['database']};charset=utf8mb4",
                 $dbConfig['user'],
                 $dbConfig['pass'],
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
@@ -234,7 +209,6 @@ function runSync() {
             
             echo "✓ {$faDBName} - " . count($users) . " users - ";
             
-            $instanceNewUsers = 0;
             foreach ($users as $faUser) {
                 $stmt = $mainPDO->prepare("SELECT id, fa_instances FROM unified_users WHERE email = ? OR (fa_instance = ? AND fa_user_id = ?)");
                 $stmt->execute([$faUser['email'], $key, $faUser['user_id']]);
@@ -259,33 +233,30 @@ function runSync() {
                 } else {
                     $stmt = $mainPDO->prepare("INSERT INTO unified_users (email, name, fa_instance, fa_user_id, password_hash, role, fa_instances, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
                     $stmt->execute([$faUser['email'], $faUser['real_name'], $key, $faUser['user_id'], $faUser['password'], $faUser['role'], json_encode($faInstances)]);
-                    $instanceNewUsers++;
                 }
             }
             
             $connected++;
-            $totalUsers += count($users);
-            echo "synced: {$instanceNewUsers} new\n";
+            echo "synced\n";
             
         } catch (PDOException $e) {
             $failed++;
-            $errors[] = "{$key}: " . $e->getMessage();
+            $errors[] = $key . ": " . substr($e->getMessage(), 0, 60);
             echo "✗ ERROR\n";
         }
     }
     
     $elapsed = round(microtime(true) - $startTime, 2);
     
-    echo "\n╔══════════════════════════════════════════════════════════════╗\n";
-    echo "║                    SYNC COMPLETE                              ║\n";
-    echo "╚══════════════════════════════════════════════════════════════╝\n";
-    echo "Time elapsed: {$elapsed} seconds\n";
-    echo "Instances connected: {$connected}/" . count($FA_DATABASES) . "\n";
-    echo "Total FA users: {$totalUsers}\n";
+    echo "\n╔══════════════════════════════════════════════════════╗\n";
+    echo "║              SYNC COMPLETE                           ║\n";
+    echo "╚══════════════════════════════════════════════════════╝\n";
+    echo "Time: {$elapsed}s | Connected: {$connected}/" . count($FA_DATABASES) . " | Failed: {$failed}\n";
     
     if (!empty($errors)) {
-        echo "Errors: " . count($errors) . "\n";
+        echo "\nFailed instances:\n";
+        foreach ($errors as $e) echo "  - {$e}\n";
     }
     
-    echo "\n✓ Users synced successfully! Portal login is now ready.\n";
+    echo "\n✓ All users synced to unified_users table!\n";
 }
