@@ -1,0 +1,97 @@
+# FrontAccounting API Gateway - URL Routing
+
+# Enable rewrite engine
+RewriteEngine On
+
+# Set base path
+RewriteBase /
+
+# Force HTTPS (uncomment after SSL is configured)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# API Endpoint Routing
+RewriteRule ^api/health/?$ fa_api_gateway.php [L,QSA]
+
+RewriteRule ^api/instances/?$ fa_api_gateway.php [L,QSA]
+RewriteRule ^api/instance/?$ fa_api_gateway.php [L,QSA]
+
+RewriteRule ^api/auth/?$ fa_api_gateway.php [L,QSA]
+
+RewriteRule ^api/customers/?$ fa_api_gateway.php [L,QSA]
+RewriteRule ^api/customer/?$ fa_api_gateway.php [L,QSA]
+
+RewriteRule ^api/invoice/?$ fa_api_gateway.php [L,QSA]
+RewriteRule ^api/journal/?$ fa_api_gateway.php [L,QSA]
+
+RewriteRule ^api/aged-debtors/?$ fa_api_gateway.php [L,QSA]
+RewriteRule ^api/vat/?$ fa_api_gateway.php [L,QSA]
+
+# Pretty URLs for common endpoints
+RewriteRule ^instances/?$ fa_api_gateway.php?route=instances [L,QSA]
+RewriteRule ^customers/(.+)/?$ fa_api_gateway.php?route=customer&id=$1 [L,QSA]
+RewriteRule ^invoice/create/?$ fa_api_gateway.php?route=invoice [L,QSA]
+RewriteRule ^journal/create/?$ fa_api_gateway.php?route=journal [L,QSA]
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# PHP Settings
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value error_log /var/log/fa_api_errors.log
+    
+    php_value max_execution_time 60
+    php_value memory_limit 128M
+    php_value post_max_size 10M
+    php_value upload_max_filesize 5M
+</IfModule>
+
+# CORS Headers (if needed)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# Block access to sensitive files
+<FilesMatch "\.(env|log|ini|config|md|txt)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Deny directory browsing
+Options -Indexes
+
+# Default index file
+DirectoryIndex fa_api_gateway.php
+
+# Gzip compression (if enabled)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml application/json
+</IfModule>
+
+# Rate limiting (optional - uncomment if needed)
+# <IfModule mod_ratelimit.c>
+#     SetOutputFilter RATE_LIMIT
+#     SetEnv rate-limit 100
+# </IfModule>
+
+# Error pages
+ErrorDocument 400 /errors/400.html
+ErrorDocument 401 /errors/401.html
+ErrorDocument 403 /errors/403.html
+ErrorDocument 404 /errors/404.html
+ErrorDocument 500 /errors/500.html
+
+# Redirect server info hiding
+ServerSignature Off
+
+# Pretty URLs for documentation
+RewriteRule ^/?$ fa_api_gateway.php?route=help [L,QSA]

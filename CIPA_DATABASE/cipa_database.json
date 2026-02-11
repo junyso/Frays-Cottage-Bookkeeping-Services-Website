@@ -1,0 +1,421 @@
+/**
+ * CIPA Company Database - JSON Format
+ * Master Index with all companies and business names
+ * Generated: 2026-02-09
+ */
+
+{
+  "metadata": {
+    "generated": "2026-02-09T22:10:00+02:00",
+    "account_holder": "Julian Useya",
+    "portal_url": "https://www.cipa.co.bw/master/ui/",
+    "platform": "CIPA eServices (Foster Moore)",
+    "last_login": "2026-02-09 18:06 CAT",
+    "statistics": {
+      "total_entities": 82,
+      "companies": 70,
+      "business_names": 12,
+      "pending_tasks": 7,
+      "annual_return_deadline": "2026-02-28"
+    }
+  },
+  
+  "compliance_alerts": {
+    "urgent": [
+      {
+        "company": "The Play Fields Proprietary Limited",
+        "reg_number": "BW00004763143",
+        "issue": "2026 Annual Return Due",
+        "due_date": "2026-02-28",
+        "status": "pending",
+        "action_required": "File annual return"
+      },
+      {
+        "company": "Pula Fx Proprietary Limited",
+        "reg_number": "BW00001851934",
+        "issue": "2026 Annual Return Due",
+        "due_date": "2026-02-28",
+        "status": "pending",
+        "action_required": "File annual return"
+      },
+      {
+        "company": "Awetel Botique Bnb Proprietary Limited",
+        "reg_number": "BW00002914988",
+        "issue": "2026 Annual Return Due",
+        "due_date": "2026-02-28",
+        "status": "pending",
+        "action_required": "File annual return"
+      },
+      {
+        "company": "Palmwaters Proprietary Limited",
+        "reg_number": "BW00001320113",
+        "issue": "2026 Annual Return Due",
+        "due_date": "2026-02-28",
+        "status": "pending",
+        "action_required": "File annual return"
+      },
+      {
+        "company": "Frays Cottage Proprietary Limited",
+        "reg_number": "BW00000685387",
+        "issue": "2026 Annual Return Due",
+        "due_date": "2026-02-28",
+        "status": "pending",
+        "action_required": "File annual return"
+      },
+      {
+        "company": "Ai House Botswana Proprietary Limited",
+        "reg_number": "BW00003874460",
+        "issue": "2026 Annual Return Due",
+        "due_date": "2026-02-28",
+        "status": "pending",
+        "action_required": "File annual return"
+      },
+      {
+        "company": "Regal Fresh Proprietary Limited",
+        "reg_number": "BW00006780963",
+        "issue": "2026 Annual Return Due",
+        "due_date": "2026-02-28",
+        "status": "pending",
+        "action_required": "File annual return"
+      }
+    ]
+  },
+  
+  "companies": [
+    {
+      "name": "Una General Supplies Proprietary Limited",
+      "reg_number": "BW00000347046",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Trading/Retail",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "una_general_supplies" },
+        "osticket": { "mapped": true, "client": "Una General Supplies" },
+        "local_files": { "code": "UG", "folder": "UG_GeneralSupplies" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Coverlot Engineering Proprietary Limited",
+      "reg_number": "BW00000720824",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Engineering/Construction",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "coverlot" },
+        "osticket": { "mapped": true, "client": "Coverlot Engineering" },
+        "local_files": { "code": "CE", "folder": "CE_Coverlot" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "The Fix Shop Proprietary Limited",
+      "reg_number": "BW00000405228",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Design/Creative",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "fix_shop" },
+        "osticket": { "mapped": true, "client": "The Fix Shop" },
+        "local_files": { "code": "FS", "folder": "FS_FixShop" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Kles Proprietary Limited",
+      "reg_number": "BW00004050268",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Professional Services",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "kles" },
+        "osticket": { "mapped": true, "client": "Kles" },
+        "local_files": { "code": "KL", "folder": "KL_Kles" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Associated Precious Minerals Company Proprietary Limited",
+      "reg_number": "BW00006669321",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Mining/Minerals",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "associated_precious_minerals" },
+        "osticket": { "mapped": true, "client": "Associated Precious Minerals" },
+        "local_files": { "code": "AP", "folder": "AP_PreciousMinerals" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Log-Hub Proprietary Limited",
+      "reg_number": "BW00004554448",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Logistics",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "log_hub" },
+        "osticket": { "mapped": true, "client": "Log-Hub" },
+        "local_files": { "code": "LH", "folder": "LH_LogHub" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Pink Sparkles Beauty Studio Proprietary Limited",
+      "reg_number": "BW00001308172",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Beauty/Beauty Services",
+      "trading_as": "Nora Cosmetics",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "nora_cosmetics" },
+        "osticket": { "mapped": true, "client": "Nora Cosmetics / Pink Sparkles" },
+        "local_files": { "code": "NC", "folder": "NC_NoraCosmetics" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Proplastics Botswana Proprietary Limited",
+      "reg_number": "BW00001038247",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Construction/Engineering",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "proplastics" },
+        "osticket": { "mapped": true, "client": "Proplastics Botswana" },
+        "local_files": { "code": "PB", "folder": "PB_Proplastics" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Maunatlala Grand Boulevard Proprietary Limited",
+      "reg_number": "BW00003741976",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Hospitality/Retail",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "maunatlala" },
+        "osticket": { "mapped": true, "client": "Maunatlala Grand Boulevard" },
+        "local_files": { "code": "MB", "folder": "MB_Maunatlala" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Kwm Designs Proprietary Limited",
+      "reg_number": "BW00001703235",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Design/Creative",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "kwm_designs" },
+        "osticket": { "mapped": true, "client": "Kwm Designs" },
+        "local_files": { "code": "KD", "folder": "KD_KwmDesigns" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Gracys Lounge Proprietary Limited",
+      "reg_number": "BW00006689587",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Hospitality/F&B",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "gracys_lounge" },
+        "osticket": { "mapped": true, "client": "Gracys Lounge" },
+        "local_files": { "code": "GL", "folder": "GL_Gracys" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "West Drayton Brands Proprietary Limited",
+      "reg_number": "BW00001851682",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Retail/Trading",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "westdrayton" },
+        "osticket": { "mapped": true, "client": "West Drayton" },
+        "local_files": { "code": "WD", "folder": "WD_WestDrayton" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Guru Onks Holdings Proprietary Limited",
+      "reg_number": "BW00000601195",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Holding/Investment",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "guruonks" },
+        "osticket": { "mapped": true, "client": "Guru Onks" },
+        "local_files": { "code": "GO", "folder": "GO_GuruOnks" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Global Force Security Proprietary Limited",
+      "reg_number": "BW00005573535",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Security",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "global_strategies" },
+        "osticket": { "mapped": true, "client": "Global Force Security" },
+        "local_files": { "code": "GF", "folder": "GF_GlobalForce" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Crystal Taps Investments Proprietary Limited",
+      "reg_number": "BW00006617748",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Investment/Holding",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "crystal_taps" },
+        "osticket": { "mapped": true, "client": "Crystal Taps" },
+        "local_files": { "code": "CT", "folder": "CT_CrystalTaps" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Quanto Enterprises Proprietary Limited",
+      "reg_number": "BW00000356475",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Professional Services",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "quanto" },
+        "osticket": { "mapped": true, "client": "Quanto Enterprises" },
+        "local_files": { "code": "QE", "folder": "QE_Quanto" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Outpost Motors Proprietary Limited",
+      "reg_number": "BW00001908528",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Automotive",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "outpost_motors" },
+        "osticket": { "mapped": true, "client": "Outpost Motors" },
+        "local_files": { "code": "OM", "folder": "OM_OutpostMotors" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "Ezj Genesis Proprietary Limited",
+      "reg_number": "BW00009456581",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Food/Agri",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "ezj_genesis" },
+        "osticket": { "mapped": true, "client": "Ezj Genesis" },
+        "local_files": { "code": "EG", "folder": "EG_EzjGenesis" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    },
+    {
+      "name": "The Mystery Nest Proprietary Limited",
+      "reg_number": "BW00000828920",
+      "type": "Private Company",
+      "status": "Active",
+      "reg_date": null,
+      "industry": "Beauty/Hospitality",
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "mystery_nest" },
+        "osticket": { "mapped": true, "client": "The Mystery Nest" },
+        "local_files": { "code": "MN", "folder": "MN_MysteryNest" }
+      },
+      "compliance": { "annual_return": { "status": "pending", "due_2026": false } }
+    }
+  ],
+  
+  "business_names": [
+    {
+      "name": "Collins Travel & Tours",
+      "reg_number": null,
+      "type": "Business Name",
+      "status": "Active",
+      "reg_date": null,
+      "cross_references": {
+        "frontaccounting": { "mapped": true, "instance": "collins_travel" },
+        "osticket": { "mapped": true, "client": "Collins Travel" }
+      }
+    }
+  ],
+  
+  "statistics": {
+    "by_industry": {
+      "Trading/Retail": 8,
+      "Hospitality/F&B": 6,
+      "Beauty/Beauty Services": 4,
+      "Construction/Engineering": 5,
+      "Mining/Minerals": 2,
+      "Security": 3,
+      "Logistics/Transport": 3,
+      "Automotive": 2,
+      "Design/Creative": 4,
+      "Technology/IT": 4,
+      "Professional Services": 5,
+      "Financial Services": 4,
+      "Fashion/Retail": 3,
+      "Waste Management": 2,
+      "Sports/Recreation": 1,
+      "Other": 10
+    },
+    "cross_system_mapping": {
+      "frontaccounting": {
+        "total": 30,
+        "mapped": 30,
+        "unmapped": 52
+      },
+      "osticket": {
+        "total": 90,
+        "clients_mapped": 25,
+        "companies_mapped": 25
+      },
+      "local_files": {
+        "companies_with_folders": 30,
+        "company_codes_defined": 10
+      }
+    }
+  },
+  
+  "action_items": [
+    {
+      "priority": "URGENT",
+      "action": "File annual returns for 7 companies",
+      "deadline": "2026-02-28",
+      "companies": [
+        "The Play Fields Proprietary Limited",
+        "Pula Fx Proprietary Limited",
+        "Awetel Botique Bnb Proprietary Limited",
+        "Palmwaters Proprietary Limited",
+        "Frays Cottage Proprietary Limited",
+        "Ai House Botswana Proprietary Limited",
+        "Regal Fresh Proprietary Limited"
+      ]
+    }
+  ]
+}

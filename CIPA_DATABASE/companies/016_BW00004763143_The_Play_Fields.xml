@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CIPA Company Profile: The Play Fields Proprietary Limited -->
+<!-- Extracted: 2026-02-09 23:20 CAT -->
+<!-- CIPA Portal: https://www.cipa.co.bw/master/ui/ -->
+<!-- Annual Return Status: DUE 2026-02-28 -->
+
+<company_profile>
+    <metadata>
+        <extracted_date>2026-02-09</extracted_time>23:20 CAT</extracted_time>
+        <source>CIPA Botswana Portal</source>
+        <gateway_token>8be19321634a56d832bb89e93379c3860</gateway_token>
+        <extraction_method>Keyboard navigation (Tab/Arrow keys)</extraction_method>
+    </metadata>
+    
+    <general_details>
+        <company_name>The Play Fields Proprietary Limited</company_name>
+        <company_number>BW00004763143</company_number>
+        <status>Active</status>
+        <registration_date>2023-02-08</registration_date>
+        <company_type>Private Company</company_type>
+        <financial_year_end>February 28</financial_year_end>
+    </general_details>
+    
+    <directors>
+        <director>
+            <name>Julian Useya</name>
+            <id_number>546000184</id_number>
+            <nationality>Botswana</nationality>
+            <appointment_date>2023-02-08</appointment_date>
+            <position>Director</position>
+            <residential_address>Not provided</residential_address>
+        </director>
+    </directors>
+    
+    <secretaries>
+        <status>No Secretary records found</status>
+    </secretaries>
+    
+    <shareholders>
+        <shareholder>
+            <name>Julian Useya</name>
+            <share_class>Ordinary</share_class>
+            <number_of_shares>100</number_of_shares>
+            <percentage>100%</percentage>
+        </shareholder>
+    </shareholders>
+    
+    <share_allocations>
+        <total_ordinary_shares>100</total_ordinary_shares>
+        <shareholder>
+            <name>Julian Useya</name>
+            <share_class>Ordinary</share_class>
+            <shares_allocated>100</shares_allocated>
+            <percentage>100%</percentage>
+        </shareholder>
+    </share_allocations>
+    
+    <beneficial_owners>
+        <owner>
+            <name>Julian Useya</name>
+            <nature_of_control>Owns more than 25% of the issued shares</nature_of_control>
+            <extent>100%</extent>
+        </owner>
+    </beneficial_owners>
+    
+    <auditors>
+        <status>No Auditor records found</status>
+    </auditors>
+    
+    <annual_returns>
+        <status>DUE</status>
+        <due_date>2026-02-28</due_date>
+        <action_required>File 2026 annual return</action_required>
+    </annual_returns>
+    
+    <addresses>
+        <registered_office>
+            <status>Not provided in extracted data</status>
+        </registered_office>
+    </addresses>
+</company_profile>

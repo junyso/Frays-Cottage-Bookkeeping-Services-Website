@@ -1,0 +1,475 @@
+{
+  "documents": [
+    {
+      "id": "d015e499-7cf7-460f-a993-4f073646cb20",
+      "originalName": "Adobe Scan Jan 20, 2026 (10).pdf",
+      "uploadedAt": "2026-02-10T16:45:10.433Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-010"
+        },
+        {
+          "step": "file_info",
+          "size": 313220
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910376-3f469c4f-083a-49bf-815c-fb45fbba37ad.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910376-3f469c4f-083a-49bf-815c-fb45fbba37ad_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-010",
+      "fileSize": 313220,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910376-3f469c4f-083a-49bf-815c-fb45fbba37ad.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910376-3f469c4f-083a-49bf-815c-fb45fbba37ad_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "11b7bf79-76bb-4716-8324-ad0824014639",
+      "originalName": "Adobe Scan Jan 20, 2026 (9).pdf",
+      "uploadedAt": "2026-02-10T16:45:10.429Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-009"
+        },
+        {
+          "step": "file_info",
+          "size": 215311
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910375-d30f590f-3ec7-4001-b2e9-1c9ef2c44a96.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910375-d30f590f-3ec7-4001-b2e9-1c9ef2c44a96_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-009",
+      "fileSize": 215311,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910375-d30f590f-3ec7-4001-b2e9-1c9ef2c44a96.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910375-d30f590f-3ec7-4001-b2e9-1c9ef2c44a96_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "d6eb7f91-ef1f-4a2b-beba-485c28a83965",
+      "originalName": "Adobe Scan Jan 20, 2026 (9) 3.pdf",
+      "uploadedAt": "2026-02-10T16:45:10.425Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-008"
+        },
+        {
+          "step": "file_info",
+          "size": 215311
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910373-b3d290b9-5075-4566-9cbd-1a2701abe801.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910373-b3d290b9-5075-4566-9cbd-1a2701abe801_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-008",
+      "fileSize": 215311,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910373-b3d290b9-5075-4566-9cbd-1a2701abe801.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910373-b3d290b9-5075-4566-9cbd-1a2701abe801_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "8286dafa-149c-4995-a0b6-995074487719",
+      "originalName": "Adobe Scan Jan 20, 2026 (9) 2.pdf",
+      "uploadedAt": "2026-02-10T16:45:10.421Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-007"
+        },
+        {
+          "step": "file_info",
+          "size": 215311
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910372-dc732ba5-2769-42aa-baba-1a84b13935eb.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910372-dc732ba5-2769-42aa-baba-1a84b13935eb_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-007",
+      "fileSize": 215311,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910372-dc732ba5-2769-42aa-baba-1a84b13935eb.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910372-dc732ba5-2769-42aa-baba-1a84b13935eb_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "347d6153-d954-4c77-a2ff-04f89697bb03",
+      "originalName": "Adobe Scan Jan 20, 2026 (7).pdf",
+      "uploadedAt": "2026-02-10T16:45:10.416Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-006"
+        },
+        {
+          "step": "file_info",
+          "size": 365525
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910370-78be408d-bfe2-4c11-9baa-ba8cdfe373b6.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910370-78be408d-bfe2-4c11-9baa-ba8cdfe373b6_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-006",
+      "fileSize": 365525,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910370-78be408d-bfe2-4c11-9baa-ba8cdfe373b6.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910370-78be408d-bfe2-4c11-9baa-ba8cdfe373b6_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "ccfe9414-7de9-41a3-b838-5400058a2fe2",
+      "originalName": "Adobe Scan Jan 20, 2026 (6).pdf",
+      "uploadedAt": "2026-02-10T16:45:10.410Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-005"
+        },
+        {
+          "step": "file_info",
+          "size": 390430
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910367-12a8817c-2d8a-44b1-8891-0b746607bbc9.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910367-12a8817c-2d8a-44b1-8891-0b746607bbc9_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-005",
+      "fileSize": 390430,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910367-12a8817c-2d8a-44b1-8891-0b746607bbc9.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910367-12a8817c-2d8a-44b1-8891-0b746607bbc9_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "b13613ee-950e-4455-9494-e7c2e0a865fc",
+      "originalName": "Adobe Scan Jan 20, 2026 (4).pdf",
+      "uploadedAt": "2026-02-10T16:45:10.404Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-004"
+        },
+        {
+          "step": "file_info",
+          "size": 466590
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910365-86a9d3c1-20c6-4ab1-936e-491323d40f20.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910365-86a9d3c1-20c6-4ab1-936e-491323d40f20_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-004",
+      "fileSize": 466590,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910365-86a9d3c1-20c6-4ab1-936e-491323d40f20.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910365-86a9d3c1-20c6-4ab1-936e-491323d40f20_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "1ae9114e-fab3-4cca-8e1b-54bb0b4dadad",
+      "originalName": "Adobe Scan Jan 20, 2026 (3).pdf",
+      "uploadedAt": "2026-02-10T16:45:10.400Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-003"
+        },
+        {
+          "step": "file_info",
+          "size": 231506
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910363-98d83fbb-ebd8-47be-91f1-d5ba65ada10d.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910363-98d83fbb-ebd8-47be-91f1-d5ba65ada10d_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-003",
+      "fileSize": 231506,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910363-98d83fbb-ebd8-47be-91f1-d5ba65ada10d.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910363-98d83fbb-ebd8-47be-91f1-d5ba65ada10d_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "0025f72d-fd6f-4adb-b2a9-2f142e3c62be",
+      "originalName": "Adobe Scan Jan 20, 2026 (2).pdf",
+      "uploadedAt": "2026-02-10T16:45:10.395Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-002"
+        },
+        {
+          "step": "file_info",
+          "size": 248048
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910360-5fcd4fe1-c98e-4b0b-9f9b-6168f12717aa.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910360-5fcd4fe1-c98e-4b0b-9f9b-6168f12717aa_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-002",
+      "fileSize": 248048,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910360-5fcd4fe1-c98e-4b0b-9f9b-6168f12717aa.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910360-5fcd4fe1-c98e-4b0b-9f9b-6168f12717aa_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    },
+    {
+      "id": "db7a8922-8bb0-4e2c-a790-a3baeb685a46",
+      "originalName": "Adobe Scan Jan 20, 2026 (1).pdf",
+      "uploadedAt": "2026-02-10T16:45:10.379Z",
+      "uploadedVia": "web",
+      "clientCode": "DEFAULT",
+      "status": "manual_review",
+      "processingLog": [
+        {
+          "step": "reference",
+          "ref": "INV-DEFAULT-2026-02-10-001"
+        },
+        {
+          "step": "file_info",
+          "size": 661215
+        },
+        {
+          "step": "converted",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910352-3a1e2790-8926-42e6-a18a-9b5451590caa.pdf"
+        },
+        {
+          "step": "watermarked",
+          "path": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910352-3a1e2790-8926-42e6-a18a-9b5451590caa_WM.pdf"
+        },
+        {
+          "step": "legibility",
+          "skipped": true,
+          "reason": "OCR unavailable - marked for manual review"
+        },
+        {
+          "step": "filed",
+          "location": "OneDrive/Incoming",
+          "status": "manual_review"
+        },
+        {
+          "step": "notification_sent"
+        }
+      ],
+      "reference": "INV-DEFAULT-2026-02-10-001",
+      "fileSize": 661215,
+      "pdfPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910352-3a1e2790-8926-42e6-a18a-9b5451590caa.pdf",
+      "watermarkedPath": "/Users/julianuseya/.openclaw/workspace/DOCUMENT_PROCESSOR/uploads/1770741910352-3a1e2790-8926-42e6-a18a-9b5451590caa_WM.pdf",
+      "legibilityScore": null,
+      "ocrPreview": "",
+      "needsManualReview": true
+    }
+  ],
+  "batches": [],
+  "settings": {
+    "referencePrefix": "INV",
+    "defaultClient": "DEFAULT",
+    "autoPostToFA": false,
+    "notificationChannels": [
+      "whatsapp"
+    ],
+    "clerkContact": "+267XXXXXXXX",
+    "clerkEmail": "clerk@company.co.bw"
+  }
+}

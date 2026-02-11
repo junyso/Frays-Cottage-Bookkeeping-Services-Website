@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CIPA Company Database - Master Index -->
+<!-- Generated: 2026-02-09 -->
+<!-- Total Companies: 82 -->
+<!-- Companies: 70 | Business Names: 12 -->
+
+<cipa_portfolio>
+    <metadata>
+        <account_holder>Julian Useya</account_holder>
+        <last_login>2026-02-09 18:06 CAT</last_login>
+        <total_entities>82</total_entities>
+        <companies>70</companies>
+        <business_names>12</business_names>
+        <pending_tasks>7</pending_tasks>
+        <annual_return_deadline>2026-02-28</annual_return_deadline>
+        <platform>CIPA eServices (Foster Moore)</platform>
+    </metadata>
+    
+    <compliance_alerts>
+        <urgent>
+            <alert type="annual_return_due">
+                <companies>
+                    <company>The Play Fields Proprietary Limited</company>
+                    <reg_number>BW00004763143</reg_number>
+                    <due_date>2026-02-28</due_date>
+                    <status>pending</status>
+                </companies>
+                <company>Pula Fx Proprietary Limited</company>
+                <reg_number>BW00001851934</reg_number>
+                <due_date>2026-02-28</due_date>
+                <status>pending</status>
+            </company>
+            <company>Awetel Botique Bnb Proprietary Limited</company>
+            <reg_number>BW00002914988</reg_number>
+            <due_date>2026-02-28</due_date>
+            <status>pending</status>
+            </company>
+            <company>Palmwaters Proprietary Limited</company>
+            <reg_number>BW00001320113</reg_number>
+            <due_date>2026-02-28</due_date>
+            <status>pending</status>
+            </company>
+            <company>Frays Cottage Proprietary Limited</company>
+            <reg_number>BW00000685387</reg_number>
+            <due_date>2026-02-28</due_date>
+            <status>pending</status>
+            </company>
+            <company>Ai House Botswana Proprietary Limited</company>
+            <reg_number>BW00003874460</reg_number>
+            <due_date>2026-02-28</due_date>
+            <status>pending</status>
+            </company>
+            <company>Regal Fresh Proprietary Limited</company>
+            <reg_number>BW00006780963</reg_number>
+            <due_date>2026-02-28</due_date>
+            <status>pending</status>
+            </company>
+        </urgent>
+    </compliance_alerts>
+    
+    <company_list>
+        <!-- Companies will be indexed here -->
+    </company_list>
+    
+    <business_name_list>
+        <!-- Business names indexed here -->
+    </business_name_list>
+    
+    <cross_references>
+        <frontaccounting>
+            <mapped_companies>30</mapped_companies>
+            <unmapped_companies>52</unmapped_companies>
+        </frontaccounting>
+        <osticket>
+            <clients_tracked>90+</clients_tracked>
+            <mapped_companies>25+</mapped_companies>
+        </osticket>
+        <local_files>
+            <folder_structure>11 categories</folder_structure>
+            <company_codes>CG, MB, NC, EP, FC, CS, KL, DB, PP, EB</company_codes>
+        </local_files>
+    </cross_references>
+</cipa_portfolio>

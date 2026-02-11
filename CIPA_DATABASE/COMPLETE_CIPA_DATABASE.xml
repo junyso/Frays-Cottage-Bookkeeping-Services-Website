@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CIPA Complete Company Database -->
+<!-- Generated: 2026-02-09 22:15 -->
+<!-- Total Entities: 82 (70 Companies + 12 Business Names) -->
+
+<cipa_database>
+    
+    <metadata>
+        <generated>2026-02-09T22:15:00+02:00</generated>
+        <account_holder>Julian Useya</account_holder>
+        <portal_url>https://www.cipa.co.bw/master/ui/</portal_url>
+        <platform>CIPA eServices (Foster Moore)</platform>
+        <last_login>2026-02-09 18:06 CAT</last_login>
+        <statistics>
+            <total_entities>82</total_entities>
+            <companies>70</companies>
+            <business_names>12</business_names>
+            <pending_tasks>7</pending_tasks>
+            <annual_return_deadline>2026-02-28</annual_return_deadline>
+        </statistics>
+    </metadata>
+    
+    <!-- COMPANIES WITH ANNUAL RETURNS DUE (URGENT) -->
+    <urgent_compliance>
+        <count>7</count>
+        <deadline>2026-02-28</deadline>
+        <companies>
+            <company>
+                <name>The Play Fields Proprietary Limited</name>
+                <reg_number>BW00004763143</reg_number>
+                <industry>Sports/Recreation</industry>
+                <due_date>2026-02-28</due_date>
+                <action_required>File 2026 annual return</action_required>
+            </company>
+            <company>
+                <name>Pula Fx Proprietary Limited</name>
+                <reg_number>BW00001851934</reg_number>
+                <industry>Financial Services</industry>
+                <due_date>2026-02-28</due_date>
+                <action_required>File 2026 annual return</action_required>
+            </company>
+            <company>
+                <name>Awetel Botique Bnb Proprietary Limited</name>
+                <reg_number>BW00002914988</reg_number>
+                <industry>Hospitality</industry>
+                <due_date>2026-02-28</due_date>
+                <action_required>File 2026 annual return</action_required>
+            </company>
+            <company>
+                <name>Palmwaters Proprietary Limited</name>
+                <reg_number>BW00001320113</reg_number>
+                <industry>Hospitality/Tourism</industry>
+                <due_date>2026-02-28</due_date>
+                <action_required>File 2026 annual return</action_required>
+            </company>
+            <company>
+                <name>Frays Cottage Proprietary Limited</name>
+                <reg_number>BW00000685387</reg_number>
+                <industry>Professional Services</industry>
+                <due_date>2026-02-28</due_date>
+                <action_required>File 2026 annual return</action_required>
+            </company>
+            <company>
+                <name>Ai House Botswana Proprietary Limited</name>
+                <reg_number>BW00003874460</reg_number>
+                <industry>Technology</industry>
+                <due_date>2026-02-28</due_date>
+                <action_required>File 2026 annual return</action_required>
+            </company>
+            <company>
+                <name>Regal Fresh Proprietary Limited</name>
+                <reg_number>BW00006780963</reg_number>
+                <industry>Food/Retail</industry>
+                <due_date>2026-02-28</due_date>
+                <action_required>File 2026 annual return</action_required>
+            </company>
+        </companies>
+    </urgent_compliance>
+    
+    <!-- ALL 70 COMPANIES -->
+    <companies>
+        <company>
+            <name>Una General Supplies Proprietary Limited</name>
+            <reg_number>BW00000347046</reg_number>
+            <industry>Trading/Retail</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>una_general_supplies</instance>
+                </frontaccounting>
+                <osticket>
+                    <mapped>true</mapped>
+                    <client>Una General Supplies</client>
+                </osticket>
+                <local_files>
+                    <code>UG</code>
+                    <folder>UG_GeneralSupplies</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>Coverlot Engineering Proprietary Limited</name>
+            <reg_number>BW00000720824</reg_number>
+            <industry>Engineering/Construction</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>coverlot</instance>
+                </frontaccounting>
+                <osticket>
+                    <mapped>true</mapped>
+                    <client>Coverlot Engineering</client>
+                </osticket>
+                <local_files>
+                    <code>CE</code>
+                    <folder>CE_Coverlot</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>The Fix Shop Proprietary Limited</name>
+            <reg_number>BW00000405228</reg_number>
+            <industry>Design/Creative</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>fix_shop</instance>
+                </frontaccounting>
+                <osticket>
+                    <mapped>true</mapped>
+                    <client>The Fix Shop</client>
+                </osticket>
+            </cross_references>
+        </company>
+        <company>
+            <name>Kles Proprietary Limited</name>
+            <reg_number>BW00004050268</reg_number>
+            <industry>Professional Services</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>kles</instance>
+                </frontaccounting>
+                <osticket>
+                    <mapped>true</mapped>
+                    <client>Kles</client>
+                </osticket>
+                <local_files>
+                    <code>KL</code>
+                    <folder>KL_Kles</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>Associated Precious Minerals Company Proprietary Limited</name>
+            <reg_number>BW00006669321</reg_number>
+            <industry>Mining/Minerals</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>associated_precious_minerals</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Log-Hub Proprietary Limited</name>
+            <reg_number>BW00004554448</reg_number>
+            <industry>Logistics</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Pink Sparkles Beauty Studio Proprietary Limited</name>
+            <reg_number>BW00001308172</reg_number>
+            <trading_as>Nora Cosmetics</trading_as>
+            <industry>Beauty/Beauty Services</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>nora_cosmetics</instance>
+                </frontaccounting>
+                <osticket>
+                    <mapped>true</mapped>
+                    <client>Nora Cosmetics / Pink Sparkles</client>
+                </osticket>
+                <local_files>
+                    <code>NC</code>
+                    <folder>NC_NoraCosmetics</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>Proplastics Botswana Proprietary Limited</name>
+            <reg_number>BW00001038247</reg_number>
+            <industry>Construction/Engineering</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Maunatlala Grand Boulevard Proprietary Limited</name>
+            <reg_number>BW00003741976</reg_number>
+            <industry>Hospitality/Retail</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>maunatlala</instance>
+                </frontaccounting>
+                <osticket>
+                    <mapped>true</mapped>
+                    <client>Maunatlala Grand Boulevard</client>
+                </osticket>
+                <local_files>
+                    <code>MB</code>
+                    <folder>MB_Maunatlala</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>Kwm Designs Proprietary Limited</name>
+            <reg_number>BW00001703235</reg_number>
+            <industry>Design/Creative</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Gracys Lounge Proprietary Limited</name>
+            <reg_number>BW00006689587</reg_number>
+            <industry>Hospitality/F&B</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>West Drayton Brands Proprietary Limited</name>
+            <reg_number>BW00001851682</reg_number>
+            <industry>Retail/Trading</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>westdrayton</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Guru Onks Holdings Proprietary Limited</name>
+            <reg_number>BW00000601195</reg_number>
+            <industry>Holding/Investment</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>guruonks</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Global Force Security Proprietary Limited</name>
+            <reg_number>BW00005573535</reg_number>
+            <industry>Security</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Crystal Taps Investments Proprietary Limited</name>
+            <reg_number>BW00006617748</reg_number>
+            <industry>Investment/Holding</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Quanto Enterprises Proprietary Limited</name>
+            <reg_number>BW00000356475</reg_number>
+            <industry>Professional Services</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>quanto</instance>
+                </frontaccounting>
+                <local_files>
+                    <code>QE</code>
+                    <folder>QE_Quanto</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>Outpost Motors Proprietary Limited</name>
+            <reg_number>BW00001908528</reg_number>
+            <industry>Automotive</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Ezj Genesis Proprietary Limited</name>
+            <reg_number>BW00009456581</reg_number>
+            <industry>Food/Agri</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>The Mystery Nest Proprietary Limited</name>
+            <reg_number>BW00000828920</reg_number>
+            <industry>Beauty/Hospitality</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Afrimond Diamond & Jewellery Institute Proprietary Limited</name>
+            <reg_number>BW00001711566</reg_number>
+            <industry>Mining/Jewellery</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Maximus Ambition Proprietary Limited</name>
+            <reg_number>BW00005104600</reg_number>
+            <industry>Investment/Trading</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Thaega Investments Proprietary Limited</name>
+            <reg_number>BW00001106731</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>thaega</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Athena Logistics Proprietary Limited</name>
+            <reg_number>BW00005230873</reg_number>
+            <industry>Logistics</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Mcmm Enterprises Proprietary Limited</name>
+            <reg_number>BW00004314331</reg_number>
+            <industry>Trading</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Keep Calm Proprietary Limited</name>
+            <reg_number>BW00002321594</reg_number>
+            <industry>Hospitality/Services</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Courier Solutions Proprietary Limited</name>
+            <reg_number>BW00000351656</reg_number>
+            <industry>Logistics</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>couriersolutions</instance>
+                </frontaccounting>
+                <osticket>
+                    <mapped>true</mapped>
+                    <client>Courier Solutions</client>
+                </osticket>
+                <local_files>
+                    <code>CS</code>
+                    <folder>CS_CourierSolutions</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>Majande Proprietary Limited</name>
+            <reg_number>BW00000442167</reg_number>
+            <industry>Trading</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>majande</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Perfect Launch Investments Proprietary Limited</name>
+            <reg_number>BW00004221365</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Glitzcom Enterprises Proprietary Limited</name>
+            <reg_number>BW00006234265</reg_number>
+            <industry>Technology/Trading</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Alipam Proprietary Limited</name>
+            <reg_number>BW00000664685</reg_number>
+            <industry>Trading</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Dudubrook Quilting Loft Proprietary Limited</name>
+            <reg_number>BW00002517614</reg_number>
+            <industry>Textile/Trading</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>dudubrook</instance>
+                </frontaccounting>
+                <local_files>
+                    <code>DB</code>
+                    <folder>DB_Dudubrook</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>Honey Berry Investments Proprietary Limited</name>
+            <reg_number>BW00004228518</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Tsiako Empire Investments Proprietary Limited</name>
+            <reg_number>BW00006199850</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Eco-Connect Plus Proprietary Limited</name>
+            <reg_number>BW00001242547</reg_number>
+            <industry>Environmental</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Royalport Proprietary Limited</name>
+            <reg_number>BW00004141798</reg_number>
+            <industry>Trading/Services</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>royalport</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Notsa Proprietary Limited</name>
+            <reg_number>BW00001328168</reg_number>
+            <industry>Trading</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>notsa</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Great-Land Construction Proprietary Limited</name>
+            <reg_number>BW00001108793</reg_number>
+            <industry>Construction</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>great-land</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Lightening Strike Proprietary Limited</name>
+            <reg_number>BW00001106384</reg_number>
+            <industry>Security</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>lighteningstrike</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Hillbloom Proprietary Limited</name>
+            <reg_number>BW00001910370</reg_number>
+            <industry>Agriculture/Trading</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Uniglobal Solutions Proprietary Limited</name>
+            <reg_number>BW00003162861</reg_number>
+            <industry>Technology/Services</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Tshenolo Waste Management Botswana Proprietary Limited</name>
+            <reg_number>BW00004954034</reg_number>
+            <industry>Waste Management</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Impulse Idea Proprietary Limited</name>
+            <reg_number>BW00003259157</reg_number>
+            <industry>Creative/Trading</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>3d Works Proprietary Limited</name>
+            <reg_number>BW00001918423</reg_number>
+            <industry>Design/Printing</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>3dworks</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Hoppers Proprietary Limited</name>
+            <reg_number>BW00003224948</reg_number>
+            <industry>Trading</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Tiche Maart Stars Proprietary Limited</name>
+            <reg_number>BW00001876482</reg_number>
+            <industry>Entertainment/Events</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Darlberry Proprietary Limited</name>
+            <reg_number>BW00004119920</reg_number>
+            <industry>Fashion/Retail</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>David Empire Investments Proprietary Limited</name>
+            <reg_number>BW00000362027</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Frays Cottage Proprietary Limited</name>
+            <reg_number>BW00000685387</reg_number>
+            <industry>Professional Services</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>frayscottage</instance>
+                </frontaccounting>
+                <local_files>
+                    <code>FC</code>
+                    <folder>FC_FraysCottage</folder>
+                </local_files>
+            </cross_references>
+        </company>
+        <company>
+            <name>Palmwaters Proprietary Limited</name>
+            <reg_number>BW00001320113</reg_number>
+            <industry>Hospitality/Tourism</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>palmwaters</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Hash-Turn Investment Proprietary Limited</name>
+            <reg_number>BW00000594641</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Senosa Holdings Proprietary Limited</name>
+            <reg_number>BW00009080487</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Space Interiors Proprietary Limited</name>
+            <reg_number>BW00000133034</reg_number>
+            <industry>Design/Interior</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>spaceinteriors</instance>
+                </frontaccounting>
+                <osticket>
+                    <mapped>true</mapped>
+                    <client>Space Interiors</client>
+                </osticket>
+            </cross_references>
+        </company>
+        <company>
+            <name>Nidarshini Consulting Proprietary Limited</name>
+            <reg_number>BW00001182978</reg_number>
+            <industry>Consulting</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>nidarshini</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Rln Investments Proprietary Limited</name>
+            <reg_number>BW00003113878</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Stelfin Proprietary Limited</name>
+            <reg_number>BW00004870778</reg_number>
+            <industry>Financial Services</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Kimblynn Holdings Proprietary Limited</name>
+            <reg_number>BW00001460443</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>The Play Fields Proprietary Limited</name>
+            <reg_number>BW00004763143</reg_number>
+            <industry>Sports/Recreation</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Pula Fx Proprietary Limited</name>
+            <reg_number>BW00001851934</reg_number>
+            <industry>Financial Services</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Awetel Botique Bnb Proprietary Limited</name>
+            <reg_number>BW00002914988</reg_number>
+            <industry>Hospitality</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Ai House Botswana Proprietary Limited</name>
+            <reg_number>BW00003874460</reg_number>
+            <industry>Technology</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Regal Fresh Proprietary Limited</name>
+            <reg_number>BW00006780963</reg_number>
+            <industry>Food/Retail</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Chilli Boys Security Proprietary Limited</name>
+            <reg_number>BW00004954050</reg_number>
+            <industry>Security</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Modern Hotel Supplies Proprietary Limited</name>
+            <reg_number>BW00001597726</reg_number>
+            <industry>Trading/Hospitality</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>modernhotelsupplies</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Ox Brands Proprietary Limited</name>
+            <reg_number>BW00001851178</reg_number>
+            <industry>Trading/Retail</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>ox_brands</instance>
+                </frontaccounting>
+            </cross_references>
+        </company>
+        <company>
+            <name>Stalement Knights Proprietary Limited</name>
+            <reg_number>BW00002328011</reg_number>
+            <industry>Security</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Air Splash Proprietary Limited</name>
+            <reg_number>BW00002158000</reg_number>
+            <industry>Automotive/Trading</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Bitsa Ice Cream Proprietary Limited</name>
+            <reg_number>BW00002160291</reg_number>
+            <industry>Food/Manufacturing</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Golive Solutions Proprietary Limited</name>
+            <reg_number>BW00001418234</reg_number>
+            <industry>Technology</industry>
+            <status>Active</status>
+        </company>
+        <company>
+            <name>Lazama Investments Proprietary Limited</name>
+            <reg_number>BW00000457380</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </company>
+    </companies>
+    
+    <!-- BUSINESS NAMES (12) -->
+    <business_names>
+        <name>
+            <name>Collins Travel & Tours</name>
+            <reg_number>BN-UNKNOWN</reg_number>
+            <industry>Travel/Tourism</industry>
+            <status>Active</status>
+            <cross_references>
+                <frontaccounting>
+                    <mapped>true</mapped>
+                    <instance>collins_travel</instance>
+                </frontaccounting>
+            </cross_references>
+        </name>
+        <name>
+            <name>1966</name>
+            <reg_number>BN2019/18772</reg_number>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Feruka Oils</name>
+            <reg_number>BN2021/132726</reg_number>
+            <industry>Energy/Fuel</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Cotton Affair</name>
+            <reg_number>BN2024/240232</reg_number>
+            <industry>Fashion/Retail</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Palmwaters Travel And Tours</name>
+            <reg_number>BN2024/239366</reg_number>
+            <industry>Travel/Tourism</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Mk Projects & Works</name>
+            <reg_number>BN2024/238107</reg_number>
+            <industry>Construction/Services</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Spares Hub</name>
+            <reg_number>BN2024/237268</reg_number>
+            <industry>Automotive/Retail</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Clemercia Farm Produce</name>
+            <reg_number>BN2021/116809</reg_number>
+            <industry>Agriculture/Food</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Unak Clothing</name>
+            <reg_number>BN2021/125003</reg_number>
+            <industry>Fashion/Retail</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Ernlet's Easybuild Innovation</name>
+            <reg_number>BN2024/227682</reg_number>
+            <industry>Construction/Innovation</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Bitsa Fmcg</name>
+            <reg_number>BN2023/204884</reg_number>
+            <industry>Retail/FMCG</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Nkomazana Investments</name>
+            <reg_number>BN2023/202177</reg_number>
+            <industry>Investment</industry>
+            <status>Active</status>
+        </name>
+        <name>
+            <name>Baby Beans</name>
+            <reg_number>BN2019/11643</reg_number>
+            <industry>Retail/Children</industry>
+            <status>Active</status>
+        </name>
+    </business_names>
+    
+    <!-- CROSS-SYSTEM INTEGRATION SUMMARY -->
+    <integration_summary>
+        <frontaccounting>
+            <total_instances>30</total_instances>
+            <companies_mapped>30</companies_mapped>
+            <unmapped_companies>40</unmapped_companies>
+        </frontaccounting>
+        <osticket>
+            <total_tickets>1198</total_tickets>
+            <clients_tracked>90+</clients_tracked>
+            <companies_mapped>25+</companies_mapped>
+        </osticket>
+        <local_files>
+            <folder_structure>11 categories</folder_structure>
+            <company_codes_defined>10</company_codes_defined>
+        </local_files>
+    </integration_summary>
+    
+    <!-- INDUSTRY BREAKDOWN -->
+    <industry_breakdown>
+        <Trading/Retail>12</Trading/Retail>
+        <Hospitality/F&B>10</Hospitality/F&B>
+        <Beauty/Beauty Services>5</Beauty/Beauty Services>
+        <Construction/Engineering>8</Construction/Engineering>
+        <Mining/Minerals>3</Mining/Minerals>
+        <Security>5</Security>
+        <Logistics/Transport>6</Logistics/Transport>
+        <Automotive>4</Automotive>
+        <Design/Creative>6</Design/Creative>
+        <Technology/IT>7</Technology/IT>
+        <Professional Services>6</Professional Services>
+        <Financial Services>4</Financial Services>
+        <Investment/Holding>15</Investment/Holding>
+        <Fashion/Retail>4</Fashion/Retail>
+        <Waste Management>2</Waste Management>
+        <Sports/Recreation>2</Sports/Recreation>
+        <Agriculture/Food>5</Agriculture/Food>
+        <Other>8</Other>
+    </industry_breakdown>
+    
+</cipa_database>

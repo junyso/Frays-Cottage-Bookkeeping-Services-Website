@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document AI Pipeline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .drop-zone {
+            border: 3px dashed #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                📄 Document AI Pipeline
+            </h1>
+            <p class="text-gray-600">
+                FREE Tesseract OCR + GPT-3.5 Turbo Processing
+            </p>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow p-4 text-center">
+                <div class="text-2xl font-bold text-blue-600" id="docCount">0</div>
+                <div class="text-sm text-gray-600">Documents</div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-4 text-center">
+                <div class="text-2xl font-bold text-green-600" id="costDisplay">$0.00</div>
+                <div class="text-sm text-gray-600">API Cost</div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-4 text-center">
+                <div class="text-2xl font-bold text-purple-600" id="ocrEngine">Tesseract</div>
+                <div class="text-sm text-gray-600">OCR Engine</div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-4 text-center">
+                <div class="text-2xl font-bold text-indigo-600">GPT-3.5</div>
+                <div class="text-sm text-gray-600">AI Model</div>
+            </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Upload Documents</h2>
+            
+            <div id="dropZone" class="drop-zone rounded-lg p-12 text-center cursor-pointer">
+                <div class="text-6xl mb-4">📁</div>
+                <p class="text-lg text-gray-700 mb-2">
+                    Drag & drop files here
+                </p>
+                <p class="text-sm text-gray-500 mb-4">
+                    or click to select
+                </p>
+                <p class="text-xs text-gray-400">
+                    Supports: JPG, PNG, PDF, TIFF (Max 10MB)
+                </p>
+                <input type="file" id="fileInput" multiple accept="image/*,.pdf" class="hidden">
+            </div>
+
+            <!-- File List -->
+            <div id="fileList" class="mt-4 hidden">
+                <h3 class="font-semibold mb-2">Selected Files:</h3>
+                <ul id="files" class="space-y-2"></ul>
+            </div>
+
+            <!-- Process Button -->
+            <div class="mt-4 text-center">
+                <button id="processBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span id="processText">Process Documents</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Processing Status -->
+        <div id="processing" class="hidden bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
+            <div class="flex items-center mb-3">
+                <div class="loading mr-3">
+                    <div class="text-2xl">⏳</div>
+                </div>
+                <div>
+                    <p class="font-semibold">Processing documents...</p>
+                    <p id="progress" class="text-sm text-gray-600">Initializing...</p>
+                </div>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-200 rounded-full h-3">
+                <div id="progressBar" class="bg-blue-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <p id="progressDetail" class="text-xs text-gray-500 mt-1">0 of 0 documents</p>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Processing Results</h2>
+                    <div class="space-x-2">
+                        <button id="exportCsvBtn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                            📊 Export CSV
+                        </button>
+                        <button id="exportFaBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg">
+                            🏦 Export FA Format
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="resultsList" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- Pricing Info -->
+        <div class="bg-gray-50 rounded-lg p-4 text-center text-sm text-gray-600">
+            <p>💰 <strong>Free OCR:</strong> Tesseract.js extracts text at no cost</p>
+            <p>🤖 <strong>AI Classification:</strong> Optional - requires API key (OpenAI or Groq)</p>
+            <p>📄 <strong>Scanned PDFs:</strong> Converted to images, then OCR processed</p>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let files = [];
+        let results = [];
+        let totalCost = 0;
+
+        // DOM Elements
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const filesUl = document.getElementById('files');
+        const processBtn = document.getElementById('processBtn');
+        const processing = document.getElementById('processing');
+        const progress = document.getElementById('progress');
+        const resultsDiv = document.getElementById('results');
+        const resultsList = document.getElementById('resultsList');
+        const docCount = document.getElementById('docCount');
+        const costDisplay = document.getElementById('costDisplay');
+
+        // Event Listeners
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+        processBtn.addEventListener('click', processDocuments);
+
+        function handleFiles(inputFiles) {
+            const newFiles = Array.from(inputFiles);
+            files = [...files, ...newFiles];
+            
+            if (files.length > 0) {
+                document.getElementById('fileList').classList.remove('hidden');
+                renderFiles();
+            }
+        }
+
+        function renderFiles() {
+            filesUl.innerHTML = files.map((file, i) => `
+                <li class="flex items-center justify-between bg-gray-50 rounded px-3 py-2">
+                    <span class="text-sm">📄 ${file.name}</span>
+                    <button onclick="removeFile(${i})" class="text-red-500 hover:text-red-700">✕</button>
+                </li>
+            `).join('');
+        }
+
+        function removeFile(i) {
+            files.splice(i, 1);
+            renderFiles();
+        }
+
+        async function processDocuments() {
+            if (files.length === 0) return;
+
+            processBtn.disabled = true;
+            processing.classList.remove('hidden');
+            resultsDiv.classList.add('hidden');
+            results = [];
+
+            const progressBar = document.getElementById('progressBar');
+            const progressDetail = document.getElementById('progressDetail');
+            
+            // Initialize progress
+            progressBar.style.width = '5%';
+            progress.textContent = `Uploading ${files.length} documents...`;
+            progressDetail.textContent = `Preparing...`;
+
+            const formData = new FormData();
+            files.forEach(file => formData.append('documents', file));
+
+            try {
+                progress.textContent = `Processing ${files.length} documents...`;
+                progressBar.style.width = '20%';
+                
+                const response = await fetch('/api/process/batch', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                if (data.success) {
+                    progress.textContent = `Completed! ${data.processed} documents processed`;
+                    progressBar.style.width = '100%';
+                    
+                    results = data.results;
+                    totalCost = data.totalCost;
+                    
+                    docCount.textContent = data.processed;
+                    costDisplay.textContent = `$${totalCost.toFixed(4)}`;
+                    
+                    // Update progress detail
+                    const successCount = results.filter(r => r.success).length;
+                    progressDetail.textContent = `✅ ${successCount} successful, ${results.length - successCount} failed`;
+                    
+                    renderResults();
+                    resultsDiv.classList.remove('hidden');
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('Error: ' + error.message);
+                progress.textContent = 'Error processing documents';
+                progressBar.style.width = '0%';
+            } finally {
+                processBtn.disabled = false;
+                setTimeout(() => {
+                    // processing.classList.add('hidden');
+                }, 2000);
+            }
+        }
+
+        function renderResults() {
+            resultsList.innerHTML = results.map((r, i) => `
+                <div class="border rounded-lg p-4 ${r.success ? 'bg-green-50' : 'bg-red-50'}">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h4 class="font-semibold">${r.originalName}</h4>
+                            ${r.success ? `
+                                <p class="text-sm text-gray-600">Type: ${r.documentType}</p>
+                                <p class="text-sm text-gray-600">Confidence: ${r.confidence?.toFixed(1) || 'N/A'}%</p>
+                                <p class="text-sm text-gray-600">Cost: $${(r.cost || 0).toFixed(4)}</p>
+                            ` : `
+                                <p class="text-sm text-red-600">Processing failed</p>
+                            `}
+                        </div>
+                        <div class="text-right">
+                            ${r.success ? '✅' : '❌'}
+                        </div>
+                    </div>
+                    ${r.extractedData ? `
+                        <div class="mt-2 p-2 bg-white rounded text-sm">
+                            <pre class="text-xs overflow-auto">${JSON.stringify(r.extractedData, null, 2)}</pre>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Export buttons
+        document.getElementById('exportCsvBtn').addEventListener('click', async () => {
+            if (results.length === 0) return;
+            
+            const response = await fetch('/api/export/csv', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ documents: results, format: 'fa' })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                window.open(data.downloadUrl, '_blank');
+            }
+        });
+
+        document.getElementById('exportFaBtn').addEventListener('click', async () => {
+            if (results.length === 0) return;
+            
+            const response = await fetch('/api/export/fa', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ documents: results })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                window.open(data.downloadUrl, '_blank');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CIPA Company Profile Template -->
+<!-- Fill in details for each company -->
+
+<company_profile>
+    <basic_information>
+        <company_name></company_name>
+        <registration_number></registration_number>
+        <entity_type>Private Company</entity_type>
+        <status>Active</status>
+        <registration_date></registration_date>
+        <incorporation_number></incorporation_number>
+    </basic_information>
+    
+    <registered_address>
+        <address_line_1></address_line_1>
+        <address_line_2></address_line_2>
+        <city></city>
+        <postal_address></postal_address>
+    </registered_address>
+    
+    <principal_place_of_business>
+        <address_line_1></address_line_1>
+        <address_line_2></address_line_2>
+        <city></city>
+    </principal_place_of_business>
+    
+    <share_capital>
+        <authorised_share_capital>
+            <currency>BWP</currency>
+            <amount></amount>
+        </authorised_share_capital>
+        <issued_share_capital>
+            <currency>BWP</currency>
+            <amount></amount>
+        </issued_share_capital>
+    </share_capital>
+    
+    <directors>
+        <director>
+            <name></name>
+            <id_number></id_number>
+            <nationality></nationality>
+            <appointment_date></appointment_date>
+            <residential_address></residential_address>
+            <occupation></occupation>
+        </director>
+    </directors>
+    
+    <shareholders>
+        <shareholder>
+            <name></name>
+            <shares_allotted></shares_allotted>
+            <share_class></share_class>
+            <date_of_allotment></date_of_allotment>
+            <amount_paid></amount_paid>
+        </shareholder>
+    </shareholders>
+    
+    <secretary>
+        <name></name>
+        <id_number></id_number>
+        <appointment_date></appointment_date>
+    </secretary>
+    
+    <compliance>
+        <annual_return>
+            <last_filed_date></last_filed_date>
+            <next_due_date></next_due_date>
+            <status></status>
+        </annual_return>
+        <annual_fees>
+            <last_payment_date></last_payment_date>
+            <amount></amount>
+            <status></status>
+        </annual_fees>
+        <penalties>
+            <amount></amount>
+            <status></status>
+        </penalties>
+    </compliance>
+    
+    <filing_history>
+        <filing>
+            <type></type>
+            <date></date>
+            <document_number></document_number>
+        </filing>
+    </filing_history>
+    
+    <cross_references>
+        <frontaccounting>
+            <instance_url></instance_url>
+            <customer_code></customer_code>
+        </frontaccounting>
+        <osticket>
+            <client_id></client_id>
+            <tickets_count></tickets_count>
+        </osticket>
+        <local_files>
+            <company_code></company_code>
+            <folder_path></folder_path>
+        </local_files>
+    </cross_references>
+    
+    <notes>
+        <note></note>
+    </notes>
+</company_profile>

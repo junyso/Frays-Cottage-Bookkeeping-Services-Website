@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Upload</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                <i class="ri-file-upload-line"></i> Document Upload
+            </h1>
+            <p class="text-gray-600">Upload invoices, receipts, waybills & documents</p>
+        </div>
+
+        <!-- Upload Form -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <form id="upload-form" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1">Client Code</label>
+                    <input type="text" name="clientCode" class="w-full border rounded px-3 py-2" placeholder="e.g., KLES, MGB, FRACOT">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1">Document Type</label>
+                    <select name="docType" class="w-full border rounded px-3 py-2">
+                        <option value="INV">Invoice</option>
+                        <option value="REC">Receipt</option>
+                        <option value="WAY">Waybill</option>
+                        <option value="STM">Statement</option>
+                        <option value="GEN">General</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1">Files (PDF, JPG, PNG)</label>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-colors cursor-pointer" id="dropZone">
+                        <i class="ri-cloud-upload-line text-4xl text-gray-400 mb-2"></i>
+                        <p class="text-gray-600">Drag & drop files here or click to browse</p>
+                        <input type="file" name="documents" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                    </div>
+                    <div id="fileList" class="mt-2 space-y-2"></div>
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed" id="submitBtn">
+                    <i class="ri-upload-line"></i> Upload & Process Documents
+                </button>
+            </form>
+        </div>
+
+        <!-- Progress -->
+        <div id="progress" class="hidden bg-white rounded-lg shadow p-4 mb-6">
+            <div class="flex items-center mb-2">
+                <div class="animate-spin mr-2">
+                    <i class="ri-loader-4-line text-blue-600"></i>
+                </div>
+                <span class="font-medium">Processing documents...</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div id="progressBar" class="bg-blue-600 h-2 rounded-full transition-all" style="width: 0%"></div>
+            </div>
+            <p id="progressText" class="text-sm text-gray-600 mt-1"></p>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="hidden bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Processing Results</h2>
+            <div id="resultsList" class="space-y-3"></div>
+        </div>
+
+        <!-- Admin Link -->
+        <div class="text-center mt-8">
+            <a href="/admin.html" class="text-blue-600 hover:text-blue-800 text-sm">
+                <i class="ri-admin-line"></i> Open Admin Panel
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const uploadForm = document.getElementById('upload-form');
+        const progressDiv = document.getElementById('progress');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const resultsDiv = document.getElementById('results');
+        const resultsList = document.getElementById('resultsList');
+        
+        let selectedFiles = [];
+        
+        // File selection
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('border-blue-500', 'bg-blue-50');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+            for (const file of files) {
+                selectedFiles.push(file);
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between bg-gray-50 rounded px-3 py-2';
+                div.innerHTML = `
+                    <span class="text-sm flex items-center gap-2">
+                        <i class="ri-file-line text-gray-400"></i>
+                        ${file.name}
+                    </span>
+                    <button onclick="removeFile('${file.name}')" class="text-red-500 hover:text-red-700">
+                        <i class="ri-close-line"></i>
+                    </button>
+                `;
+                fileList.appendChild(div);
+            }
+        }
+        
+        function removeFile(name) {
+            selectedFiles = selectedFiles.filter(f => f.name !== name);
+            renderFileList();
+        }
+        
+        function renderFileList() {
+            fileList.innerHTML = selectedFiles.map(f => `
+                <div class="flex items-center justify-between bg-gray-50 rounded px-3 py-2">
+                    <span class="text-sm flex items-center gap-2">
+                        <i class="ri-file-line text-gray-400"></i>
+                        ${f.name}
+                    </span>
+                    <button onclick="removeFile('${f.name}')" class="text-red-500 hover:text-red-700">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        // Upload
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (selectedFiles.length === 0) {
+                alert('Please select at least one document');
+                return;
+            }
+            
+            const formData = new FormData();
+            selectedFiles.forEach(f => formData.append('documents', f));
+            formData.append('clientCode', uploadForm.clientCode.value || 'DEFAULT');
+            formData.append('docType', uploadForm.docType.value);
+            
+            progressDiv.classList.remove('hidden');
+            resultsDiv.classList.add('hidden');
+            document.getElementById('submitBtn').disabled = true;
+            
+            try {
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await res.json();
+                
+                progressBar.style.width = '100%';
+                progressText.textContent = `Completed: ${result.processed} processed, ${result.rejected} rejected`;
+                
+                if (result.results && result.results.length > 0) {
+                    resultsDiv.classList.remove('hidden');
+                    resultsList.innerHTML = result.results.map(r => `
+                        <div class="flex items-center justify-between p-3 rounded ${r.status === 'ready_for_review' ? 'bg-green-50' : 'bg-red-50'}">
+                            <div>
+                                <div class="font-medium">${r.originalName}</div>
+                                <div class="text-sm text-gray-600">
+                                    Ref: ${r.reference || 'N/A'} | Score: ${r.legibilityScore?.toFixed(1) || 0}%
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 rounded text-xs font-bold ${r.status === 'ready_for_review' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}">
+                                ${r.status}
+                            </span>
+                        </div>
+                    `).join('');
+                    
+                    // Send notification toast
+                    if (navigator.notification) {
+                        navigator.notification.vibrate([100, 50, 100]);
+                    }
+                }
+                
+                // Reset
+                selectedFiles = [];
+                fileList.innerHTML = '';
+                uploadForm.reset();
+            } catch (error) {
+                progressText.textContent = 'Error: ' + error.message;
+            }
+            
+            document.getElementById('submitBtn').disabled = false;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+[10-Feb-2026 20:04:58 Africa/Gaborone] PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/uploads): Failed to open directory: No such file or directory in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php:449
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(449): RecursiveDirectoryIterator->__construct('/Users/julianus...', 4096)
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(462): cleanupProcessedFiles()
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/login.php(8): require_once('/Users/julianus...')
+#3 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
+[10-Feb-2026 20:05:29 Africa/Gaborone] PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/uploads): Failed to open directory: No such file or directory in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php:449
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(449): RecursiveDirectoryIterator->__construct('/Users/julianus...', 4096)
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(462): cleanupProcessedFiles()
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/login.php(8): require_once('/Users/julianus...')
+#3 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(30): require('/Users/julianus...')
+#4 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
+[10-Feb-2026 20:05:32 Africa/Gaborone] PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/uploads): Failed to open directory: No such file or directory in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php:449
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(449): RecursiveDirectoryIterator->__construct('/Users/julianus...', 4096)
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(462): cleanupProcessedFiles()
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/login.php(8): require_once('/Users/julianus...')
+#3 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(30): require('/Users/julianus...')
+#4 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
+[10-Feb-2026 20:05:42 Africa/Gaborone] PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/uploads): Failed to open directory: No such file or directory in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php:449
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(449): RecursiveDirectoryIterator->__construct('/Users/julianus...', 4096)
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(462): cleanupProcessedFiles()
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/login.php(8): require_once('/Users/julianus...')
+#3 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(30): require('/Users/julianus...')
+#4 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
+[10-Feb-2026 20:05:49 Africa/Gaborone] PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/uploads): Failed to open directory: No such file or directory in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php:449
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(449): RecursiveDirectoryIterator->__construct('/Users/julianus...', 4096)
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(462): cleanupProcessedFiles()
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/login.php(8): require_once('/Users/julianus...')
+#3 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(30): require('/Users/julianus...')
+#4 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
+[10-Feb-2026 20:06:02 Africa/Gaborone] PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/uploads): Failed to open directory: No such file or directory in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php:449
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(449): RecursiveDirectoryIterator->__construct('/Users/julianus...', 4096)
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(462): cleanupProcessedFiles()
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/login.php(8): require_once('/Users/julianus...')
+#3 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(27): require('/Users/julianus...')
+#4 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
+[10-Feb-2026 20:06:06 Africa/Gaborone] PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/uploads): Failed to open directory: No such file or directory in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php:449
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(449): RecursiveDirectoryIterator->__construct('/Users/julianus...', 4096)
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(462): cleanupProcessedFiles()
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/login.php(8): require_once('/Users/julianus...')
+#3 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(27): require('/Users/julianus...')
+#4 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
+[10-Feb-2026 20:06:15 Africa/Gaborone] PHP Fatal error:  Uncaught UnexpectedValueException: RecursiveDirectoryIterator::__construct(/Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/uploads): Failed to open directory: No such file or directory in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php:449
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(449): RecursiveDirectoryIterator->__construct('/Users/julianus...', 4096)
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php(462): cleanupProcessedFiles()
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/login.php(8): require_once('/Users/julianus...')
+#3 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(27): require('/Users/julianus...')
+#4 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
