@@ -7,6 +7,7 @@
  */
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/fa-database-creds.php';
 
 /**
  * Authenticate user against all FA instances
@@ -87,25 +88,17 @@ function authenticateAgainstAllFAInstances($email, $password) {
  * Authenticate against a single FA instance
  */
 function authenticateAgainstFAInstance($instanceKey, $email, $password) {
-    $faDBName = 'fa_' . $instanceKey; // Adjust based on your naming
+    $faPDO = getFAConnection($instanceKey);
     
-    // You'll need FA database credentials
-    $faHost = defined('FA_DB_HOST') ? FA_DB_HOST : DB_HOST;
-    $faUser = defined('FA_DB_USER') ? FA_DB_USER : DB_USER;
-    $faPass = defined('FA_DB_PASS') ? FA_DB_PASS : DB_PASS;
+    if (!$faPDO) {
+        return false;
+    }
     
     try {
-        $faPDO = new PDO(
-            "mysql:host={$faHost};dbname={$faDBName};charset=utf8mb4",
-            $faUser,
-            $faPass,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-        
         // Try to find user by email
         $stmt = $faPDO->prepare("
             SELECT user_id, user_id as id, real_name, email, role, password, inactive
-            FROM {$faDBName}.users 
+            FROM {$faPDO->query("SELECT DATABASE()")->fetchColumn()}.users 
             WHERE email = ? AND inactive = 0
         ");
         $stmt->execute([$email]);
@@ -115,7 +108,7 @@ function authenticateAgainstFAInstance($instanceKey, $email, $password) {
             // Try username (some FA versions use user_id as username)
             $stmt = $faPDO->prepare("
                 SELECT user_id, user_id as id, real_name, email, role, password, inactive
-                FROM {$faDBName}.users 
+                FROM {$faPDO->query("SELECT DATABASE()")->fetchColumn()}.users 
                 WHERE user_id = ? AND inactive = 0
             ");
             $stmt->execute([$email]);
@@ -130,7 +123,7 @@ function authenticateAgainstFAInstance($instanceKey, $email, $password) {
         }
         
     } catch (PDOException $e) {
-        error_log("FA Instance {$instanceKey} connection failed: " . $e->getMessage());
+        error_log("FA Instance {$instanceKey} authentication failed: " . $e->getMessage());
     }
     
     return false;

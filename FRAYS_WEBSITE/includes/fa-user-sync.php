@@ -7,6 +7,7 @@
  */
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/fa-database-creds.php';
 
 class FAUserSync {
     
@@ -14,6 +15,7 @@ class FAUserSync {
     private $instances;
     private $syncedCount = 0;
     private $errors = [];
+    private $connectionStats = [];
     
     public function __construct() {
         $this->centralDB = getDBConnection();
@@ -34,7 +36,7 @@ class FAUserSync {
         
         echo "\n========================================\n";
         echo "Sync Complete!\n";
-        echo "Total users synced: {$this->syncedCount}\n";
+        echo "Total new users synced: {$this->syncedCount}\n";
         echo "Errors: " . count($this->errors) . "\n";
         
         if (!empty($this->errors)) {
@@ -43,30 +45,38 @@ class FAUserSync {
                 echo "  - {$error}\n";
             }
         }
+        
+        return [
+            'synced' => $this->syncedCount,
+            'errors' => count($this->errors),
+            'connections' => $this->connectionStats
+        ];
     }
     
     /**
      * Sync users from a single FA instance
      */
     private function syncInstance($instanceKey, $instance) {
-        // Get FA database credentials - customize for your setup
-        $faDBName = $this->getFADatabaseName($instanceKey);
-        $faDBHost = FA_DB_HOST; // You'll need to define this
-        $faDBUser = FA_DB_USER; // You'll need to define this
-        $faDBPass = FA_DB_PASS; // You'll need to define this
+        $faPDO = getFAConnection($instanceKey);
+        
+        if (!$faPDO) {
+            $this->errors[] = "{$instance['name']}: Could not connect to database";
+            $this->connectionStats[$instanceKey] = 'failed';
+            echo "  ERROR: Could not connect to database\n";
+            return;
+        }
+        
+        $this->connectionStats[$instanceKey] = 'connected';
+        echo "  ✓ Connected to database\n";
         
         try {
-            $faPDO = new PDO(
-                "mysql:host={$faDBHost};dbname={$faDBName};charset=utf8mb4",
-                $faDBUser,
-                $faDBPass,
-                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-            );
+            // Get database name
+            $faDBName = $faPDO->query("SELECT DATABASE()")->fetchColumn();
             
             // Get all users from FA instance
             $stmt = $faPDO->query("
                 SELECT id, user_id, real_name, email, role, password, inactive 
-                FROM {$faDBName}.users 
+                FROM users 
                 WHERE inactive = 0
             ");
             $faUsers = $stmt->fetchAll();
@@ -74,7 +84,7 @@ class FAUserSync {
             echo "  Found " . count($faUsers) . " active users\n";
             
             foreach ($faUsers as $faUser) {
-                $this->syncUser($instanceKey, $instance, $faUser);
+                $this->syncUser($instanceKey, $instance, $faUser, $faDBName);
             }
             
         } catch (PDOException $e) {
@@ -87,7 +97,7 @@ class FAUserSync {
     /**
      * Sync a single user to central database
      */
-    private function syncUser($instanceKey, $instance, $faUser) {
+    private function syncUser($instanceKey, $instance, $faUser, $faDBName) {
         // Check if user already exists in central DB
         $stmt = $this->centralDB->prepare("
             SELECT id, fa_instances FROM unified_users 
@@ -106,6 +116,7 @@ class FAUserSync {
             'name' => $instance['name'],
             'fa_user_id' => $faUser['user_id'],
             'role' => $faUser['role'],
+            'database' => $faDBName,
             'added_at' => date('Y-m-d H:i:s')
         ];
         
@@ -123,7 +134,7 @@ class FAUserSync {
             $stmt->execute([
                 $faUser['real_name'],
                 json_encode($faInstances),
-                $faUser['password'], // Keep FA password for fallback
+                $faUser['password'],
                 $faUser['role'],
                 $existingUser['id']
             ]);
@@ -148,11 +159,10 @@ class FAUserSync {
     }
     
     /**
-     * Get database name for FA instance
+     * Get connection statistics
      */
-    private function getFADatabaseName($instanceKey) {
-        // Customize this based on your FA database naming convention
-        return 'fa_' . $instanceKey;
+    public function getConnectionStats() {
+        return $this->connectionStats;
     }
 }
 
@@ -188,9 +198,44 @@ function createUnifiedUsersTable() {
     }
 }
 
+/**
+ * Test all FA database connections
+ */
+function testFAConnections() {
+    echo "Testing FA Database Connections...\n\n";
+    
+    $results = testFAConnections();
+    
+    $connected = 0;
+    $failed = 0;
+    
+    foreach ($results as $key => $result) {
+        $status = $result['status'] ?? 'unknown';
+        $instanceName = $GLOBALS['FA_INSTANCES'][$key]['name'] ?? $key;
+        
+        if ($status === 'connected') {
+            echo "  ✓ {$instanceName} ({$key}) - {$result['ms']}ms\n";
+            $connected++;
+        } else {
+            echo "  ✗ {$instanceName} ({$key}) - {$result['error']}\n";
+            $failed++;
+        }
+    }
+    
+    echo "\n--------------------------------\n";
+    echo "Connected: {$connected}\n";
+    echo "Failed: {$failed}\n";
+    
+    return $results;
+}
+
 // Run if executed directly
 if (php_sapi_name() === 'cli' || basename(__FILE__) === basename($_SERVER['SCRIPT_FILENAME'] ?? '')) {
-    createUnifiedUsersTable();
-    $sync = new FAUserSync();
-    $sync->syncAll();
+    if (isset($argv[1]) && $argv[1] === 'test') {
+        testFAConnections();
+    } else {
+        createUnifiedUsersTable();
+        $sync = new FAUserSync();
+        $sync->syncAll();
+    }
 }
