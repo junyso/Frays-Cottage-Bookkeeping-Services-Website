@@ -27,6 +27,13 @@ define('DB_USER', 'frays_admin');
 define('DB_PASS', 'admin123');
 define('DB_CHARSET', 'utf8mb4');
 
+// FA Instances Database Configuration
+// These are the credentials to connect to each FA instance's database
+// IMPORTANT: Change these to match your actual FA database credentials
+define('FA_DB_HOST', 'localhost');  // or your FA server IP/hostname
+define('FA_DB_USER', 'frays_admin');  // user with access to all FA databases
+define('FA_DB_PASS', 'admin123');  // password for FA database user
+
 // FA Instances Configuration
 $FA_INSTANCES = [
     'northernwarehouse' => [

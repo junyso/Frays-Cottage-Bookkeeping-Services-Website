@@ -4,9 +4,11 @@
  * 
  * Login required for users with valid FA instances
  * After login: Choose UPLOAD Documents or UPDATE Books
+ * Supports single login across ALL 30+ FA instances
  */
 
 require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/unified-auth.php';
 
 $error = '';
 $success = '';
@@ -19,7 +21,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     redirect('/portal');
 }
 
-// Handle login
+// Handle login - UNIFIED AUTHENTICATION
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
     if (!validateCSRFToken($_POST['csrf_token'] ?? '')) {
         $error = 'Invalid request';
@@ -27,22 +29,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $email = sanitizeInput($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
         
-        $user = authenticateUser($email, $password);
+        // Try unified authentication across all FA instances
+        $user = authenticateUserUnified($email, $password);
         
         if ($user) {
-            $userFaInstances = getUserFAInstances($user['id']);
+            $userFaInstances = getUserFAInstancesUnified($user['id']);
             
             if (empty($userFaInstances)) {
                 $error = 'Access denied. Your account does not have access to any FrontAccounting instances.';
                 logActivity('login_denied_no_instances', ['email' => $email]);
             } else {
+                // Set session variables
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['name'];
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['fa_instances'] = $userFaInstances;
+                $_SESSION['is_unified'] = true;
                 
-                logActivity('user_login', ['email' => $email, 'instances' => count($userFaInstances)]);
-                $success = 'Login successful!';
+                logActivity('user_login_unified', ['email' => $email, 'instances' => count($userFaInstances)]);
+                
+                // Redirect to appropriate FA instance
+                $redirectUrl = getUserRedirectUrl($user);
+                if ($redirectUrl !== '/portal') {
+                    redirect($redirectUrl);
+                } else {
+                    $success = 'Login successful!';
+                }
             }
         } else {
             $error = 'Invalid username or password';
