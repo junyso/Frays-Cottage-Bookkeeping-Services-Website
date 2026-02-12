@@ -321,7 +321,11 @@ $csrfToken = generateCSRFToken();
                 <h1 class="font-display text-4xl font-bold text-black mb-2">
                     Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>! 👋
                 </h1>
-                <p class="text-gray-600 text-lg">What would you like to do today?</p>
+                <p class="text-gray-600 text-lg mb-4">What would you like to do today?</p>
+                <a href="/portal?action=logout" class="inline-flex items-center gap-2 text-gray-500 hover:text-frays-red transition-colors text-sm">
+                    <i class="ri-logout-box-line"></i>
+                    Sign Out
+                </a>
             </div>
             
             <!-- FA Instance Banner -->
