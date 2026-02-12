@@ -148,7 +148,7 @@ function runSync() {
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
             
-            $stmt = $faPDO->query("SELECT id, user_id, real_name, email, role, password, inactive FROM users WHERE inactive = 0");
+            $stmt = $faPDO->query("SELECT id, user_id, real_name, email, role, password, inactive FROM 0_users WHERE inactive = 0");
             $users = $stmt->fetchAll();
             
             echo "✓ {$dbName} - " . count($users) . " users - ";
@@ -190,7 +190,7 @@ function runSync() {
             if (strpos($errMsg, '1044') !== false || strpos($errMsg, '1045') !== false) {
                 $errors[] = $key . ": No access";
             } elseif (strpos($errMsg, '1146') !== false || strpos($errMsg, '42S02') !== false) {
-                $errors[] = $key . ": No users table";
+                $errors[] = $key . ": No 0_users table";
             } else {
                 $errors[] = $key . ": " . substr($errMsg, 0, 25);
             }
