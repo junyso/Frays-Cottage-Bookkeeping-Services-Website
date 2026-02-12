@@ -317,7 +317,7 @@ $csrfToken = generateCSRFToken();
         <div class="max-w-4xl mx-auto">
             
             <!-- Welcome -->
-            <div class="text-center mb-10">
+            <div class="text-center mb-8">
                 <h1 class="font-display text-3xl font-bold text-black mb-2">
                     Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>! 👋
                 </h1>
@@ -327,108 +327,71 @@ $csrfToken = generateCSRFToken();
             </div>
             
             <!-- Quick Actions -->
-            <div class="grid md:grid-cols-2 gap-6 mb-12">
+            <div class="grid md:grid-cols-2 gap-6">
                 
                 <!-- Update My Books -->
                 <a href="/redirect.php?instance=<?= urlencode($firstInstance ?? 'default') ?>" 
-                   class="bg-gradient-to-br from-frays-red to-red-800 rounded-2xl p-8 text-white hover:shadow-2xl transition-all group">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <i class="ri-calculator-line text-2xl"></i>
+                   class="bg-gradient-to-br from-frays-red to-red-800 rounded-xl p-6 text-white hover:shadow-xl transition-all group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-105 transition-transform">
+                            <i class="ri-calculator-line text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="text-lg font-bold">Update My Books</h2>
+                            <p class="text-white/70 text-sm">Access your accounting</p>
                         </div>
                         <i class="ri-arrow-right-line text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                     </div>
-                    <h2 class="text-xl font-bold mb-1">Update My Books</h2>
-                    <p class="text-white/70 text-sm">Access your accounting system</p>
                 </a>
                 
                 <!-- Upload Documents -->
-                <div onclick="scrollToUpload()" 
-                     class="bg-white border-2 border-gray-200 rounded-2xl p-8 cursor-pointer hover:border-frays-red hover:shadow-lg transition-all group">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 rounded-full bg-frays-parchment flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <i class="ri-upload-cloud-line text-2xl text-frays-red"></i>
-                        </div>
-                        <i class="ri-arrow-down-line text-gray-400 group-hover:text-frays-red group-hover:translate-y-1 transition-all"></i>
-                    </div>
-                    <h2 class="text-xl font-bold text-black mb-1">Upload Documents</h2>
-                    <p class="text-gray-500 text-sm">Submit invoices & receipts for AI processing</p>
-                </div>
-                
-            </div>
-            
-            <!-- Upload Section -->
-            <div id="upload-section" class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
-                    <h3 class="font-semibold text-black flex items-center gap-2">
-                        <i class="ri-upload-cloud-line text-frays-red"></i>
-                        Upload Documents
-                    </h3>
-                </div>
-                
-                <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
-                <form id="upload-form" enctype="multipart/form-data" class="p-6">
-                    <input type="hidden" name="fa_instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
-                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
-                    <input type="hidden" name="user_email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
-                    
-                    <!-- Settings Row -->
-                    <div class="flex gap-4 mb-6">
-                        <div class="flex-1">
-                            <label class="text-xs text-gray-500 mb-1 block">Client</label>
-                            <div class="flex items-center gap-2 px-4 py-2.5 bg-gray-50 rounded-lg">
-                                <i class="ri-building-line text-frays-red"></i>
-                                <span class="text-sm font-medium">
-                                    <?= !empty($faInstances) ? htmlspecialchars($faInstances[array_key_first($faInstances)]['name'] ?? array_key_first($faInstances)) : 'Select' ?>
-                                </span>
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-frays-red hover:shadow-lg transition-all">
+                    <form id="upload-form" enctype="multipart/form-data">
+                        <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
+                        <input type="hidden" name="fa_instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
+                        <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
+                        <input type="hidden" name="user_email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
+                        <input type="hidden" name="auto_ocr" value="1">
+                        <input type="hidden" name="doc_type" value="auto">
+                        
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-frays-parchment flex items-center justify-center">
+                                <i class="ri-upload-cloud-line text-xl text-frays-red"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h2 class="text-lg font-bold text-black">Upload Documents</h2>
+                                <p class="text-gray-500 text-sm">AI auto-detects format</p>
                             </div>
                         </div>
-                        <div class="w-40">
-                            <label class="text-xs text-gray-500 mb-1 block">Type</label>
-                            <select name="doc_type" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm">
-                                <option value="invoice">Invoice</option>
-                                <option value="receipt">Receipt</option>
-                                <option value="waybill">Waybill</option>
-                                <option value="statement">Statement</option>
-                                <option value="general">General</option>
-                            </select>
+                        
+                        <!-- Dropzone -->
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-frays-red cursor-pointer" id="dropzone">
+                            <i class="ri-cloud-upload-line text-2xl text-gray-300 mb-1"></i>
+                            <p class="text-sm text-gray-500">Drag files or click</p>
+                            <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
                         </div>
-                        <div class="flex items-end">
-                            <label class="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50">
-                                <input type="checkbox" name="auto_ocr" value="1" checked class="rounded text-frays-red">
-                                <span class="text-sm">OCR</span>
-                            </label>
+                        
+                        <!-- Progress -->
+                        <div id="upload-progress" class="hidden mt-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span id="progress-text">Processing...</span>
+                                <span id="progress-percent">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="progress-bar" class="bg-frays-red h-2 rounded-full" style="width: 0%"></div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Dropzone -->
-                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red cursor-pointer mb-4" id="dropzone">
-                        <i class="ri-cloud-upload-line text-3xl text-gray-300 mb-2"></i>
-                        <p class="text-gray-600 text-sm">Drag files here or click to browse</p>
-                        <p class="text-xs text-gray-400 mt-1">PDF, JPG, PNG</p>
-                        <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
-                        <div id="file-list" class="mt-4 text-left"></div>
-                    </div>
-                    
-                    <!-- Progress -->
-                    <div id="upload-progress" class="hidden mb-4">
-                        <div class="flex justify-between text-sm mb-1">
-                            <span id="progress-text">Processing...</span>
-                            <span id="progress-percent">0%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div id="progress-bar" class="bg-frays-red h-2 rounded-full" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Results -->
-                    <div id="upload-results" class="hidden mb-4"></div>
-                    
-                    <!-- Submit -->
-                    <button type="submit" id="submit-btn" class="w-full bg-frays-red text-white py-3 rounded-lg font-medium hover:opacity-90 transition-all">
-                        <i class="ri-upload-line"></i> Process Documents
-                    </button>
-                </form>
+                        
+                        <!-- Results -->
+                        <div id="upload-results" class="hidden mt-4"></div>
+                        
+                        <!-- Submit -->
+                        <button type="submit" id="submit-btn" class="w-full mt-4 bg-frays-red text-white py-2.5 rounded-lg font-medium hover:opacity-90 transition-all">
+                            <i class="ri-upload-line"></i> Upload & Process
+                        </button>
+                    </form>
+                </div>
+                
             </div>
         </div>
     </section>
@@ -436,28 +399,16 @@ $csrfToken = generateCSRFToken();
             <script>
             const API_URL = '/api/document-ai.php';
             
-            function scrollToUpload() {
-                document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' });
-            }
-            
             // File selection handling
             document.getElementById('dropzone').addEventListener('click', function() {
                 document.getElementById('fileInput').click();
             });
             
             document.getElementById('fileInput').addEventListener('change', function(e) {
-                const list = document.getElementById('file-list');
-                list.innerHTML = '';
-                
-                Array.from(e.target.files).forEach((file, i) => {
-                    list.innerHTML += `
-                        <div class="flex items-center gap-2 p-2 bg-white rounded mb-2">
-                            <i class="ri-file-line text-frays-red"></i>
-                            <span class="text-sm flex-1 truncate">${file.name}</span>
-                            <span class="text-xs text-gray-400">${(file.size / 1024).toFixed(1)} KB</span>
-                        </div>
-                    `;
-                });
+                const files = e.target.files;
+                if (files.length > 0) {
+                    document.getElementById('submit-btn').innerHTML = '<i class="ri-upload-line"></i> Upload ' + files.length + ' File' + (files.length > 1 ? 's' : '');
+                }
             });
             
             // Drag and drop
@@ -585,7 +536,7 @@ $csrfToken = generateCSRFToken();
                 
                 // Clear file input
                 document.getElementById('fileInput').value = '';
-                document.getElementById('file-list').innerHTML = '';
+                document.getElementById('submit-btn').innerHTML = '<i class="ri-upload-line"></i> Upload & Process';
             });
             
             </script>
@@ -652,36 +603,15 @@ $csrfToken = generateCSRFToken();
     
     const API_URL = '/api/document-ai.php';
     
-    // File selection handling with preview
+    // File selection handling
     document.getElementById('dropzone').addEventListener('click', function() {
         document.getElementById('fileInput').click();
     });
     
     document.getElementById('fileInput').addEventListener('change', function(e) {
-        const list = document.getElementById('file-list');
-        list.innerHTML = '';
-        
-        Array.from(e.target.files).forEach((file, i) => {
-            let preview = '';
-            if (file.type.startsWith('image/')) {
-                preview = `<img src="${URL.createObjectURL(file)}" class="w-12 h-12 object-cover rounded-lg mr-3">`;
-            } else {
-                preview = `<div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-3"><i class="ri-file-pdf-line text-xl text-red-500"></i></div>`;
-            }
-            
-            list.innerHTML += `
-                <div class="flex items-center p-2 bg-white rounded-lg mb-2">
-                    ${preview}
-                    <div class="flex-1 truncate">
-                        <div class="text-sm font-medium truncate">${file.name}</div>
-                        <div class="text-xs text-gray-400">${(file.size / 1024).toFixed(1)} KB</div>
-                    </div>
-                    <button type="button" onclick="this.parentElement.remove()" class="text-gray-400 hover:text-red-500">
-                        <i class="ri-close-line"></i>
-                    </button>
-                </div>
-            `;
-        });
+        if (e.target.files.length > 0) {
+            document.getElementById('submit-btn').innerHTML = '<i class="ri-upload-line"></i> Upload ' + e.target.files.length + ' File' + (e.target.files.length > 1 ? 's' : '');
+        }
     });
     
     // Drag and drop
@@ -812,7 +742,7 @@ $csrfToken = generateCSRFToken();
         resultsDiv.innerHTML = html;
         
         document.getElementById('fileInput').value = '';
-        document.getElementById('file-list').innerHTML = '';
+        document.getElementById('submit-btn').innerHTML = '<i class="ri-upload-line"></i> Upload & Process';
     });
     
     </script>
