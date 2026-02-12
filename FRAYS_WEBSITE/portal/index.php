@@ -346,27 +346,6 @@ $csrfToken = generateCSRFToken();
                             <i class="ri-arrow-right-line"></i>
                             Go to Accounting
                         </span>
-                    </div>
-                </a>
-                
-                <!-- Option 2: Upload Documents -->
-                <a href="#upload-section" 
-                   class="group bg-gradient-to-br from-frays-yellow to-yellow-600 rounded-2xl shadow-xl p-8 text-black hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-20 h-20 mb-4 rounded-full bg-white/50 flex items-center justify-center">
-                            <i class="ri-upload-cloud-line text-4xl text-frays-red"></i>
-                        </div>
-                        <h2 class="font-display text-2xl font-bold mb-3">Upload Documents</h2>
-                        <p class="text-black/70 text-sm mb-4">
-                            Submit invoices & receipts for AI processing
-                        </p>
-                        <span class="inline-flex items-center gap-2 bg-frays-red text-white px-5 py-2 rounded-lg font-semibold">
-                            <i class="ri-upload-line"></i>
-                            Upload Now
-                        </span>
-                    </div>
-                </a>
-                
             </div>
             
         </div>
@@ -675,7 +654,7 @@ $csrfToken = generateCSRFToken();
                         <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-frays-yellow flex items-center justify-center hover:opacity-80">
                             <i class="ri-linkedin-fill text-frays-red text-sm md:text-base"></i>
                         </a>
-                        <a href="https://wa.me/2673966011" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-frays-yellow flex items-center justify-center hover:opacity-80">
+                        <a href="https://wa.me/2673966011" target="_blank" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-frays-yellow flex items-center justify-center hover:opacity-80">
                             <i class="ri-whatsapp-fill text-frays-red text-sm md:text-base"></i>
                         </a>
                     </div>
