@@ -9,6 +9,7 @@
 
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/unified-auth.php';
+require_once __DIR__ . '/../includes/test-credentials.php';
 
 $error = '';
 $success = '';
@@ -29,36 +30,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $email = sanitizeInput($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
         
-        // Try unified authentication across all FA instances
-        $user = authenticateUserUnified($email, $password);
-        
-        if ($user) {
-            $userFaInstances = getUserFAInstancesUnified($user['id']);
+        // First check if it's a test user
+        $testUser = authenticateTestUser($email, $password);
+        if ($testUser) {
+            $_SESSION['user_id'] = $testUser['id'];
+            $_SESSION['user_name'] = $testUser['name'];
+            $_SESSION['user_email'] = $testUser['email'];
+            $_SESSION['fa_instances'] = $testUser['fa_instances'];
+            $_SESSION['is_unified'] = false;
+            $_SESSION['is_test'] = true;
+            $success = 'Test login successful!';
+        } else {
+            // Try real FA authentication
+            $user = authenticateUserUnified($email, $password);
             
-            if (empty($userFaInstances)) {
-                $error = 'Access denied. Your account does not have access to any FrontAccounting instances.';
-                logActivity('login_denied_no_instances', ['email' => $email]);
-            } else {
-                // Set session variables
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['name'];
-                $_SESSION['user_email'] = $user['email'];
-                $_SESSION['fa_instances'] = $userFaInstances;
-                $_SESSION['is_unified'] = true;
+            if ($user) {
+                $userFaInstances = getUserFAInstancesUnified($user['id']);
                 
-                logActivity('user_login_unified', ['email' => $email, 'instances' => count($userFaInstances)]);
-                
-                // Redirect to appropriate FA instance
-                $redirectUrl = getUserRedirectUrl($user);
-                if ($redirectUrl !== '/portal') {
-                    redirect($redirectUrl);
+                if (empty($userFaInstances)) {
+                    $error = 'Access denied. Your account does not have access to any FrontAccounting instances.';
+                    logActivity('login_denied_no_instances', ['email' => $email]);
                 } else {
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_name'] = $user['name'];
+                    $_SESSION['user_email'] = $user['email'];
+                    $_SESSION['fa_instances'] = $userFaInstances;
+                    $_SESSION['is_unified'] = true;
+                    
+                    logActivity('user_login_unified', ['email' => $email, 'instances' => count($userFaInstances)]);
                     $success = 'Login successful!';
                 }
+            } else {
+                $error = 'Invalid username or password';
+                logActivity('login_failed', ['email' => $email]);
             }
-        } else {
-            $error = 'Invalid username or password';
-            logActivity('login_failed', ['email' => $email]);
         }
     }
 }
@@ -94,6 +99,17 @@ $csrfToken = generateCSRFToken();
                     }
                 }
             }
+        }
+        
+        // Fill test credentials
+        function fillTestLogin(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            
+            // Visual feedback
+            const buttons = document.querySelectorAll('button[onclick^="fillTestLogin"]');
+            buttons.forEach(btn => btn.style.backgroundColor = '');
+            event.target.closest('button').style.backgroundColor = '#e0e7ff';
         }
     </script>
     
@@ -229,6 +245,31 @@ $csrfToken = generateCSRFToken();
                             </button>
                         </div>
                     </form>
+                    
+                    <!-- Test Credentials -->
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <p class="text-xs text-center text-gray-500 mb-3">
+                            <i class="ri-flash-line"></i>
+                            TEST MODE - Click to fill test credentials
+                        </p>
+                        <div class="grid grid-cols-1 gap-2">
+                            <button type="button" onclick="fillTestLogin('test@frayscottage.co.bw', 'test123')" 
+                                    class="text-left px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-sm transition-colors">
+                                <span class="font-medium text-gray-700">Test User</span>
+                                <span class="text-gray-400 ml-2">test@frayscottage.co.bw / test123</span>
+                            </button>
+                            <button type="button" onclick="fillTestLogin('demo@frayscottage.co.bw', 'demo456')" 
+                                    class="text-left px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-sm transition-colors">
+                                <span class="font-medium text-gray-700">Demo User (2 instances)</span>
+                                <span class="text-gray-400 ml-2">demo@frayscottage.co.bw / demo456</span>
+                            </button>
+                            <button type="button" onclick="fillTestLogin('julian@frayscottage.co.bw', 'julian123')" 
+                                    class="text-left px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-sm transition-colors">
+                                <span class="font-medium text-gray-700">Julian</span>
+                                <span class="text-gray-400 ml-2">julian@frayscottage.co.bw / julian123</span>
+                            </button>
+                        </div>
+                    </div>
                     
                     <div class="mt-4 pt-4 border-t border-gray-200 text-center">
                         <p class="text-xs text-gray-500 flex items-center justify-center gap-1">

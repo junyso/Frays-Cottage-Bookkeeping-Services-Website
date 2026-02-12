@@ -61,3 +61,133 @@ Stack trace:
 #3 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(27): require('/Users/julianus...')
 #4 {main}
   thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/config.php on line 449
+[11-Feb-2026 23:40:50 Africa/Gaborone] PHP Fatal error:  Cannot redeclare testFAConnections() (previously declared in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/fa-user-sync.php:204) in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/fa-database-creds.php on line 223
+[11-Feb-2026 23:42:44 Africa/Gaborone] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'frayscottage_bookkeeping.unified_users' doesn't exist in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/unified-auth.php:23
+Stack trace:
+#0 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/unified-auth.php(23): PDO->prepare('\n        SELECT...')
+#1 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/portal/index.php(33): authenticateUserUnified('admin@frays', 'julian@2021razi')
+#2 /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/router.php(27): require('/Users/julianus...')
+#3 {main}
+  thrown in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/unified-auth.php on line 23
+[11-Feb-2026 23:43:12 Africa/Gaborone] PHP Fatal error:  Cannot redeclare testFAConnections() (previously declared in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/fa-user-sync.php:204) in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/fa-database-creds.php on line 223
+[11-Feb-2026 23:46:55 Africa/Gaborone] PHP Parse error:  Unclosed '{' on line 197 in /Users/julianuseya/.openclaw/workspace/FRAYS_WEBSITE/includes/fa-database-creds.php on line 198
+[12-Feb-2026 02:40:35 Africa/Gaborone] FA Database connection failed (northernwarehouse): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron93'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:36 Africa/Gaborone] FA Database connection failed (madamz): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron75'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:37 Africa/Gaborone] FA Database connection failed (cleaningguru): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron35'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:38 Africa/Gaborone] FA Database connection failed (quanto): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron61'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:39 Africa/Gaborone] FA Database connection failed (spaceinteriors): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron89'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:39 Africa/Gaborone] FA Database connection failed (unlimitedfoods): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron71'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:40 Africa/Gaborone] FA Database connection failed (ernletprojects): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron88'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:41 Africa/Gaborone] FA Database connection failed (frayscottage): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron00'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:42 Africa/Gaborone] FA Database connection failed (constantadaptation): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron53'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:43 Africa/Gaborone] FA Database connection failed (great-land): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron24'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:44 Africa/Gaborone] FA Database connection failed (lighteningstrike): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron70'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:45 Africa/Gaborone] FA Database connection failed (notsa): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron60'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:46 Africa/Gaborone] FA Database connection failed (thaega): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron65'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:47 Africa/Gaborone] FA Database connection failed (modernhotelsupplies): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron21'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:48 Africa/Gaborone] FA Database connection failed (training): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron94'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:49 Africa/Gaborone] FA Database connection failed (majande): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron84'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:51 Africa/Gaborone] FA Instance guruonks authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_00onks.users' doesn't exist
+[12-Feb-2026 02:40:51 Africa/Gaborone] FA Database connection failed (marctizmo): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron40'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:52 Africa/Gaborone] FA Database connection failed (4bnb): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron17'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:53 Africa/Gaborone] FA Database connection failed (noracosmetics): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron43'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:54 Africa/Gaborone] FA Database connection failed (3dworks): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron48'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:40:56 Africa/Gaborone] FA Instance westdrayton authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_01.users' doesn't exist
+[12-Feb-2026 02:40:58 Africa/Gaborone] FA Instance ernletprojects2 authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron621.users' doesn't exist
+[12-Feb-2026 02:41:00 Africa/Gaborone] FA Instance ernletgroup authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron114.users' doesn't exist
+[12-Feb-2026 02:41:02 Africa/Gaborone] FA Instance couriersolutions authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron895.users' doesn't exist
+[12-Feb-2026 02:41:04 Africa/Gaborone] FA Instance loremaster authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron558.users' doesn't exist
+[12-Feb-2026 02:41:06 Africa/Gaborone] FA Instance coverlot authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron997.users' doesn't exist
+[12-Feb-2026 02:41:08 Africa/Gaborone] FA Instance globalstrategies authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron143.users' doesn't exist
+[12-Feb-2026 02:41:10 Africa/Gaborone] FA Instance norahbeauty authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron773.users' doesn't exist
+[12-Feb-2026 02:41:11 Africa/Gaborone] FA Database connection failed (nidarshini): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron341'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:46 Africa/Gaborone] FA Database connection failed (northernwarehouse): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron93'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:47 Africa/Gaborone] FA Database connection failed (madamz): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron75'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:47 Africa/Gaborone] FA Database connection failed (cleaningguru): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron35'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:48 Africa/Gaborone] FA Database connection failed (quanto): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron61'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:49 Africa/Gaborone] FA Database connection failed (spaceinteriors): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron89'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:50 Africa/Gaborone] FA Database connection failed (unlimitedfoods): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron71'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:51 Africa/Gaborone] FA Database connection failed (ernletprojects): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron88'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:52 Africa/Gaborone] FA Database connection failed (frayscottage): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron00'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:53 Africa/Gaborone] FA Database connection failed (constantadaptation): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron53'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:54 Africa/Gaborone] FA Database connection failed (great-land): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron24'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:55 Africa/Gaborone] FA Database connection failed (lighteningstrike): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron70'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:56 Africa/Gaborone] FA Database connection failed (notsa): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron60'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:57 Africa/Gaborone] FA Database connection failed (thaega): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron65'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:58 Africa/Gaborone] FA Database connection failed (modernhotelsupplies): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron21'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:42:59 Africa/Gaborone] FA Database connection failed (training): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron94'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:43:00 Africa/Gaborone] FA Database connection failed (majande): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron84'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:43:02 Africa/Gaborone] FA Instance guruonks authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_00onks.users' doesn't exist
+[12-Feb-2026 02:43:03 Africa/Gaborone] FA Database connection failed (marctizmo): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron40'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:43:03 Africa/Gaborone] FA Database connection failed (4bnb): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron17'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:43:04 Africa/Gaborone] FA Database connection failed (noracosmetics): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron43'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:43:05 Africa/Gaborone] FA Database connection failed (3dworks): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron48'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:43:07 Africa/Gaborone] FA Instance westdrayton authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_01.users' doesn't exist
+[12-Feb-2026 02:43:09 Africa/Gaborone] FA Instance ernletprojects2 authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron621.users' doesn't exist
+[12-Feb-2026 02:43:11 Africa/Gaborone] FA Instance ernletgroup authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron114.users' doesn't exist
+[12-Feb-2026 02:43:12 Africa/Gaborone] FA Instance couriersolutions authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron895.users' doesn't exist
+[12-Feb-2026 02:43:14 Africa/Gaborone] FA Instance loremaster authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron558.users' doesn't exist
+[12-Feb-2026 02:43:16 Africa/Gaborone] FA Instance coverlot authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron997.users' doesn't exist
+[12-Feb-2026 02:43:18 Africa/Gaborone] FA Instance globalstrategies authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron143.users' doesn't exist
+[12-Feb-2026 02:43:20 Africa/Gaborone] FA Instance norahbeauty authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron773.users' doesn't exist
+[12-Feb-2026 02:43:21 Africa/Gaborone] FA Database connection failed (nidarshini): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron341'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:23 Africa/Gaborone] FA Database connection failed (northernwarehouse): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron93'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:24 Africa/Gaborone] FA Database connection failed (madamz): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron75'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:25 Africa/Gaborone] FA Database connection failed (cleaningguru): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron35'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:26 Africa/Gaborone] FA Database connection failed (quanto): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron61'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:27 Africa/Gaborone] FA Database connection failed (spaceinteriors): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron89'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:28 Africa/Gaborone] FA Database connection failed (unlimitedfoods): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron71'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:29 Africa/Gaborone] FA Database connection failed (ernletprojects): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron88'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:30 Africa/Gaborone] FA Database connection failed (frayscottage): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron00'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:31 Africa/Gaborone] FA Database connection failed (constantadaptation): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron53'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:31 Africa/Gaborone] FA Database connection failed (great-land): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron24'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:32 Africa/Gaborone] FA Database connection failed (lighteningstrike): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron70'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:33 Africa/Gaborone] FA Database connection failed (notsa): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron60'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:34 Africa/Gaborone] FA Database connection failed (thaega): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron65'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:35 Africa/Gaborone] FA Database connection failed (modernhotelsupplies): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron21'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:36 Africa/Gaborone] FA Database connection failed (training): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron94'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:37 Africa/Gaborone] FA Database connection failed (majande): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron84'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:39 Africa/Gaborone] FA Instance guruonks authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_00onks.users' doesn't exist
+[12-Feb-2026 02:47:40 Africa/Gaborone] FA Database connection failed (marctizmo): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron40'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:41 Africa/Gaborone] FA Database connection failed (4bnb): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron17'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:42 Africa/Gaborone] FA Database connection failed (noracosmetics): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron43'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:43 Africa/Gaborone] FA Database connection failed (3dworks): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron48'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 02:47:44 Africa/Gaborone] FA Instance westdrayton authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_01.users' doesn't exist
+[12-Feb-2026 02:47:46 Africa/Gaborone] FA Instance ernletprojects2 authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron621.users' doesn't exist
+[12-Feb-2026 02:47:48 Africa/Gaborone] FA Instance ernletgroup authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron114.users' doesn't exist
+[12-Feb-2026 02:47:50 Africa/Gaborone] FA Instance couriersolutions authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron895.users' doesn't exist
+[12-Feb-2026 02:47:52 Africa/Gaborone] FA Instance loremaster authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron558.users' doesn't exist
+[12-Feb-2026 02:47:54 Africa/Gaborone] FA Instance coverlot authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron997.users' doesn't exist
+[12-Feb-2026 02:47:56 Africa/Gaborone] FA Instance globalstrategies authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron143.users' doesn't exist
+[12-Feb-2026 02:47:58 Africa/Gaborone] FA Instance norahbeauty authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron773.users' doesn't exist
+[12-Feb-2026 02:47:59 Africa/Gaborone] FA Database connection failed (nidarshini): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron341'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:43 Africa/Gaborone] FA Database connection failed (northernwarehouse): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron93'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:44 Africa/Gaborone] FA Database connection failed (madamz): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron75'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:45 Africa/Gaborone] FA Database connection failed (cleaningguru): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron35'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:46 Africa/Gaborone] FA Database connection failed (quanto): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron61'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:47 Africa/Gaborone] FA Database connection failed (spaceinteriors): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron89'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:48 Africa/Gaborone] FA Database connection failed (unlimitedfoods): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron71'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:49 Africa/Gaborone] FA Database connection failed (ernletprojects): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron88'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:50 Africa/Gaborone] FA Database connection failed (frayscottage): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron00'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:51 Africa/Gaborone] FA Database connection failed (constantadaptation): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron53'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:52 Africa/Gaborone] FA Database connection failed (great-land): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron24'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:53 Africa/Gaborone] FA Database connection failed (lighteningstrike): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron70'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:54 Africa/Gaborone] FA Database connection failed (notsa): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron60'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:54 Africa/Gaborone] FA Database connection failed (thaega): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron65'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:55 Africa/Gaborone] FA Database connection failed (modernhotelsupplies): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron21'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:56 Africa/Gaborone] FA Database connection failed (training): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron94'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:57 Africa/Gaborone] FA Database connection failed (majande): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron84'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:21:59 Africa/Gaborone] FA Instance guruonks authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_00onks.users' doesn't exist
+[12-Feb-2026 15:22:00 Africa/Gaborone] FA Database connection failed (marctizmo): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron40'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:22:01 Africa/Gaborone] FA Database connection failed (4bnb): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron17'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:22:02 Africa/Gaborone] FA Database connection failed (noracosmetics): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron43'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:22:03 Africa/Gaborone] FA Database connection failed (3dworks): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron48'@'168.167.95.181' (using password: YES)
+[12-Feb-2026 15:22:05 Africa/Gaborone] FA Instance westdrayton authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_01.users' doesn't exist
+[12-Feb-2026 15:22:07 Africa/Gaborone] FA Instance ernletprojects2 authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron621.users' doesn't exist
+[12-Feb-2026 15:22:09 Africa/Gaborone] FA Instance ernletgroup authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron114.users' doesn't exist
+[12-Feb-2026 15:22:10 Africa/Gaborone] FA Instance couriersolutions authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron895.users' doesn't exist
+[12-Feb-2026 15:22:13 Africa/Gaborone] FA Instance loremaster authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron558.users' doesn't exist
+[12-Feb-2026 15:22:15 Africa/Gaborone] FA Instance coverlot authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron997.users' doesn't exist
+[12-Feb-2026 15:22:16 Africa/Gaborone] FA Instance globalstrategies authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron143.users' doesn't exist
+[12-Feb-2026 15:22:18 Africa/Gaborone] FA Instance norahbeauty authentication failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'bookkeepingco_fron773.users' doesn't exist
+[12-Feb-2026 15:22:19 Africa/Gaborone] FA Database connection failed (nidarshini): SQLSTATE[HY000] [1045] Access denied for user 'bookkeepingco_fron341'@'168.167.95.181' (using password: YES)
