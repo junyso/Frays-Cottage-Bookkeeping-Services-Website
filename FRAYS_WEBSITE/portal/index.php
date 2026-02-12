@@ -329,18 +329,23 @@ $csrfToken = generateCSRFToken();
             </div>
             
             <!-- FA Instance Banner -->
-            <?php if (!empty($_SESSION['fa_instances'])): ?>
+            <?php 
+            $faInstances = $_SESSION['fa_instances'] ?? [];
+            $firstInstance = !empty($faInstances) ? array_key_first($faInstances) : 'default';
+            $instanceName = !empty($faInstances) ? ($faInstances[array_key_first($faInstances)]['name'] ?? array_key_first($faInstances)) : 'Default';
+            ?>
+            <?php if (!empty($faInstances)): ?>
             <div class="bg-frays-parchment rounded-xl p-4 mb-8 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <i class="ri-building-4-line text-frays-red text-2xl"></i>
                     <div>
                         <p class="text-sm text-gray-500">Your FrontAccounting Instance</p>
                         <p class="font-semibold text-black">
-                            <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $_SESSION['fa_instances'][0]))) ?>
+                            <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?>
                         </p>
                     </div>
                 </div>
-                <a href="/redirect.php?instance=<?= urlencode($_SESSION['fa_instances'][0]) ?>" 
+                <a href="/redirect.php?instance=<?= urlencode($firstInstance) ?>" 
                    class="bg-frays-red text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors flex items-center gap-2">
                     <i class="ri-arrow-right-line"></i>
                     Open Accounting
@@ -352,9 +357,6 @@ $csrfToken = generateCSRFToken();
             <div class="grid md:grid-cols-2 gap-8 mb-0">
                 
                 <!-- Option 1: Go to FA Instance -->
-                <?php 
-                $firstInstance = !empty($_SESSION['fa_instances']) ? reset($_SESSION['fa_instances']) : 'default';
-                ?>
                 <a href="/redirect.php?instance=<?= urlencode($firstInstance) ?>" 
                    class="group bg-gradient-to-br from-frays-red to-red-800 rounded-2xl shadow-xl p-8 text-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center">
@@ -393,18 +395,22 @@ $csrfToken = generateCSRFToken();
             </div>
             
             <!-- Multiple FA Instances -->
-            <?php if (count($_SESSION['fa_instances'] ?? []) > 1): ?>
+            <?php 
+            $allInstances = !empty($faInstances) ? array_keys($faInstances) : [];
+            if (count($allInstances) > 1): ?>
             <div class="mt-8 bg-frays-parchment rounded-xl shadow-lg p-6">
                 <h3 class="font-semibold text-black mb-4 flex items-center gap-1">
                     <i class="ri-links-line text-frays-red"></i>
                     Your Other FrontAccounting Instances
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <?php foreach (array_slice($_SESSION['fa_instances'], 1) as $instance): ?>
-                    <a href="/redirect.php?instance=<?= urlencode($instance) ?>" 
+                    <?php foreach (array_slice($allInstances, 1) as $instanceKey): 
+                    $instanceName = $faInstances[$instanceKey]['name'] ?? $instanceKey;
+                    ?>
+                    <a href="/redirect.php?instance=<?= urlencode($instanceKey) ?>" 
                        class="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-frays-yellow transition-colors">
                         <i class="ri-building-line text-frays-red"></i>
-                        <span class="text-sm font-medium"><?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instance))) ?></span>
+                        <span class="text-sm font-medium"><?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?></span>
                     </a>
                     <?php endforeach; ?>
                 </div>
@@ -437,7 +443,7 @@ $csrfToken = generateCSRFToken();
                 
                 <form id="upload-form" enctype="multipart/form-data">
                     <!-- Hidden: User's FA Instance (auto-filled on login) -->
-                    <input type="hidden" name="fa_instance" id="fa-instance" value="<?= htmlspecialchars($_SESSION['fa_instances'][0] ?? '') ?>">
+                    <input type="hidden" name="fa_instance" id="fa-instance" value="<?= htmlspecialchars($firstInstance ?? '') ?>">
                     <input type="hidden" name="user_id" id="user-id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
                     <input type="hidden" name="user_email" id="user-email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
                     
