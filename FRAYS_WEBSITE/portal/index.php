@@ -314,82 +314,241 @@ $csrfToken = generateCSRFToken();
     <?php else: ?>
     <!-- DASHBOARD - After Login -->
     <section class="pt-24 pb-12 px-4">
-        <div class="max-w-xl mx-auto">
+        <div class="max-w-7xl mx-auto">
             
-            <!-- Welcome -->
-            <div class="text-center mb-8">
-                <h1 class="font-display text-3xl font-bold text-black mb-2">
-                    Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>! 👋
-                </h1>
+            <?php 
+            $faInstances = $_SESSION['fa_instances'] ?? [];
+            $currentInstance = !empty($faInstances) ? array_key_first($faInstances) : 'default';
+            $instanceName = !empty($faInstances) ? ($faInstances[$currentInstance]['name'] ?? $currentInstance) : 'Default';
+            ?>
+            
+            <!-- Welcome Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="font-display text-3xl font-bold text-black">
+                        Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>! 👋
+                    </h1>
+                    <p class="text-gray-500 mt-1">
+                        <i class="ri-building-line"></i>
+                        <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?>
+                    </p>
+                </div>
                 <a href="/portal?action=logout" class="inline-flex items-center gap-2 text-gray-400 hover:text-frays-red text-sm transition-colors">
                     <i class="ri-logout-box-line"></i>
                     Sign Out
                 </a>
             </div>
             
-            <!-- Update My Books -->
-            <a href="/redirect.php?instance=<?= urlencode($firstInstance ?? 'default') ?>" 
-               class="block bg-gradient-to-br from-frays-red to-red-800 rounded-xl p-5 mb-4 text-white hover:shadow-lg transition-all group">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                        <i class="ri-calculator-line text-xl"></i>
+            <!-- Main Content Grid -->
+            <div class="grid lg:grid-cols-3 gap-6">
+                
+                <!-- Left Column: Statistics -->
+                <div class="lg:col-span-1 space-y-6">
+                    
+                    <!-- Document Statistics -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                        <h3 class="font-semibold text-black mb-4 flex items-center gap-2">
+                            <i class="ri-file-chart-line text-frays-red"></i>
+                            Document Statistics
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-frays-parchment rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-frays-red">127</div>
+                                <div class="text-xs text-gray-500">Lifetime</div>
+                            </div>
+                            <div class="bg-frays-yellow/20 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-green-700">23</div>
+                                <div class="text-xs text-gray-500">MTD</div>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-green-600">89</div>
+                                <div class="text-xs text-gray-500">YTD</div>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-blue-600">5</div>
+                                <div class="text-xs text-gray-500">Pending</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex-1">
-                        <h2 class="text-lg font-bold">Update My Books</h2>
-                        <p class="text-white/70 text-sm">Access your accounting</p>
+                    
+                    <!-- FA Statistics -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                        <h3 class="font-semibold text-black mb-4 flex items-center gap-2">
+                            <i class="ri-calculator-line text-frays-red"></i>
+                            <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?>
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-sm text-gray-600">Suppliers</span>
+                                <span class="font-medium">47</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-sm text-gray-600">Cashbooks</span>
+                                <span class="font-medium">3</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-sm text-gray-600">Dimensions</span>
+                                <span class="font-medium">8</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span class="text-sm text-gray-600">Bank Accounts</span>
+                                <span class="font-medium">2</span>
+                            </div>
+                        </div>
                     </div>
-                    <i class="ri-arrow-right-line text-white/60 text-xl group-hover:translate-x-1 transition-all"></i>
+                    
+                    <!-- User History -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                        <h3 class="font-semibold text-black mb-4 flex items-center gap-2">
+                            <i class="ri-history-line text-frays-red"></i>
+                            Recent Activity
+                        </h3>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-start gap-2">
+                                <i class="ri-login-circle-line text-green-600 mt-0.5"></i>
+                                <div>
+                                    <div class="text-gray-800">Login successful</div>
+                                    <div class="text-xs text-gray-400">Today, 9:15 AM</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <i class="ri-upload-cloud-line text-blue-600 mt-0.5"></i>
+                                <div>
+                                    <div class="text-gray-800">Uploaded 3 invoices</div>
+                                    <div class="text-xs text-gray-400">Yesterday, 2:30 PM</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <i class="ri-file-chart-line text-frays-red mt-0.5"></i>
+                                <div>
+                                    <div class="text-gray-800">Processed 12 documents</div>
+                                    <div class="text-xs text-gray-400">Feb 10, 2026</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
-            </a>
-            
-            <!-- Upload Documents -->
-            <div class="bg-white border border-gray-200 rounded-xl p-5 hover:border-frays-red hover:shadow-md transition-all">
-                <form id="upload-form" enctype="multipart/form-data">
-                    <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
-                    <input type="hidden" name="fa_instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
-                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
-                    <input type="hidden" name="user_email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
-                    <input type="hidden" name="auto_ocr" value="1">
-                    <input type="hidden" name="doc_type" value="auto">
+                
+                <!-- Right Column: Actions -->
+                <div class="lg:col-span-2 space-y-6">
                     
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-frays-yellow/30 flex items-center justify-center flex-shrink-0">
-                            <i class="ri-upload-cloud-line text-lg text-frays-red"></i>
+                    <!-- Update My Books -->
+                    <a href="/redirect.php?instance=<?= urlencode($currentInstance) ?>" 
+                       class="block bg-gradient-to-r from-green-700 to-green-500 rounded-xl p-5 text-white hover:shadow-lg transition-all group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                                    <i class="ri-calculator-line text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-xl font-bold">Update My Books</h2>
+                                    <p class="text-white/80 text-sm">
+                                        <i class="ri-building-line"></i>
+                                        <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-white/80 text-sm">Access Accounting</span>
+                                <i class="ri-arrow-right-line text-2xl text-white/60 group-hover:translate-x-1 transition-all"></i>
+                            </div>
                         </div>
-                        <div>
-                            <h2 class="text-lg font-bold text-black">Upload Documents</h2>
-                            <p class="text-gray-500 text-xs">AI auto-detects format</p>
+                    </a>
+                    
+                    <!-- Upload Documents -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div class="bg-gray-50 px-5 py-4 border-b border-gray-100">
+                            <h3 class="font-semibold text-black flex items-center gap-2">
+                                <i class="ri-upload-cloud-line text-frays-red"></i>
+                                Upload Documents
+                            </h3>
                         </div>
+                        
+                        <form id="upload-form" enctype="multipart/form-data" class="p-5">
+                            <input type="hidden" name="fa_instance" value="<?= htmlspecialchars($currentInstance) ?>">
+                            <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
+                            <input type="hidden" name="user_email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
+                            <input type="hidden" name="auto_ocr" value="1">
+                            <input type="hidden" name="doc_type" value="auto">
+                            
+                            <!-- Dropzone -->
+                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red cursor-pointer mb-4 transition-all" id="dropzone">
+                                <i class="ri-cloud-upload-line text-4xl text-gray-300 mb-3"></i>
+                                <p class="text-gray-600 font-medium mb-2">Drag files here or click to browse</p>
+                                <p class="text-sm text-gray-400 mb-4">Upload invoices, receipts, waybills & statements</p>
+                                
+                                <!-- Guidelines -->
+                                <div class="bg-frays-parchment rounded-lg p-4 text-left max-w-md mx-auto">
+                                    <p class="text-xs font-semibold text-gray-600 mb-2">📋 Guidelines:</p>
+                                    <ul class="text-xs text-gray-500 space-y-1">
+                                        <li>• <strong>Max 20 files</strong> per upload</li>
+                                        <li>• <strong>Types:</strong> PDF, JPG, PNG</li>
+                                        <li>• <strong>Max size:</strong> 10MB per file</li>
+                                        <li>• <strong>AI auto-detects</strong> document type</li>
+                                    </ul>
+                                </div>
+                                
+                                <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                            </div>
+                            
+                            <!-- Progress -->
+                            <div id="upload-progress" class="hidden mb-4">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span id="progress-text">Processing...</span>
+                                    <span id="progress-percent">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div id="progress-bar" class="bg-frays-red h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Results with Extracted Data Table -->
+                            <div id="upload-results" class="hidden mb-4">
+                                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <i class="ri-checkbox-circle-line text-green-600 text-xl"></i>
+                                        <div>
+                                            <div class="font-medium text-green-800">Upload Successful!</div>
+                                            <div class="text-sm text-green-600">Data extracted and ready for admin review</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h4 class="font-medium text-black mb-2">Extracted Data Preview</h4>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-sm">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-600">File</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Type</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Vendor</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Date</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Amount</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Confidence</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="results-table-body">
+                                            <!-- Filled by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-3">
+                                    <i class="ri-lock-line"></i>
+                                    Full CSV export available to admin only
+                                </p>
+                            </div>
+                            
+                            <!-- Submit -->
+                            <button type="submit" id="submit-btn" class="w-full bg-[#990000] text-white py-3 rounded-lg font-medium hover:opacity-90 transition-all">
+                                <i class="ri-upload-line"></i> Upload & Process
+                            </button>
+                        </form>
                     </div>
                     
-                    <!-- Dropzone -->
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-frays-red cursor-pointer mb-3" id="dropzone">
-                        <i class="ri-cloud-upload-line text-2xl text-gray-300 mb-1"></i>
-                        <p class="text-sm text-gray-500">Drag files or click</p>
-                        <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
-                    </div>
-                    
-                    <!-- Progress -->
-                    <div id="upload-progress" class="hidden mb-3">
-                        <div class="flex justify-between text-xs mb-1">
-                            <span id="progress-text">Processing...</span>
-                            <span id="progress-percent">0%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                            <div id="progress-bar" class="bg-frays-red h-1.5 rounded-full" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Results -->
-                    <div id="upload-results" class="hidden mb-3"></div>
-                    
-                    <!-- Submit -->
-                    <button type="submit" id="submit-btn" class="w-full bg-frays-yellow text-black py-2.5 rounded-lg font-medium hover:opacity-90 transition-all">
-                        <i class="ri-upload-line"></i> Upload & Process
-                    </button>
-                </form>
+                </div>
+                
             </div>
-            
         </div>
     </section>
             
@@ -508,28 +667,37 @@ $csrfToken = generateCSRFToken();
                 const resultsDiv = document.getElementById('upload-results');
                 resultsDiv.classList.remove('hidden');
                 
-                let html = '<div class="space-y-2">';
+                // Build table rows
+                let tableRows = '';
                 results.forEach(r => {
-                    if (r.success) {
-                        html += `
-                            <div class="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
-                                <i class="ri-check-line text-green-600"></i>
-                                <span class="text-sm text-green-800 flex-1">${r.filename}</span>
-                                <span class="text-xs text-green-600">Processed</span>
-                            </div>
+                    if (r.success && r.data) {
+                        const d = r.data;
+                        const confidence = d.confidence ? Math.round(d.confidence * 100) : '-';
+                        const confClass = d.confidence && d.confidence < 0.5 ? 'text-yellow-600' : 'text-green-600';
+                        tableRows += `
+                            <tr class="border-b border-gray-100">
+                                <td class="px-3 py-2 text-gray-800 truncate max-w-[150px]">${r.filename}</td>
+                                <td class="px-3 py-2 text-gray-600 capitalize">${d.type || 'General'}</td>
+                                <td class="px-3 py-2 text-gray-600 truncate max-w-[120px]">${d.vendor || '-'}</td>
+                                <td class="px-3 py-2 text-gray-600">${d.date || '-'}</td>
+                                <td class="px-3 py-2 text-gray-800 font-medium">${d.total ? 'P' + parseFloat(d.total).toLocaleString() : '-'}</td>
+                                <td class="px-3 py-2 ${confClass}">${confidence}%</td>
+                            </tr>
                         `;
                     } else {
-                        html += `
-                            <div class="flex items-center gap-2 p-3 bg-red-50 rounded-lg">
-                                <i class="ri-error-warning-line text-red-600"></i>
-                                <span class="text-sm text-red-800 flex-1">${r.filename}</span>
-                                <span class="text-xs text-red-600">${r.error || 'Failed'}</span>
-                            </div>
+                        tableRows += `
+                            <tr class="border-b border-gray-100 bg-red-50">
+                                <td class="px-3 py-2 text-red-800 truncate max-w-[150px]">${r.filename}</td>
+                                <td class="px-3 py-2 text-red-600" colspan="5">${r.error || 'Processing failed'}</td>
+                            </tr>
                         `;
                     }
                 });
-                html += '</div>';
-                resultsDiv.innerHTML = html;
+                
+                document.getElementById('results-table-body').innerHTML = tableRows;
+                
+                // Scroll to results
+                resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 
                 // Clear file input
                 document.getElementById('fileInput').value = '';
