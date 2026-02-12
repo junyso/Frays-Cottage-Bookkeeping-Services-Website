@@ -195,9 +195,9 @@ function runSync() {
             } elseif (strpos($errMsg, '1146') !== false || strpos($errMsg, '42S02') !== false) {
                 $errors[] = $key . ": No 0_users table";
             } else {
-                $errors[] = $key . ": " . substr($errMsg, 0, 30);
+                $errors[] = $key . ": " . $errMsg;
             }
-            echo "✗ ERROR\n";
+            echo "✗ ERROR - " . $errMsg . "\n";
         }
     }
     
