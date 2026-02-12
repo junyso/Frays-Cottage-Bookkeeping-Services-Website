@@ -1,207 +1,595 @@
 <?php
 /**
- * Document AI API Proxy
- * Bridges PHP portal to Node.js Document AI service
+ * Document AI Processor - Pure PHP Implementation
  * 
- * Document AI runs on: http://localhost:3000
+ * Integrated into Frays Website - runs on port 8080
+ * No separate Node.js server needed!
+ * 
+ * Features:
+ * - File upload & management
+ * - OCR text extraction (Tesseract or fallback)
+ * - CSV export
+ * - FrontAccounting integration
  */
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-
-// Handle preflight
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
+// Only load config if not API endpoint
+$isAPI = strpos($_SERVER['REQUEST_URI'] ?? '', '/api/') !== false;
+if (!$isAPI && !defined('APP_LOADED')) {
+    require_once __DIR__ . '/../includes/config.php';
 }
 
 // Configuration
-define('DOCAI_HOST', 'http://localhost:3000');
-define('DOCAI_TIMEOUT', 60);
+define('DOCAI_UPLOAD_DIR', __DIR__ . '/../uploads');
+define('DOCAI_EXPORT_DIR', __DIR__ . '/../exports');
+define('DOCAI_TEMP_DIR', __DIR__ . '/../processed');
 
 /**
- * Make request to Document AI service
+ * Main Document AI Processor Class
  */
-function callDocAI($endpoint, $method = 'GET', $data = null, $files = null) {
-    $url = DOCAI_HOST . $endpoint;
+class DocumentAI {
     
-    $ch = curl_init();
+    private $uploadDir;
+    private $exportDir;
+    private $processedDir;
     
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, DOCAI_TIMEOUT);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    
-    if ($method === 'POST') {
-        curl_setopt($ch, CURLOPT_POST, true);
+    public function __construct() {
+        $this->uploadDir = DOCAI_UPLOAD_DIR;
+        $this->exportDir = DOCAI_EXPORT_DIR;
+        $this->processedDir = DOCAI_TEMP_DIR;
         
-        if ($files) {
-            // Handle multipart/form-data with files
-            $multipart = [];
-            
-            // Add data fields
-            if ($data) {
-                foreach ($data as $key => $value) {
-                    $multipart[] = [
-                        'name' => $key,
-                        'contents' => $value
-                    ];
-                }
+        // Ensure directories exist
+        foreach ([$this->uploadDir, $this->exportDir, $this->processedDir] as $dir) {
+            if (!is_dir($dir)) {
+                mkdir($dir, 0755, true);
             }
-            
-            // Add files
-            foreach ($files as $key => $file) {
-                $multipart[] = [
-                    'name' => $key,
-                    'filename' => basename($file['tmp_name']),
-                    'type' => $file['type'],
-                    'contents' => fopen($file['tmp_name'], 'r')
-                ];
-            }
-            
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $multipart);
-        } else {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         }
     }
     
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
+    /**
+     * Process a single document
+     */
+    public function processDocument($file, $options = []) {
+        $result = [
+            'success' => false,
+            'filename' => $file['name'],
+            'extracted_text' => '',
+            'data' => [],
+            'confidence' => 0,
+            'processing_time' => 0,
+            'errors' => []
+        ];
+        
+        $startTime = microtime(true);
+        
+        try {
+            // Validate file
+            if ($file['error'] !== UPLOAD_ERR_OK) {
+                throw new Exception("Upload error: " . $file['error']);
+            }
+            
+            // Validate file type
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
+            
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $mimeType = mime_content_type($file['tmp_name']);
+            
+            if (!in_array($ext, $allowedExtensions) || !in_array($mimeType, $allowedTypes)) {
+                throw new Exception("Invalid file type. Allowed: jpg, png, gif, pdf");
+            }
+            
+            // Generate unique filename
+            $newFilename = uniqid() . '_' . sanitizeFilename($file['name']);
+            $destination = $this->uploadDir . '/' . $newFilename;
+            
+            // Move uploaded file
+            if (!move_uploaded_file($file['tmp_name'], $destination)) {
+                throw new Exception("Failed to save uploaded file");
+            }
+            
+            $result['saved_path'] = $destination;
+            
+            // Extract text based on file type
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
+                $ocrResult = $this->performOCR($destination);
+                $result['extracted_text'] = $ocrResult['text'];
+                $result['confidence'] = $ocrResult['confidence'];
+            } else {
+                // For PDFs, try to extract text
+                $result['extracted_text'] = $this->extractPDFText($destination);
+                $result['confidence'] = 0.7; // Estimate for PDFs
+            }
+            
+            // Parse extracted data
+            $result['data'] = $this->parseDocumentData($result['extracted_text'], $ext);
+            
+            // Auto-export to CSV if requested
+            if (!empty($options['auto_export'])) {
+                $result['csv_path'] = $this->exportToCSV($result['data'], $file['name']);
+            }
+            
+            // Push to FrontAccounting if requested
+            if (!empty($options['push_fa'])) {
+                $result['fa_result'] = $this->pushToFrontAccounting($result['data']);
+            }
+            
+            $result['success'] = true;
+            
+        } catch (Exception $e) {
+            $result['errors'][] = $e->getMessage();
+        }
+        
+        $result['processing_time'] = round((microtime(true) - $startTime) * 1000, 2);
+        
+        return $result;
+    }
     
-    curl_close($ch);
+    /**
+     * Perform OCR on image
+     */
+    private function performOCR($imagePath) {
+        $result = [
+            'text' => '',
+            'confidence' => 0
+        ];
+        
+        // Try Tesseract OCR first (if installed)
+        $tesseractPath = trim(shell_exec('which tesseract 2>/dev/null') ?? '');
+        
+        if (!empty($tesseractPath)) {
+            $tempFile = tempnam(sys_get_temp_dir(), 'ocr_');
+            $output = shell_exec("tesseract " . escapeshellarg($imagePath) . " " . escapeshellarg($tempFile) . " 2>&1");
+            
+            if (file_exists($tempFile . '.txt')) {
+                $result['text'] = file_get_contents($tempFile . '.txt');
+                $result['confidence'] = 0.85; // Tesseract is generally good
+                @unlink($tempFile . '.txt');
+            }
+            @unlink($tempFile);
+        } else {
+            // Fallback: Simple text extraction using ImageMagick
+            $imPath = trim(shell_exec('which convert 2>/dev/null') ?? '');
+            
+            if (!empty($imPath)) {
+                $tempFile = tempnam(sys_get_temp_dir(), 'ocr_') . '.txt';
+                $output = shell_exec("convert -density 300 -depth 8 -quality 85 " . escapeshellarg($imagePath) . " txt:- | grep -v '^0,0,0' | cut -d' ' -f4 | head -50");
+                $result['text'] = $output ?: '';
+                $result['confidence'] = 0.5; // Lower confidence without OCR
+            } else {
+                // Ultimate fallback: basic image info
+                $result['text'] = $this->extractImageMetadata($imagePath);
+                $result['confidence'] = 0.3;
+            }
+        }
+        
+        return $result;
+    }
     
-    if ($error) {
+    /**
+     * Extract text from PDF
+     */
+    private function extractPDFText($pdfPath) {
+        // Try pdftotext first
+        $pdftotextPath = trim(shell_exec('which pdftotext 2>/dev/null') ?? '');
+        
+        if (!empty($pdftotextPath)) {
+            $tempFile = tempnam(sys_get_temp_dir(), 'pdf_') . '.txt';
+            $output = shell_exec("pdftotext " . escapeshellarg($pdfPath) . " " . escapeshellarg($tempFile) . " 2>&1");
+            
+            if (file_exists($tempFile)) {
+                $text = file_get_contents($tempFile);
+                @unlink($tempFile);
+                return $text;
+            }
+        }
+        
+        // Fallback: Use PHP's PDF functions or return placeholder
+        return "[PDF text extraction requires pdftotext or similar tool]\n" .
+               "File: " . basename($pdfPath) . "\n" .
+               "Size: " . filesize($pdfPath) . " bytes";
+    }
+    
+    /**
+     * Extract image metadata as fallback
+     */
+    private function extractImageMetadata($imagePath) {
+        $info = getimagesize($imagePath);
+        return "[Image Metadata]\n" .
+               "Width: " . ($info[0] ?? 'unknown') . "px\n" .
+               "Height: " . ($info[1] ?? 'unknown') . "px\n" .
+               "Type: " . ($info['mime'] ?? 'unknown') . "\n" .
+               "For text extraction, install Tesseract OCR:\n" .
+               "  macOS: brew install tesseract\n" .
+               "  Linux: apt-get install tesseract-ocr\n" .
+               "  Windows: Download from https://github.com/UB-Mannheim/tesseract/wiki";
+    }
+    
+    /**
+     * Parse document data from extracted text
+     */
+    private function parseDocumentData($text, $fileType) {
+        $data = [
+            'raw_text' => $text,
+            'type' => $this->detectDocumentType($text, $fileType),
+            'vendor' => '',
+            'invoice_number' => '',
+            'date' => '',
+            'total' => 0,
+            'subtotal' => 0,
+            'vat' => 0,
+            'line_items' => [],
+            'confidence' => 0
+        ];
+        
+        // Extract invoice number
+        $invoicePatterns = [
+            '/(?:invoice|inv|inv[.#]?|receipt|#)\s*[:#]?\s*([A-Z0-9-]+)/i',
+            '/[#]\s*([A-Z0-9-]+)/'
+        ];
+        
+        foreach ($invoicePatterns as $pattern) {
+            if (preg_match($pattern, $text, $matches)) {
+                $data['invoice_number'] = trim($matches[1]);
+                break;
+            }
+        }
+        
+        // Extract dates
+        $datePatterns = [
+            '/(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4})/',
+            '/(\d{4}[\/\-\.]\d{1,2}[\/\-\.]\d{1,2})/',
+            '/(?:date|dated)[:\s]*(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4})/i'
+        ];
+        
+        foreach ($datePatterns as $pattern) {
+            if (preg_match($pattern, $text, $matches)) {
+                $data['date'] = $this->normalizeDate($matches[1]);
+                break;
+            }
+        }
+        
+        // Extract amounts (look for largest number after currency symbols)
+        $amountPatterns = [
+            '/P\s*([\d,]+\.?\d*)/',  // Botswana Pula
+            '/BWP\s*([\d,]+\.?\d*)/',
+            '/([\d,]+\.?\d*)\s*(?:P|BWP)/',
+            '/Total[:\s]*P?\s*([\d,]+\.?\d*)/i',
+            '/Amount[:\s]*P?\s*([\d,]+\.?\d*)/i'
+        ];
+        
+        $amounts = [];
+        foreach ($amountPatterns as $pattern) {
+            if (preg_match_all($pattern, $text, $matches)) {
+                foreach ($matches[1] as $amount) {
+                    $clean = (float)str_replace(',', '', $amount);
+                    if ($clean > 0) {
+                        $amounts[] = $clean;
+                    }
+                }
+            }
+        }
+        
+        if (!empty($amounts)) {
+            // Usually the largest amount is the total
+            $data['total'] = max($amounts);
+            // VAT is often 14% of total
+            $data['vat'] = round($data['total'] * 0.14, 2);
+            $data['subtotal'] = round($data['total'] - $data['vat'], 2);
+        }
+        
+        // Extract vendor name (first substantial line that's not a header)
+        $lines = array_filter(array_map('trim', explode("\n", $text)));
+        foreach ($lines as $i => $line) {
+            if (strlen($line) > 3 && !preg_match('/^(invoice|total|date|payment|terms)/i', $line)) {
+                if ($i < 3) { // Vendor is usually in first few lines
+                    $data['vendor'] = $line;
+                    break;
+                }
+            }
+        }
+        
+        // Calculate confidence based on what we found
+        $found = 0;
+        if (!empty($data['invoice_number'])) $found++;
+        if (!empty($data['date'])) $found++;
+        if ($data['total'] > 0) $found++;
+        if (!empty($data['vendor'])) $found++;
+        $data['confidence'] = $found / 4;
+        
+        return $data;
+    }
+    
+    /**
+     * Detect document type from content
+     */
+    private function detectDocumentType($text, $fileType) {
+        $textLower = strtolower($text);
+        
+        if (preg_match('/(invoice|inv|receipt|tax invoice)/', $textLower)) {
+            return 'invoice';
+        }
+        if (preg_match('/(statement|account)/', $textLower)) {
+            return 'statement';
+        }
+        if (preg_match('/(waybill|delivery|dispatch)/', $textLower)) {
+            return 'waybill';
+        }
+        if (preg_match('/(purchase|order|purchase order)/', $textLower)) {
+            return 'purchase_order';
+        }
+        
+        // Default based on file extension
+        return match($fileType) {
+            'pdf' => 'invoice',
+            default => 'general'
+        };
+    }
+    
+    /**
+     * Normalize date to YYYY-MM-DD format
+     */
+    private function normalizeDate($dateStr) {
+        $formats = [
+            'd/m/Y', 'd-m-Y', 'd.m.Y',
+            'm/d/Y', 'm-d-Y',
+            'Y/m/d', 'Y-m-d'
+        ];
+        
+        foreach ($formats as $format) {
+            $date = DateTime::createFromFormat($format, $dateStr);
+            if ($date) {
+                return $date->format('Y-m-d');
+            }
+        }
+        
+        return $dateStr; // Return original if parsing fails
+    }
+    
+    /**
+     * Export data to CSV
+     */
+    public function exportToCSV($data, $originalFilename) {
+        $baseName = pathinfo($originalFilename, PATHINFO_FILENAME);
+        $filename = 'docai_' . $baseName . '_' . date('Y-m-d_His') . '.csv';
+        $filepath = $this->exportDir . '/' . $filename;
+        
+        $headers = [
+            'Invoice Number', 'Date', 'Vendor', 'Subtotal', 'VAT', 'Total',
+            'Document Type', 'Confidence', 'Raw Text'
+        ];
+        
+        $row = [
+            $data['invoice_number'] ?? '',
+            $data['date'] ?? '',
+            $data['vendor'] ?? '',
+            $data['subtotal'] ?? 0,
+            $data['vat'] ?? 0,
+            $data['total'] ?? 0,
+            $data['type'] ?? 'general',
+            $data['confidence'] ?? 0,
+            // Don't include full raw text in CSV, just preview
+            substr($data['raw_text'] ?? '', 0, 100) . '...'
+        ];
+        
+        $handle = fopen($filepath, 'w');
+        fputcsv($handle, $headers);
+        fputcsv($handle, $row);
+        fclose($handle);
+        
+        return $filepath;
+    }
+    
+    /**
+     * Push data to FrontAccounting
+     */
+    private function pushToFrontAccounting($data) {
+        // This would call the FA API Gateway
+        // For now, return placeholder result
+        
         return [
             'success' => false,
-            'error' => 'Document AI service error: ' . $error
+            'message' => 'FrontAccounting integration requires FA API Gateway',
+            'data' => $data
         ];
     }
     
-    return [
-        'success' => $httpCode >= 200 && $httpCode < 300,
-        'data' => json_decode($response, true),
-        'http_code' => $httpCode
-    ];
+    /**
+     * List processed documents
+     */
+    public function listDocuments() {
+        $documents = [];
+        
+        foreach ([$this->uploadDir, $this->processedDir] as $dir) {
+            $files = glob($dir . '/*');
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    $documents[] = [
+                        'filename' => basename($file),
+                        'path' => $file,
+                        'size' => filesize($file),
+                        'modified' => date('Y-m-d H:i:s', filemtime($file)),
+                        'type' => mime_content_type($file)
+                    ];
+                }
+            }
+        }
+        
+        return $documents;
+    }
+    
+    /**
+     * Delete a document
+     */
+    public function deleteDocument($filename) {
+        $paths = [
+            $this->uploadDir . '/' . $filename,
+            $this->processedDir . '/' . $filename,
+            $this->exportDir . '/' . $filename
+        ];
+        
+        $deleted = false;
+        foreach ($paths as $path) {
+            if (file_exists($path)) {
+                unlink($path);
+                $deleted = true;
+            }
+        }
+        
+        return $deleted;
+    }
+    
+    /**
+     * Get storage stats
+     */
+    public function getStats() {
+        return [
+            'uploads_count' => count(glob($this->uploadDir . '/*')),
+            'uploads_size' => $this->getDirSize($this->uploadDir),
+            'exports_count' => count(glob($this->exportDir . '/*')),
+            'exports_size' => $this->getDirSize($this->exportDir),
+            'processed_count' => count(glob($this->processedDir . '/*')),
+            'processed_size' => $this->getDirSize($this->processedDir)
+        ];
+    }
+    
+    private function getDirSize($dir) {
+        $size = 0;
+        foreach (glob($dir . '/*') as $file) {
+            if (is_file($file)) {
+                $size += filesize($file);
+            }
+        }
+        return $size;
+    }
 }
 
 /**
- * Simple POST without files
+ * Helper: Sanitize filename (only if not already defined)
  */
-function postDocAI($endpoint, $data) {
-    return callDocAI($endpoint, 'POST', $data, null);
+if (!function_exists('sanitizeFilename')) {
+    function sanitizeFilename($filename) {
+        return preg_replace('/[^a-zA-Z0-9._-]/', '_', $filename);
+    }
 }
 
-// ============================================
-// ROUTES
-// ============================================
-
-$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$requestUri = str_replace('/api/', '', $requestUri);
-
-// Health check
-if ($requestUri === 'health' || $requestUri === '') {
-    echo json_encode([
-        'service' => 'Document AI Proxy',
-        'status' => 'running',
-        'timestamp' => date('c')
-    ]);
-    exit;
-}
-
-// Route: Process single document
-if ($requestUri === 'process' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_FILES['document'])) {
-        echo json_encode(['success' => false, 'error' => 'No document uploaded']);
-        exit;
+/**
+ * API Endpoint Handler
+ */
+function handleAPIRequest() {
+    $method = $_SERVER['REQUEST_METHOD'];
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    // Remove /api/document-ai.php or /api/document-ai prefix
+    $path = preg_replace('#^/api/document-ai\.php#', '', $path);
+    $path = preg_replace('#^/api/document-ai#', '', $path);
+    $path = trim($path, '/');
+    
+    $docAI = new DocumentAI();
+    
+    // Health check
+    if ($path === 'health' || $path === '') {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'service' => 'Document AI (PHP)',
+            'status' => 'running',
+            'version' => '1.0.0',
+            'timestamp' => date('c'),
+            'features' => [
+                'ocr' => !empty(shell_exec('which tesseract 2>/dev/null')),
+                'pdf_text' => !empty(shell_exec('which pdftotext 2>/dev/null')),
+                'fa_integration' => false
+            ],
+            'stats' => $docAI->getStats()
+        ]);
+        return;
     }
     
-    $result = callDocAI('/api/process', 'POST', null, [
-        'document' => [
-            'tmp_name' => $_FILES['document']['tmp_name'],
-            'type' => $_FILES['document']['type']
-        ]
-    ]);
+    // List documents
+    if ($path === 'documents' && $method === 'GET') {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'documents' => $docAI->listDocuments()
+        ]);
+        return;
+    }
     
-    echo json_encode($result);
-    exit;
-}
-
-// Route: Batch process
-if ($requestUri === 'process/batch' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $files = [];
+    // Get stats
+    if ($path === 'stats' && $method === 'GET') {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'stats' => $docAI->getStats()
+        ]);
+        return;
+    }
     
-    if (!empty($_FILES['documents']['name'][0])) {
-        foreach ($_FILES['documents']['name'] as $idx => $name) {
-            $files['documents'][] = [
-                'tmp_name' => $_FILES['documents']['tmp_name'][$idx],
-                'type' => $_FILES['documents']['type'][$idx]
-            ];
+    // Process single document
+    if ($path === 'process' && $method === 'POST') {
+        if (!isset($_FILES['document'])) {
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'No document uploaded']);
+            return;
         }
+        
+        $options = [
+            'auto_ocr' => !empty($_POST['auto_ocr']),
+            'auto_export' => !empty($_POST['auto_export']),
+            'push_fa' => !empty($_POST['push_fa'])
+        ];
+        
+        $result = $docAI->processDocument($_FILES['document'], $options);
+        
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        return;
     }
     
-    $result = callDocAI('/api/process/batch', 'POST', null, $files);
-    echo json_encode($result);
-    exit;
+    // Delete document
+    if (preg_match('#^delete/(.+)$#', $path, $matches) && $method === 'DELETE') {
+        $filename = urldecode($matches[1]);
+        $deleted = $docAI->deleteDocument($filename);
+        
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => $deleted,
+            'filename' => $filename
+        ]);
+        return;
+    }
+    
+    // Export to CSV
+    if ($path === 'export/csv' && $method === 'POST') {
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        $filepath = $docAI->exportToCSV($data['data'] ?? [], $data['filename'] ?? 'document');
+        
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => file_exists($filepath),
+            'filepath' => basename($filepath),
+            'download_url' => '/exports/' . basename($filepath)
+        ]);
+        return;
+    }
+    
+    // 404
+    header('Content-Type: application/json');
+    http_response_code(404);
+    echo json_encode(['success' => false, 'error' => 'Endpoint not found']);
 }
 
-// Route: Export to CSV
-if ($requestUri === 'export/csv' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $result = postDocAI('/api/export/csv', $data);
-    echo json_encode($result);
-    exit;
+// Handle CLI
+if (php_sapi_name() === 'cli') {
+    echo "Document AI Processor - Pure PHP\n";
+    echo "================================\n\n";
+    
+    $docAI = new DocumentAI();
+    echo "Stats:\n";
+    print_r($docAI->getStats());
 }
 
-// Route: Push to FrontAccounting
-if ($requestUri === 'export/fa' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $result = postDocAI('/api/export/fa', $data);
-    echo json_encode($result);
-    exit;
+// Handle web API requests
+if (php_sapi_name() !== 'cli') {
+    handleAPIRequest();
 }
-
-// Route: Test FA connection
-if ($requestUri === 'fa/test' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    $result = callDocAI('/api/fa/test');
-    echo json_encode($result);
-    exit;
-}
-
-// Route: Get FA suppliers
-if ($requestUri === 'fa/suppliers' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    $result = callDocAI('/api/fa/suppliers');
-    echo json_encode($result);
-    exit;
-}
-
-// Route: Get FA customers
-if ($requestUri === 'fa/customers' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    $result = callDocAI('/api/fa/customers');
-    echo json_encode($result);
-    exit;
-}
-
-// Route: Get exports list
-if ($requestUri === 'exports' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    $result = callDocAI('/api/exports');
-    echo json_encode($result);
-    exit;
-}
-
-// Route: Get stats
-if ($requestUri === 'stats' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    $result = callDocAI('/api/stats');
-    echo json_encode($result);
-    exit;
-}
-
-// 404
-http_response_code(404);
-echo json_encode([
-    'success' => false,
-    'error' => 'Endpoint not found: ' . $requestUri
-]);

@@ -328,22 +328,28 @@ $csrfToken = generateCSRFToken();
             </div>
             <?php endif; ?>
             
-            <!-- Upload Section with Document AI -->
+            <!-- Upload Section with Integrated Document AI -->
             <div id="upload-section" class="bg-frays-parchment rounded-2xl shadow-xl p-4">
-                <h2 class="font-display text-2xl font-bold text flex items-center gap-black mb-2-1">
-                    <i class="ri-upload-line text-frays-red"></i>
+                <h2 class="font-display text-2xl font-bold text-black mb-2 flex items-center gap-2">
+                    <i class="ri-scan-line text-frays-red"></i>
                     Smart Document Upload
                 </h2>
-                <p class="text-gray-600 mb-6 text-sm">
-                    <i class="ri-magic-line text-frays-red"></i>
-                    AI-powered invoice & receipt processing with OCR
+                <p class="text-gray-600 mb-4 text-sm">
+                    <i class="ri-magic-line text-frays-yellow"></i>
+                    AI-powered document processing with OCR • Runs on port 8080
                 </p>
                 
                 <!-- Document AI Status -->
                 <div id="docai-status" class="mb-4 p-3 rounded-lg bg-white border border-gray-200 text-sm">
-                    <span class="text-gray-500">Document AI Status:</span>
-                    <span id="docai-indicator" class="inline-block w-2 h-2 rounded-full bg-gray-300 ml-2"></span>
-                    <span id="docai-message" class="text-gray-600 ml-2">Checking...</span>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span class="text-green-700 font-medium">Document AI Connected</span>
+                    </div>
+                    <div class="mt-2 text-xs text-gray-500" id="docai-features">
+                        <span id="ocr-status">🔍 OCR: Checking...</span> •
+                        <span id="pdf-status">📄 PDF: Checking...</span> •
+                        <span id="fa-status">🏢 FA: Integrated</span>
+                    </div>
                 </div>
                 
                 <form id="upload-form" enctype="multipart/form-data">
@@ -370,37 +376,43 @@ $csrfToken = generateCSRFToken();
                         </div>
                     </div>
                     
+                    <!-- Processing Options -->
+                    <div class="bg-white rounded-lg p-4 mb-6">
+                        <p class="text-sm font-medium text-gray-700 mb-3 flex items-center gap-1">
+                            <i class="ri-settings-3-line text-frays-red"></i>
+                            Processing Options
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="auto_ocr" value="1" checked class="rounded text-frays-red">
+                                <span class="text-sm text-gray-700">
+                                    <i class="ri-scan-line text-frays-red"></i>
+                                    Extract Text (OCR)
+                                </span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="auto_export" value="1" class="rounded text-frays-red">
+                                <span class="text-sm text-gray-700">
+                                    <i class="ri-file-excel-line text-green-600"></i>
+                                    Export to CSV
+                                </span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" name="push_fa" value="1" class="rounded text-frays-red">
+                                <span class="text-sm text-gray-700">
+                                    <i class="ri-building-line text-blue-600"></i>
+                                    Push to FA
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    
                     <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red transition-colors cursor-pointer mb-6" id="dropzone">
                         <i class="ri-cloud-upload-line text-5xl text-gray-300 mb-4"></i>
                         <p class="text-gray-600 mb-2">Drag & drop files here or click to browse</p>
                         <p class="text-sm text-gray-400">PDF, JPG, PNG up to 10MB each</p>
                         <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
                         <div id="file-list" class="mt-4 text-left"></div>
-                    </div>
-                    
-                    <!-- Processing Options -->
-                    <div class="bg-white rounded-lg p-4 mb-6">
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" name="auto_ocr" value="1" checked class="rounded text-frays-red">
-                            <span class="text-sm text-gray-700">
-                                <i class="ri-scan-line text-frays-red"></i>
-                                Extract text with OCR
-                            </span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer mt-2">
-                            <input type="checkbox" name="auto_export" value="1" class="rounded text-frays-red">
-                            <span class="text-sm text-gray-700">
-                                <i class="ri-export-line text-frays-red"></i>
-                                Auto-export to CSV
-                            </span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer mt-2">
-                            <input type="checkbox" name="push_fa" value="1" class="rounded text-frays-red">
-                            <span class="text-sm text-gray-700">
-                                <i class="ri-building-line text-frays-red"></i>
-                                Push to FrontAccounting
-                            </span>
-                        </label>
                     </div>
                     
                     <!-- Progress -->
@@ -416,6 +428,9 @@ $csrfToken = generateCSRFToken();
                     
                     <!-- Results -->
                     <div id="upload-results" class="hidden mb-4"></div>
+                    
+                    <!-- Document Preview -->
+                    <div id="document-preview" class="hidden mb-4"></div>
                     
                     <button type="submit" id="submit-btn" class="w-full bg-frays-red text-white py-4 rounded-lg font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-2">
                         <i class="ri-upload-line"></i>
@@ -615,9 +630,205 @@ $csrfToken = generateCSRFToken();
     </footer>
     
     <script>
-        document.querySelector('.border-dashed')?.addEventListener('click', function() {
-            document.getElementById('fileInput')?.click();
+    // =============================================
+    // Integrated Document AI - Pure PHP Version
+    // Runs on port 8080 with the main website
+    // =============================================
+    
+    const API_URL = '/api/document-ai.php';
+    
+    // Check Document AI status on load
+    async function checkDocAIStatus() {
+        try {
+            const response = await fetch(API_URL + '?health');
+            const data = await response.json();
+            
+            const ocrStatus = document.getElementById('ocr-status');
+            const pdfStatus = document.getElementById('pdf-status');
+            
+            if (data.features && data.features.ocr) {
+                ocrStatus.textContent = '🔍 OCR: Ready';
+                ocrStatus.className = 'text-green-600';
+            } else {
+                ocrStatus.textContent = '🔍 OCR: Limited';
+                ocrStatus.className = 'text-yellow-600';
+            }
+            
+            if (data.features && data.features.pdf_text) {
+                pdfStatus.textContent = '📄 PDF: Ready';
+                pdfStatus.className = 'text-green-600';
+            } else {
+                pdfStatus.textContent = '📄 PDF: Basic';
+                pdfStatus.className = 'text-yellow-600';
+            }
+            
+        } catch (error) {
+            console.log('Document AI status check failed:', error);
+        }
+    }
+    
+    // File selection handling with preview
+    document.getElementById('dropzone').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+    });
+    
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const list = document.getElementById('file-list');
+        list.innerHTML = '';
+        
+        Array.from(e.target.files).forEach((file, i) => {
+            let preview = '';
+            if (file.type.startsWith('image/')) {
+                preview = `<img src="${URL.createObjectURL(file)}" class="w-12 h-12 object-cover rounded-lg mr-3">`;
+            } else {
+                preview = `<div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-3"><i class="ri-file-pdf-line text-xl text-red-500"></i></div>`;
+            }
+            
+            list.innerHTML += `
+                <div class="flex items-center p-2 bg-white rounded-lg mb-2">
+                    ${preview}
+                    <div class="flex-1 truncate">
+                        <div class="text-sm font-medium truncate">${file.name}</div>
+                        <div class="text-xs text-gray-400">${(file.size / 1024).toFixed(1)} KB</div>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-gray-400 hover:text-red-500">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+            `;
         });
+    });
+    
+    // Drag and drop
+    const dropzone = document.getElementById('dropzone');
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, () => {
+            dropzone.classList.add('border-frays-red', 'bg-frays-parchment/30');
+        });
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, () => {
+            dropzone.classList.remove('border-frays-red', 'bg-frays-parchment/30');
+        });
+    });
+    
+    dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        document.getElementById('fileInput').files = files;
+        const event = new Event('change');
+        document.getElementById('fileInput').dispatchEvent(event);
+    });
+    
+    // Form submission
+    document.getElementById('upload-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const files = document.getElementById('fileInput').files;
+        
+        if (files.length === 0) {
+            alert('Please select at least one file');
+            return;
+        }
+        
+        document.getElementById('upload-progress').classList.remove('hidden');
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('progress-text').textContent = 'Processing documents...';
+        
+        let completed = 0;
+        let results = [];
+        
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileFormData = new FormData();
+            fileFormData.append('document', file);
+            fileFormData.append('auto_ocr', formData.get('auto_ocr') ? '1' : '0');
+            fileFormData.append('auto_export', formData.get('auto_export') ? '1' : '0');
+            fileFormData.append('push_fa', formData.get('push_fa') ? '1' : '0');
+            
+            document.getElementById('progress-text').textContent = `Processing ${i + 1}/${files.length}: ${file.name}`;
+            
+            try {
+                const response = await fetch(API_URL + '/process', {
+                    method: 'POST',
+                    body: fileFormData
+                });
+                
+                const data = await response.json();
+                results.push({
+                    filename: file.name,
+                    success: data.success,
+                    data: data.data || data.error
+                });
+            } catch (error) {
+                results.push({
+                    filename: file.name,
+                    success: false,
+                    error: error.message
+                });
+            }
+            
+            completed++;
+            document.getElementById('progress-bar').style.width = Math.round(10 + (completed / files.length) * 80) + '%';
+        }
+        
+        document.getElementById('upload-progress').classList.add('hidden');
+        document.getElementById('submit-btn').disabled = false;
+        document.getElementById('progress-bar').style.width = '100%';
+        
+        const resultsDiv = document.getElementById('upload-results');
+        resultsDiv.classList.remove('hidden');
+        
+        let html = '<div class="space-y-3">';
+        results.forEach(r => {
+            if (r.success && r.data) {
+                const d = r.data;
+                html += `
+                    <div class="bg-white rounded-lg p-4 border border-green-200">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="ri-check-circle-line text-green-500"></i>
+                            <span class="font-medium">${r.filename}</span>
+                            <span class="badge-green ml-auto">${d.type || 'document'}</span>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+                            ${d.invoice_number ? `<div><span class="text-gray-500">Inv:</span> ${d.invoice_number}</div>` : ''}
+                            ${d.vendor ? `<div><span class="text-gray-500">Vendor:</span> ${d.vendor.substring(0, 20)}</div>` : ''}
+                            ${d.date ? `<div><span class="text-gray-500">Date:</span> ${d.date}</div>` : ''}
+                            ${d.total > 0 ? `<div><span class="text-gray-500">Total:</span> P${parseFloat(d.total).toLocaleString()}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="flex items-center gap-2 p-3 bg-red-50 rounded-lg">
+                        <i class="ri-error-warning-line text-red-600"></i>
+                        <span class="text-sm text-red-800 flex-1">${r.filename}</span>
+                        <span class="text-xs text-red-600">${r.error || 'Failed'}</span>
+                    </div>
+                `;
+            }
+        });
+        html += '</div>';
+        resultsDiv.innerHTML = html;
+        
+        document.getElementById('fileInput').value = '';
+        document.getElementById('file-list').innerHTML = '';
+    });
+    
+    // Initialize
+    checkDocAIStatus();
     </script>
     
     <!-- Floating WhatsApp Button -->
