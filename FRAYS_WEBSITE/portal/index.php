@@ -24,15 +24,23 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 // Handle login - UNIFIED AUTHENTICATION
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'login') {
+    error_log("LOGIN: Received POST request");
+    error_log("LOGIN: Email = " . ($_POST['email'] ?? 'EMPTY'));
+    
     if (!validateCSRFToken($_POST['csrf_token'] ?? '')) {
+        error_log("LOGIN: CSRF validation failed");
         $error = 'Invalid request';
     } else {
         $email = sanitizeInput($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
+        error_log("LOGIN: Checking test: " . $email);
         
         // First check if it's a test user
         $testUser = authenticateTestUser($email, $password);
+        error_log("LOGIN: Test user result = " . ($testUser ? 'FOUND' : 'NOT FOUND'));
+        
         if ($testUser) {
+            error_log("LOGIN: Setting test session");
             $_SESSION['user_id'] = $testUser['id'];
             $_SESSION['user_name'] = $testUser['name'];
             $_SESSION['user_email'] = $testUser['email'];
@@ -41,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $_SESSION['is_test'] = true;
             $success = 'Test login successful!';
         } else {
+            error_log("LOGIN: Trying unified auth");
             // Try real FA authentication
             $user = authenticateUserUnified($email, $password);
             
@@ -339,7 +348,10 @@ $csrfToken = generateCSRFToken();
             <div class="grid md:grid-cols-2 gap-8 mb-0">
                 
                 <!-- Option 1: Go to FA Instance -->
-                <a href="/redirect.php?instance=<?= urlencode(reset($_SESSION['fa_instances'] ?? ['default'])) ?>" 
+                <?php 
+                $firstInstance = !empty($_SESSION['fa_instances']) ? reset($_SESSION['fa_instances']) : 'default';
+                ?>
+                <a href="/redirect.php?instance=<?= urlencode($firstInstance) ?>" 
                    class="group bg-gradient-to-br from-frays-red to-red-800 rounded-2xl shadow-xl p-8 text-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-24 h-24 mb-6 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
