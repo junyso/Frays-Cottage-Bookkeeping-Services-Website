@@ -371,55 +371,42 @@ $csrfToken = generateCSRFToken();
             
         </div>
     </section>
-            <div id="upload-section" class="bg-frays-parchment rounded-2xl shadow-xl p-4">
-                <h2 class="font-display text-2xl font-bold text-black mb-2 flex items-center gap-2">
-                    <i class="ri-scan-line text-frays-red"></i>
-                    Smart Document Upload
-                </h2>
-                <p class="text-gray-600 mb-4 text-sm">
-                    <i class="ri-magic-line text-frays-yellow"></i>
-                    AI-powered document processing with OCR • Runs on port 8080
-                </p>
+    
+    <!-- Document Upload Section -->
+    <section class="px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg border border-frays-yellow/30 overflow-hidden">
+                
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-frays-red to-red-800 px-6 py-4">
+                    <h2 class="font-display text-xl font-bold text-white flex items-center gap-2">
+                        <i class="ri-upload-cloud-line"></i>
+                        Upload Documents
+                    </h2>
+                    <p class="text-white/70 text-sm mt-1">AI-powered processing • Invoice extraction • Linked to your books</p>
+                </div>
                 
                 <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
-                <form id="upload-form" enctype="multipart/form-data">
-                    <!-- Hidden: User's FA Instance (auto-filled on login) -->
+                <form id="upload-form" enctype="multipart/form-data" class="p-6">
+                    <!-- Hidden fields -->
                     <input type="hidden" name="fa_instance" id="fa-instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
                     <input type="hidden" name="user_id" id="user-id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
                     <input type="hidden" name="user_email" id="user-email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
                     
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                    <!-- Quick Settings Row -->
+                    <div class="flex flex-wrap gap-4 mb-6">
+                        <div class="flex-1 min-w-[150px]">
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Client</label>
+                            <div class="flex items-center gap-2 px-3 py-2 bg-frays-parchment rounded-lg">
                                 <i class="ri-building-line text-frays-red"></i>
-                                Client / FA Instance
-                            </label>
-                            <?php if (!empty($_SESSION['fa_instances'])): ?>
-                                <div class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-600">
-                                    <?php foreach ($faInstances as $instanceKey => $instanceData): ?>
-                                        <div class="flex items-center gap-2">
-                                            <i class="ri-building-4-line text-frays-red"></i>
-                                            <span class="font-medium"><?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceData['name'] ?? $instanceKey))) ?></span>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                                <p class="text-xs text-gray-500 mt-1">
-                                    <i class="ri-information-line"></i>
-                                    Documents will be linked to this FA instance
-                                </p>
-                            <?php else: ?>
-                                <select name="client_code" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-frays-red">
-                                    <option value="DEFAULT">DEFAULT</option>
-                                    <?php foreach (['KLES', 'MGB', 'FRACOT', 'NORTHERN', 'MADAMZ', 'CLEANING', 'QUANTO', 'SPACE', 'UNLIMITED', 'ERNLET'] as $client): ?>
-                                    <option value="<?= $client ?>"><?= $client ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            <?php endif; ?>
+                                <span class="text-sm font-medium">
+                                    <?= !empty($faInstances) ? htmlspecialchars($faInstances[array_key_first($faInstances)]['name'] ?? array_key_first($faInstances)) : 'Select...' ?>
+                                </span>
+                            </div>
                         </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Document Type</label>
-                            <select name="doc_type" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-frays-red">
+                        <div class="flex-1 min-w-[120px]">
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Type</label>
+                            <select name="doc_type" class="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-frays-red">
                                 <option value="invoice">Invoice</option>
                                 <option value="receipt">Receipt</option>
                                 <option value="waybill">Waybill</option>
@@ -427,43 +414,19 @@ $csrfToken = generateCSRFToken();
                                 <option value="general">General</option>
                             </select>
                         </div>
-                    </div>
-                    
-                    <!-- Processing Options -->
-                    <div class="bg-white rounded-lg p-4 mb-6">
-                        <p class="text-sm font-medium text-gray-700 mb-3 flex items-center gap-1">
-                            <i class="ri-settings-3-line text-frays-red"></i>
-                            Processing Options
-                        </p>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <label class="flex items-center gap-2 cursor-pointer">
+                        <div class="flex items-end">
+                            <label class="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border border-gray-200 hover:bg-frays-parchment transition-colors">
                                 <input type="checkbox" name="auto_ocr" value="1" checked class="rounded text-frays-red">
-                                <span class="text-sm text-gray-700">
-                                    <i class="ri-scan-line text-frays-red"></i>
-                                    Extract Text (OCR)
-                                </span>
-                            </label>
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="checkbox" name="auto_export" value="1" class="rounded text-frays-red">
-                                <span class="text-sm text-gray-700">
-                                    <i class="ri-file-excel-line text-green-600"></i>
-                                    Export to CSV
-                                </span>
-                            </label>
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="checkbox" name="push_fa" value="1" class="rounded text-frays-red">
-                                <span class="text-sm text-gray-700">
-                                    <i class="ri-building-line text-blue-600"></i>
-                                    Push to FA
-                                </span>
+                                <span class="text-sm text-gray-700">OCR</span>
                             </label>
                         </div>
                     </div>
                     
-                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red transition-colors cursor-pointer mb-6" id="dropzone">
-                        <i class="ri-cloud-upload-line text-5xl text-gray-300 mb-4"></i>
-                        <p class="text-gray-600 mb-2">Drag & drop files here or click to browse</p>
-                        <p class="text-sm text-gray-400">PDF, JPG, PNG up to 10MB each</p>
+                    <!-- Dropzone -->
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red transition-colors cursor-pointer mb-4" id="dropzone">
+                        <i class="ri-cloud-upload-line text-4xl text-gray-300 mb-3"></i>
+                        <p class="text-gray-600 text-sm">Drag files here or click to browse</p>
+                        <p class="text-xs text-gray-400 mt-1">PDF, JPG, PNG up to 10MB</p>
                         <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
                         <div id="file-list" class="mt-4 text-left"></div>
                     </div>
@@ -474,23 +437,23 @@ $csrfToken = generateCSRFToken();
                             <span id="progress-text">Processing...</span>
                             <span id="progress-percent">0%</span>
                         </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                            <div id="progress-bar" class="bg-frays-red h-2.5 rounded-full transition-all" style="width: 0%"></div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div id="progress-bar" class="bg-frays-red h-2 rounded-full transition-all" style="width: 0%"></div>
                         </div>
                     </div>
                     
                     <!-- Results -->
                     <div id="upload-results" class="hidden mb-4"></div>
                     
-                    <!-- Document Preview -->
-                    <div id="document-preview" class="hidden mb-4"></div>
-                    
-                    <button type="submit" id="submit-btn" class="w-full bg-frays-red text-white py-4 rounded-lg font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                    <!-- Submit -->
+                    <button type="submit" id="submit-btn" class="w-full bg-frays-red text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-2">
                         <i class="ri-upload-line"></i>
-                        Process & Upload Documents
+                        Process Documents
                     </button>
                 </form>
             </div>
+        </div>
+    </section>
             
             <script>
             // Document AI Integration
