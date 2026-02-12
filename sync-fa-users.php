@@ -187,12 +187,15 @@ function runSync() {
         } catch (PDOException $e) {
             $failed++;
             $errMsg = $e->getMessage();
-            if (strpos($errMsg, '1044') !== false || strpos($errMsg, '1045') !== false) {
+            // Extract column name from error
+            if (preg_match("/Unknown column '([^']+)'/", $errMsg, $matches)) {
+                $errors[] = $key . ": Unknown column '{$matches[1]}'";
+            } elseif (strpos($errMsg, '1044') !== false || strpos($errMsg, '1045') !== false) {
                 $errors[] = $key . ": No access";
             } elseif (strpos($errMsg, '1146') !== false || strpos($errMsg, '42S02') !== false) {
                 $errors[] = $key . ": No 0_users table";
             } else {
-                $errors[] = $key . ": " . substr($errMsg, 0, 25);
+                $errors[] = $key . ": " . substr($errMsg, 0, 30);
             }
             echo "✗ ERROR\n";
         }
