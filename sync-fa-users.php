@@ -1,6 +1,6 @@
 <?php
 /**
- * FA USER SYNC - Uses single sync_all user for all databases
+ * FA USER SYNC - Correct Database Names
  */
 
 // Use bookkeepingco_sync_all for ALL connections
@@ -15,7 +15,7 @@ $MAIN_DB = [
     'pass' => $SYNC_PASS
 ];
 
-// FA Instances Configuration
+// FA Instances Configuration - CORRECTED DATABASE NAMES
 $FA_INSTANCES = [
     'northernwarehouse' => ['name' => 'Northern Warehouse'],
     'madamz' => ['name' => 'Madamz'],
@@ -49,29 +49,29 @@ $FA_INSTANCES = [
     'nidarshini' => ['name' => 'Nidarshini']
 ];
 
-// FA Databases (just names - we'll use bookkeepingco_sync_all for all)
+// CORRECTED FA Database Names (from cPanel)
 $FA_DATABASES = [
-    'northernwarehouse' => 'bookkeepingco_fron93',
-    'madamz' => 'bookkeepingco_fron75',
-    'cleaningguru' => 'bookkeepingco_fron35',
-    'quanto' => 'bookkeepingco_fron61',
-    'spaceinteriors' => 'bookkeepingco_fron89',
-    'unlimitedfoods' => 'bookkeepingco_fron71',
-    'ernletprojects' => 'bookkeepingco_fron88',
-    'frayscottage' => 'bookkeepingco_fron00',
-    'constantadaptation' => 'bookkeepingco_fron53',
-    'great-land' => 'bookkeepingco_fron24',
-    'lighteningstrike' => 'bookkeepingco_fron70',
-    'notsa' => 'bookkeepingco_fron60',
-    'thaega' => 'bookkeepingco_fron65',
-    'modernhotelsupplies' => 'bookkeepingco_fron21',
-    'training' => 'bookkeepingco_fron94',
-    'majande' => 'bookkeepingco_fron84',
+    'northernwarehouse' => 'bookkeepingco_93',
+    'madamz' => 'bookkeepingco_75',
+    'cleaningguru' => 'bookkeepingco_35',
+    'quanto' => 'bookkeepingco_61',
+    'spaceinteriors' => 'bookkeepingco_89',
+    'unlimitedfoods' => 'bookkeepingco_71',
+    'ernletprojects' => 'bookkeepingco_88',
+    'frayscottage' => 'bookkeepingco_00',
+    'constantadaptation' => 'bookkeepingco_53',
+    'great-land' => 'bookkeepingco_24',
+    'lighteningstrike' => 'bookkeepingco_70',
+    'notsa' => 'bookkeepingco_60',
+    'thaega' => 'bookkeepingco_65',
+    'modernhotelsupplies' => 'bookkeepingco_21',
+    'training' => 'bookkeepingco_94',
+    'majande' => 'bookkeepingco_84',
     'guruonks' => 'bookkeepingco_00onks',
-    'marctizmo' => 'bookkeepingco_fron40',
-    '4bnb' => 'bookkeepingco_fron17',
-    'noracosmetics' => 'bookkeepingco_fron43',
-    '3dworks' => 'bookkeepingco_fron48',
+    'marctizmo' => 'bookkeepingco_40',
+    '4bnb' => 'bookkeepingco_17',
+    'noracosmetics' => 'bookkeepingco_43',
+    '3dworks' => 'bookkeepingco_48',
     'westdrayton' => 'bookkeepingco_01',
     'ernletprojects2' => 'bookkeepingco_fron621',
     'ernletgroup' => 'bookkeepingco_fron114',
@@ -89,7 +89,7 @@ function runSync() {
     global $FA_INSTANCES, $FA_DATABASES, $MAIN_DB, $SYNC_USER, $SYNC_PASS;
     
     echo "╔══════════════════════════════════════════════════════════════╗\n";
-    echo "║           FA USER SYNC - Single User Mode                   ║\n";
+    echo "║           FA USER SYNC - CORRECTED DATABASE NAMES         ║\n";
     echo "╚══════════════════════════════════════════════════════════════╝\n";
     echo "Using: {$SYNC_USER} @ {$MAIN_DB['host']}\n\n";
     
@@ -127,7 +127,7 @@ function runSync() {
         status ENUM('active','inactive','suspended') DEFAULT 'active',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        last_login DATETIME DEFAULT NULL,
+        last_login DATETIME DEFAULT CURRENT_TIMESTAMP,
         INDEX idx_email (email),
         INDEX idx_fa_instance (fa_instance),
         INDEX idx_status (status)
@@ -141,7 +141,6 @@ function runSync() {
         echo "[" . str_pad($key, 20) . "] ";
         
         try {
-            // Connect using bookkeepingco_sync_all
             $faPDO = new PDO(
                 "mysql:host=localhost;dbname={$dbName};charset=utf8mb4",
                 $SYNC_USER,
@@ -189,11 +188,11 @@ function runSync() {
             $failed++;
             $errMsg = $e->getMessage();
             if (strpos($errMsg, '1044') !== false || strpos($errMsg, '1045') !== false) {
-                $errors[] = $key . ": No access - add {$SYNC_USER} to {$dbName}";
+                $errors[] = $key . ": No access";
             } elseif (strpos($errMsg, '1146') !== false || strpos($errMsg, '42S02') !== false) {
-                $errors[] = $key . ": No users table in {$dbName}";
+                $errors[] = $key . ": No users table";
             } else {
-                $errors[] = $key . ": " . substr($errMsg, 0, 30);
+                $errors[] = $key . ": " . substr($errMsg, 0, 25);
             }
             echo "✗ ERROR\n";
         }
@@ -210,7 +209,6 @@ function runSync() {
     if (!empty($errors)) {
         echo "\nFailed:\n";
         foreach ($errors as $e) echo "  - {$e}\n";
-        echo "\nTo fix: Add {$SYNC_USER} to those databases with ALL PRIVILEGES.\n";
     }
     
     echo "\n✓ Users stored in {$MAIN_DB['database']}.unified_users!\n";
