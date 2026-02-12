@@ -353,15 +353,38 @@ $csrfToken = generateCSRFToken();
                 </div>
                 
                 <form id="upload-form" enctype="multipart/form-data">
+                    <!-- Hidden: User's FA Instance (auto-filled on login) -->
+                    <input type="hidden" name="fa_instance" id="fa-instance" value="<?= htmlspecialchars($_SESSION['fa_instances'][0] ?? '') ?>">
+                    <input type="hidden" name="user_id" id="user-id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
+                    <input type="hidden" name="user_email" id="user-email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
+                    
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Client Code</label>
-                            <select name="client_code" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-frays-red">
-                                <option value="DEFAULT">DEFAULT</option>
-                                <?php foreach (['KLES', 'MGB', 'FRACOT', 'NORTHERN', 'MADAMZ', 'CLEANING', 'QUANTO', 'SPACE', 'UNLIMITED', 'ERNLET'] as $client): ?>
-                                <option value="<?= $client ?>"><?= $client ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="ri-building-line text-frays-red"></i>
+                                Client / FA Instance
+                            </label>
+                            <?php if (!empty($_SESSION['fa_instances'])): ?>
+                                <div class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-600">
+                                    <?php foreach ($_SESSION['fa_instances'] as $instance): ?>
+                                        <div class="flex items-center gap-2">
+                                            <i class="ri-building-4-line text-frays-red"></i>
+                                            <span class="font-medium"><?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instance))) ?></span>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    <i class="ri-information-line"></i>
+                                    Documents will be linked to this FA instance
+                                </p>
+                            <?php else: ?>
+                                <select name="client_code" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-frays-red">
+                                    <option value="DEFAULT">DEFAULT</option>
+                                    <?php foreach (['KLES', 'MGB', 'FRACOT', 'NORTHERN', 'MADAMZ', 'CLEANING', 'QUANTO', 'SPACE', 'UNLIMITED', 'ERNLET'] as $client): ?>
+                                    <option value="<?= $client ?>"><?= $client ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            <?php endif; ?>
                         </div>
                         
                         <div>
@@ -545,7 +568,9 @@ $csrfToken = generateCSRFToken();
                     const file = files[i];
                     const fileFormData = new FormData();
                     fileFormData.append('document', file);
-                    fileFormData.append('client_code', formData.get('client_code'));
+                    fileFormData.append('client_code', formData.get('client_code') || document.getElementById('fa-instance')?.value || 'DEFAULT');
+                    fileFormData.append('fa_instance', document.getElementById('fa-instance')?.value || '');
+                    fileFormData.append('user_email', document.getElementById('user-email')?.value || '');
                     fileFormData.append('doc_type', formData.get('doc_type'));
                     fileFormData.append('auto_ocr', formData.get('auto_ocr') ? '1' : '0');
                     fileFormData.append('auto_export', formData.get('auto_export') ? '1' : '0');
@@ -793,6 +818,7 @@ $csrfToken = generateCSRFToken();
         
         let html = '<div class="space-y-3">';
         results.forEach(r => {
+            const faInstance = document.getElementById('fa-instance')?.value || '';
             if (r.success && r.data) {
                 const d = r.data;
                 html += `
@@ -808,6 +834,8 @@ $csrfToken = generateCSRFToken();
                             ${d.date ? `<div><span class="text-gray-500">Date:</span> ${d.date}</div>` : ''}
                             ${d.total > 0 ? `<div><span class="text-gray-500">Total:</span> P${parseFloat(d.total).toLocaleString()}</div>` : ''}
                         </div>
+                        ${faInstance ? `<div class="mt-2 text-xs text-blue-600"><i class="ri-building-4-line"></i> Linked to: ${faInstance}</div>` : ''}
+                        ${d.confidence < 0.5 ? `<div class="mt-2 text-xs text-yellow-600"><i class="ri-error-warning-line"></i> Low confidence - please verify data</div>` : ''}
                     </div>
                 `;
             } else {
