@@ -217,7 +217,7 @@ $csrfToken = generateCSRFToken();
                 <?php endif; ?>
                 
                 <?php if ($success): ?>
-                <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-1">
+                <div class="bg-[#F1F1D4] border border-[#CCCC66] text-black px-4 py-3 rounded-lg mb-6 flex items-center gap-1">
                     <i class="ri-check-line"></i>
                     <?= htmlspecialchars($success) ?>
                 </div>
@@ -328,12 +328,12 @@ $csrfToken = generateCSRFToken();
                     <h1 class="font-display text-3xl font-bold text-black">
                         Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>! 👋
                     </h1>
-                    <p class="text-gray-500 mt-1">
-                        <i class="ri-building-line"></i>
+                    <p class="text-gray-600 mt-1">
+                        <i class="ri-building-line text-frays-red"></i>
                         <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?>
                     </p>
                 </div>
-                <a href="/portal?action=logout" class="inline-flex items-center gap-2 text-gray-400 hover:text-frays-red text-sm transition-colors">
+                <a href="/portal?action=logout" class="inline-flex items-center gap-2 text-gray-600 hover:text-[#990000] text-sm transition-colors">
                     <i class="ri-logout-box-line"></i>
                     Sign Out
                 </a>
@@ -346,83 +346,83 @@ $csrfToken = generateCSRFToken();
                 <div class="lg:col-span-1 space-y-6">
                     
                     <!-- Document Statistics -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
                         <h3 class="font-semibold text-black mb-4 flex items-center gap-2">
-                            <i class="ri-file-chart-line text-frays-red"></i>
+                            <i class="ri-file-chart-line text-[#990000]"></i>
                             Document Statistics
                         </h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-frays-parchment rounded-lg p-3 text-center">
-                                <div class="text-2xl font-bold text-frays-red">127</div>
-                                <div class="text-xs text-gray-500">Lifetime</div>
+                            <div class="bg-[#F1F1D4] rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-[#990000]">127</div>
+                                <div class="text-xs text-gray-600">Lifetime</div>
                             </div>
-                            <div class="bg-frays-yellow/20 rounded-lg p-3 text-center">
-                                <div class="text-2xl font-bold text-green-700">23</div>
-                                <div class="text-xs text-gray-500">MTD</div>
+                            <div class="bg-[#CCCC66]/30 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-[#990000]">23</div>
+                                <div class="text-xs text-gray-600">MTD</div>
                             </div>
-                            <div class="bg-green-50 rounded-lg p-3 text-center">
-                                <div class="text-2xl font-bold text-green-600">89</div>
-                                <div class="text-xs text-gray-500">YTD</div>
+                            <div class="bg-[#CCCC66]/20 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-[#990000]">89</div>
+                                <div class="text-xs text-gray-600">YTD</div>
                             </div>
-                            <div class="bg-blue-50 rounded-lg p-3 text-center">
-                                <div class="text-2xl font-bold text-blue-600">5</div>
-                                <div class="text-xs text-gray-500">Pending</div>
+                            <div class="bg-gray-100 rounded-lg p-3 text-center">
+                                <div class="text-2xl font-bold text-[#990000]">5</div>
+                                <div class="text-xs text-gray-600">Pending</div>
                             </div>
                         </div>
                     </div>
                     
                     <!-- FA Statistics -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
                         <h3 class="font-semibold text-black mb-4 flex items-center gap-2">
-                            <i class="ri-calculator-line text-frays-red"></i>
+                            <i class="ri-calculator-line text-[#990000]"></i>
                             <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?>
                         </h3>
                         <div class="space-y-3">
                             <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                                <span class="text-sm text-gray-600">Suppliers</span>
-                                <span class="font-medium">47</span>
+                                <span class="text-sm text-gray-700">Suppliers</span>
+                                <span class="font-medium text-[#990000]">47</span>
                             </div>
                             <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                                <span class="text-sm text-gray-600">Cashbooks</span>
-                                <span class="font-medium">3</span>
+                                <span class="text-sm text-gray-700">Cashbooks</span>
+                                <span class="font-medium text-[#990000]">3</span>
                             </div>
                             <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                                <span class="text-sm text-gray-600">Dimensions</span>
-                                <span class="font-medium">8</span>
+                                <span class="text-sm text-gray-700">Dimensions</span>
+                                <span class="font-medium text-[#990000]">8</span>
                             </div>
                             <div class="flex justify-between items-center py-2">
-                                <span class="text-sm text-gray-600">Bank Accounts</span>
-                                <span class="font-medium">2</span>
+                                <span class="text-sm text-gray-700">Bank Accounts</span>
+                                <span class="font-medium text-[#990000]">2</span>
                             </div>
                         </div>
                     </div>
                     
                     <!-- User History -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
                         <h3 class="font-semibold text-black mb-4 flex items-center gap-2">
-                            <i class="ri-history-line text-frays-red"></i>
+                            <i class="ri-history-line text-[#990000]"></i>
                             Recent Activity
                         </h3>
                         <div class="space-y-3 text-sm">
                             <div class="flex items-start gap-2">
-                                <i class="ri-login-circle-line text-green-600 mt-0.5"></i>
+                                <i class="ri-login-circle-line text-[#990000] mt-0.5"></i>
                                 <div>
                                     <div class="text-gray-800">Login successful</div>
-                                    <div class="text-xs text-gray-400">Today, 9:15 AM</div>
+                                    <div class="text-xs text-gray-500">Today, 9:15 AM</div>
                                 </div>
                             </div>
                             <div class="flex items-start gap-2">
-                                <i class="ri-upload-cloud-line text-blue-600 mt-0.5"></i>
+                                <i class="ri-upload-cloud-line text-[#CCCC66] mt-0.5"></i>
                                 <div>
                                     <div class="text-gray-800">Uploaded 3 invoices</div>
-                                    <div class="text-xs text-gray-400">Yesterday, 2:30 PM</div>
+                                    <div class="text-xs text-gray-500">Yesterday, 2:30 PM</div>
                                 </div>
                             </div>
                             <div class="flex items-start gap-2">
-                                <i class="ri-file-chart-line text-frays-red mt-0.5"></i>
+                                <i class="ri-file-chart-line text-[#990000] mt-0.5"></i>
                                 <div>
                                     <div class="text-gray-800">Processed 12 documents</div>
-                                    <div class="text-xs text-gray-400">Feb 10, 2026</div>
+                                    <div class="text-xs text-gray-500">Feb 10, 2026</div>
                                 </div>
                             </div>
                         </div>
@@ -435,7 +435,7 @@ $csrfToken = generateCSRFToken();
                     
                     <!-- Update My Books -->
                     <a href="/redirect.php?instance=<?= urlencode($currentInstance) ?>" 
-                       class="block bg-gradient-to-r from-green-700 to-green-500 rounded-xl p-5 text-white hover:shadow-lg transition-all group">
+                       class="block bg-gradient-to-r from-[#990000] to-[#7a0000] rounded-xl p-5 text-white hover:shadow-lg transition-all group">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-4">
                                 <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
@@ -457,10 +457,10 @@ $csrfToken = generateCSRFToken();
                     </a>
                     
                     <!-- Upload Documents -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div class="bg-gray-50 px-5 py-4 border-b border-gray-100">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-[#F1F1D4] px-5 py-4 border-b border-gray-200">
                             <h3 class="font-semibold text-black flex items-center gap-2">
-                                <i class="ri-upload-cloud-line text-frays-red"></i>
+                                <i class="ri-upload-cloud-line text-[#990000]"></i>
                                 Upload Documents
                             </h3>
                         </div>
@@ -473,15 +473,15 @@ $csrfToken = generateCSRFToken();
                             <input type="hidden" name="doc_type" value="auto">
                             
                             <!-- Dropzone -->
-                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red cursor-pointer mb-4 transition-all" id="dropzone">
-                                <i class="ri-cloud-upload-line text-4xl text-gray-300 mb-3"></i>
-                                <p class="text-gray-600 font-medium mb-2">Drag files here or click to browse</p>
-                                <p class="text-sm text-gray-400 mb-4">Upload invoices, receipts, waybills & statements</p>
+                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-[#990000] cursor-pointer mb-4 transition-all" id="dropzone">
+                                <i class="ri-cloud-upload-line text-4xl text-gray-400 mb-3"></i>
+                                <p class="text-gray-700 font-medium mb-2">Drag files here or click to browse</p>
+                                <p class="text-sm text-gray-500 mb-4">Upload invoices, receipts, waybills & statements</p>
                                 
                                 <!-- Guidelines -->
-                                <div class="bg-frays-parchment rounded-lg p-4 text-left max-w-md mx-auto">
-                                    <p class="text-xs font-semibold text-gray-600 mb-2">📋 Guidelines:</p>
-                                    <ul class="text-xs text-gray-500 space-y-1">
+                                <div class="bg-[#F1F1D4] rounded-lg p-4 text-left max-w-md mx-auto">
+                                    <p class="text-xs font-semibold text-gray-700 mb-2">📋 Guidelines:</p>
+                                    <ul class="text-xs text-gray-600 space-y-1">
                                         <li>• <strong>Max 20 files</strong> per upload</li>
                                         <li>• <strong>Types:</strong> PDF, JPG, PNG</li>
                                         <li>• <strong>Max size:</strong> 10MB per file</li>
@@ -499,18 +499,18 @@ $csrfToken = generateCSRFToken();
                                     <span id="progress-percent">0%</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div id="progress-bar" class="bg-frays-red h-2 rounded-full" style="width: 0%"></div>
+                                    <div id="progress-bar" class="bg-[#990000] h-2 rounded-full" style="width: 0%"></div>
                                 </div>
                             </div>
                             
                             <!-- Results with Extracted Data Table -->
                             <div id="upload-results" class="hidden mb-4">
-                                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                                <div class="bg-[#F1F1D4] border border-[#CCCC66] rounded-lg p-4 mb-4">
                                     <div class="flex items-center gap-2">
-                                        <i class="ri-checkbox-circle-line text-green-600 text-xl"></i>
+                                        <i class="ri-checkbox-circle-line text-[#990000] text-xl"></i>
                                         <div>
-                                            <div class="font-medium text-green-800">Upload Successful!</div>
-                                            <div class="text-sm text-green-600">Data extracted and ready for admin review</div>
+                                            <div class="font-medium text-black">Upload Successful!</div>
+                                            <div class="text-sm text-gray-600">Data extracted and ready for admin review</div>
                                         </div>
                                     </div>
                                 </div>
@@ -518,14 +518,14 @@ $csrfToken = generateCSRFToken();
                                 <h4 class="font-medium text-black mb-2">Extracted Data Preview</h4>
                                 <div class="overflow-x-auto">
                                     <table class="w-full text-sm">
-                                        <thead class="bg-gray-50">
+                                        <thead class="bg-[#F1F1D4]">
                                             <tr>
-                                                <th class="text-left px-3 py-2 font-medium text-gray-600">File</th>
-                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Type</th>
-                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Vendor</th>
-                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Date</th>
-                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Amount</th>
-                                                <th class="text-left px-3 py-2 font-medium text-gray-600">Confidence</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-700">File</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-700">Type</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-700">Vendor</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-700">Date</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-700">Amount</th>
+                                                <th class="text-left px-3 py-2 font-medium text-gray-700">Confidence</th>
                                             </tr>
                                         </thead>
                                         <tbody id="results-table-body">
@@ -533,7 +533,7 @@ $csrfToken = generateCSRFToken();
                                         </tbody>
                                     </table>
                                 </div>
-                                <p class="text-xs text-gray-400 mt-3">
+                                <p class="text-xs text-gray-500 mt-3">
                                     <i class="ri-lock-line"></i>
                                     Full CSV export available to admin only
                                 </p>
@@ -673,22 +673,22 @@ $csrfToken = generateCSRFToken();
                     if (r.success && r.data) {
                         const d = r.data;
                         const confidence = d.confidence ? Math.round(d.confidence * 100) : '-';
-                        const confClass = d.confidence && d.confidence < 0.5 ? 'text-yellow-600' : 'text-green-600';
+                        const confClass = d.confidence && d.confidence < 0.5 ? 'text-[#990000]' : 'text-[#990000]';
                         tableRows += `
-                            <tr class="border-b border-gray-100">
+                            <tr class="border-b border-gray-200">
                                 <td class="px-3 py-2 text-gray-800 truncate max-w-[150px]">${r.filename}</td>
-                                <td class="px-3 py-2 text-gray-600 capitalize">${d.type || 'General'}</td>
-                                <td class="px-3 py-2 text-gray-600 truncate max-w-[120px]">${d.vendor || '-'}</td>
-                                <td class="px-3 py-2 text-gray-600">${d.date || '-'}</td>
+                                <td class="px-3 py-2 text-gray-700 capitalize">${d.type || 'General'}</td>
+                                <td class="px-3 py-2 text-gray-700 truncate max-w-[120px]">${d.vendor || '-'}</td>
+                                <td class="px-3 py-2 text-gray-700">${d.date || '-'}</td>
                                 <td class="px-3 py-2 text-gray-800 font-medium">${d.total ? 'P' + parseFloat(d.total).toLocaleString() : '-'}</td>
                                 <td class="px-3 py-2 ${confClass}">${confidence}%</td>
                             </tr>
                         `;
                     } else {
                         tableRows += `
-                            <tr class="border-b border-gray-100 bg-red-50">
-                                <td class="px-3 py-2 text-red-800 truncate max-w-[150px]">${r.filename}</td>
-                                <td class="px-3 py-2 text-red-600" colspan="5">${r.error || 'Processing failed'}</td>
+                            <tr class="border-b border-gray-200 bg-[#F1F1D4]">
+                                <td class="px-3 py-2 text-black truncate max-w-[150px]">${r.filename}</td>
+                                <td class="px-3 py-2 text-[#990000]" colspan="5">${r.error || 'Processing failed'}</td>
                             </tr>
                         `;
                     }
@@ -871,40 +871,36 @@ $csrfToken = generateCSRFToken();
         const resultsDiv = document.getElementById('upload-results');
         resultsDiv.classList.remove('hidden');
         
-        let html = '<div class="space-y-3">';
+        // Build table rows
+        let tableRows = '';
         results.forEach(r => {
-            const faInstance = document.getElementById('fa-instance')?.value || '';
             if (r.success && r.data) {
                 const d = r.data;
-                html += `
-                    <div class="bg-white rounded-lg p-4 border border-green-200">
-                        <div class="flex items-center gap-2 mb-2">
-                            <i class="ri-check-circle-line text-green-500"></i>
-                            <span class="font-medium">${r.filename}</span>
-                            <span class="badge-green ml-auto">${d.type || 'document'}</span>
-                        </div>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-                            ${d.invoice_number ? `<div><span class="text-gray-500">Inv:</span> ${d.invoice_number}</div>` : ''}
-                            ${d.vendor ? `<div><span class="text-gray-500">Vendor:</span> ${d.vendor.substring(0, 20)}</div>` : ''}
-                            ${d.date ? `<div><span class="text-gray-500">Date:</span> ${d.date}</div>` : ''}
-                            ${d.total > 0 ? `<div><span class="text-gray-500">Total:</span> P${parseFloat(d.total).toLocaleString()}</div>` : ''}
-                        </div>
-                        ${faInstance ? `<div class="mt-2 text-xs text-blue-600"><i class="ri-building-4-line"></i> Linked to: ${faInstance}</div>` : ''}
-                        ${d.confidence < 0.5 ? `<div class="mt-2 text-xs text-yellow-600"><i class="ri-error-warning-line"></i> Low confidence - please verify data</div>` : ''}
-                    </div>
+                const confidence = d.confidence ? Math.round(d.confidence * 100) : '-';
+                tableRows += `
+                    <tr class="border-b border-gray-200">
+                        <td class="px-3 py-2 text-gray-800 truncate max-w-[150px]">${r.filename}</td>
+                        <td class="px-3 py-2 text-gray-700 capitalize">${d.type || 'General'}</td>
+                        <td class="px-3 py-2 text-gray-700 truncate max-w-[120px]">${d.vendor || '-'}</td>
+                        <td class="px-3 py-2 text-gray-700">${d.date || '-'}</td>
+                        <td class="px-3 py-2 text-gray-800 font-medium">${d.total ? 'P' + parseFloat(d.total).toLocaleString() : '-'}</td>
+                        <td class="px-3 py-2 text-[#990000]">${confidence}%</td>
+                    </tr>
                 `;
             } else {
-                html += `
-                    <div class="flex items-center gap-2 p-3 bg-red-50 rounded-lg">
-                        <i class="ri-error-warning-line text-red-600"></i>
-                        <span class="text-sm text-red-800 flex-1">${r.filename}</span>
-                        <span class="text-xs text-red-600">${r.error || 'Failed'}</span>
-                    </div>
+                tableRows += `
+                    <tr class="border-b border-gray-200 bg-[#F1F1D4]">
+                        <td class="px-3 py-2 text-black truncate max-w-[150px]">${r.filename}</td>
+                        <td class="px-3 py-2 text-[#990000]" colspan="5">${r.error || 'Processing failed'}</td>
+                    </tr>
                 `;
             }
         });
-        html += '</div>';
-        resultsDiv.innerHTML = html;
+        
+        document.getElementById('results-table-body').innerHTML = tableRows;
+        
+        // Scroll to results
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         
         document.getElementById('fileInput').value = '';
         document.getElementById('submit-btn').innerHTML = '<i class="ri-upload-line"></i> Upload & Process';
@@ -916,10 +912,10 @@ $csrfToken = generateCSRFToken();
     <a href="https://wa.me/2673966011" target="_blank" class="fixed bottom-6 right-6 z-50 group">
         <div class="relative">
             <!-- Pulse Animation -->
-            <div class="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75"></div>
-            <div class="absolute inset-0 rounded-full bg-green-500 opacity-50 animate-pulse"></div>
+            <div class="absolute inset-0 rounded-full bg-[#990000] animate-ping opacity-75"></div>
+            <div class="absolute inset-0 rounded-full bg-[#990000] opacity-50 animate-pulse"></div>
             <!-- Button -->
-            <div class="relative bg-green-500 text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 hover:bg-green-600 transition-all transform hover:scale-105">
+            <div class="relative bg-[#990000] text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 hover:bg-[#7a0000] transition-all transform hover:scale-105">
                 <i class="ri-whatsapp-line text-2xl"></i>
                 <span class="font-medium whitespace-nowrap hidden sm:block">Talk to Us, we are here to help you!</span>
             </div>
