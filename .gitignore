@@ -1,0 +1,19 @@
+# Logs
+*.log
+includes/logs/
+
+# Uploads
+uploads/
+
+# Mac
+.DS_Store
+*.DS_Store
+
+# Backups
+*.zip
+*.bak
+*.tmp
+
+# IDE
+.vscode/
+.idea/
