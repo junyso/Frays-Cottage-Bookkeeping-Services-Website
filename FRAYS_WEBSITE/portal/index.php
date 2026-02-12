@@ -266,60 +266,86 @@ $csrfToken = generateCSRFToken();
     <section class="pt-0 md:pt-0 pb-0 px-4 sm:px-6 lg:px-8 bg-white">
         <div class="max-w-6xl mx-auto">
             
-            <div class="text-center mb-0">
-                <h1 class="font-display text-4xl font-bold text-black mb-2">Welcome, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?></h1>
-                <p class="text-gray-600">Choose an action below:</p>
+            <!-- Welcome Header -->
+            <div class="text-center mb-8">
+                <h1 class="font-display text-4xl font-bold text-black mb-2">
+                    Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>! 👋
+                </h1>
+                <p class="text-gray-600 text-lg">What would you like to do today?</p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-8 mb-0">
-                <!-- Option 1: Upload Documents -->
-                <a href="#upload-section" class="group">
-                    <div class="bg-white rounded-2xl shadow-xl p-4 text-center border-2 border-transparent hover:border-frays-red transition-all duration-300 h-full">
-                        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-frays-yellow flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <i class="ri-upload-cloud-line text-4xl text-frays-red"></i>
-                        </div>
-                        <h2 class="font-display text-2xl font-bold text-black mb-4">Upload Documents</h2>
-                        <p class="text-gray-600 mb-6">
-                            Submit invoices, receipts, and business documents for processing. 
-                            We'll review and post them to your accounting system.
+            <!-- FA Instance Banner -->
+            <?php if (!empty($_SESSION['fa_instances'])): ?>
+            <div class="bg-frays-parchment rounded-xl p-4 mb-8 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <i class="ri-building-4-line text-frays-red text-2xl"></i>
+                    <div>
+                        <p class="text-sm text-gray-500">Your FrontAccounting Instance</p>
+                        <p class="font-semibold text-black">
+                            <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $_SESSION['fa_instances'][0]))) ?>
                         </p>
-                        <span class="inline-flex items-center gap-1 text-frays-red font-semibold">
-                            <i class="ri-arrow-right-line group-hover:translate-x-2 transition-transform"></i>
+                    </div>
+                </div>
+                <a href="/redirect.php?instance=<?= urlencode($_SESSION['fa_instances'][0]) ?>" 
+                   class="bg-frays-red text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors flex items-center gap-2">
+                    <i class="ri-arrow-right-line"></i>
+                    Open Accounting
+                </a>
+            </div>
+            <?php endif; ?>
+            
+            <!-- Two Main Options -->
+            <div class="grid md:grid-cols-2 gap-8 mb-0">
+                
+                <!-- Option 1: Go to FA Instance -->
+                <a href="/redirect.php?instance=<?= urlencode(reset($_SESSION['fa_instances'] ?? ['default'])) ?>" 
+                   class="group bg-gradient-to-br from-frays-red to-red-800 rounded-2xl shadow-xl p-8 text-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-24 h-24 mb-6 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i class="ri-calculator-line text-5xl"></i>
+                        </div>
+                        <h2 class="font-display text-3xl font-bold mb-4">Update My Books</h2>
+                        <p class="text-white/80 mb-6 text-lg">
+                            Access your FrontAccounting system to view reports, process transactions, and manage your business finances.
+                        </p>
+                        <span class="inline-flex items-center gap-2 bg-white text-frays-red px-6 py-3 rounded-lg font-semibold">
+                            <i class="ri-login-box-line"></i>
+                            Go to Accounting
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Option 2: Upload Documents -->
+                <a href="#upload-section" 
+                   class="group bg-gradient-to-br from-frays-yellow to-yellow-600 rounded-2xl shadow-xl p-8 text-black hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-24 h-24 mb-6 rounded-full bg-white/50 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i class="ri-upload-cloud-line text-5xl text-frays-red"></i>
+                        </div>
+                        <h2 class="font-display text-3xl font-bold mb-4">Upload Documents</h2>
+                        <p class="text-black/70 mb-6 text-lg">
+                            Submit invoices, receipts, and business documents for AI-powered processing and automatic extraction.
+                        </p>
+                        <span class="inline-flex items-center gap-2 bg-frays-red text-white px-6 py-3 rounded-lg font-semibold">
+                            <i class="ri-upload-line"></i>
                             Upload Now
                         </span>
                     </div>
                 </a>
                 
-                <!-- Option 2: Update Books -->
-                <a href="/redirect.php?instance=<?= urlencode(reset($_SESSION['fa_instances'] ?? [])) ?>" class="group">
-                    <div class="bg-white rounded-2xl shadow-xl p-4 text-center border-2 border-transparent hover:border-frays-red transition-all duration-300 h-full">
-                        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-frays-red flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <i class="ri-calculator-line text-4xl text-white"></i>
-                        </div>
-                        <h2 class="font-display text-2xl font-bold text-black mb-4">Update Books</h2>
-                        <p class="text-gray-600 mb-6">
-                            Access your FrontAccounting system to view reports, process transactions, 
-                            and manage your business finances.
-                        </p>
-                        <span class="inline-flex items-center gap-1 text-frays-red font-semibold">
-                            <i class="ri-arrow-right-line group-hover:translate-x-2 transition-transform"></i>
-                            Open Accounting
-                        </span>
-                    </div>
-                </a>
             </div>
             
             <!-- Multiple FA Instances -->
             <?php if (count($_SESSION['fa_instances'] ?? []) > 1): ?>
-            <div class="bg-frays-parchment rounded-xl shadow-lg p-6 mb-0">
+            <div class="mt-8 bg-frays-parchment rounded-xl shadow-lg p-6">
                 <h3 class="font-semibold text-black mb-4 flex items-center gap-1">
                     <i class="ri-links-line text-frays-red"></i>
-                    Your FrontAccounting Instances
+                    Your Other FrontAccounting Instances
                 </h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    <?php foreach ($_SESSION['fa_instances'] as $instance): ?>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <?php foreach (array_slice($_SESSION['fa_instances'], 1) as $instance): ?>
                     <a href="/redirect.php?instance=<?= urlencode($instance) ?>" 
-                       class="flex items-center gap-1 px-4 py-3 bg-white rounded-lg hover:bg-frays-yellow transition-colors">
+                       class="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-frays-yellow transition-colors">
                         <i class="ri-building-line text-frays-red"></i>
                         <span class="text-sm font-medium"><?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instance))) ?></span>
                     </a>
