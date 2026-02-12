@@ -313,86 +313,83 @@ $csrfToken = generateCSRFToken();
     
     <?php else: ?>
     <!-- DASHBOARD - After Login -->
-    <section class="pt-4 pb-12 px-4">
-        <div class="max-w-4xl mx-auto">
+    <section class="pt-24 pb-12 px-4">
+        <div class="max-w-xl mx-auto">
             
             <!-- Welcome -->
             <div class="text-center mb-8">
                 <h1 class="font-display text-3xl font-bold text-black mb-2">
                     Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>! 👋
                 </h1>
-                <a href="/portal?action=logout" class="text-gray-400 hover:text-frays-red text-sm">
-                    <i class="ri-logout-box-line"></i> Sign Out
+                <a href="/portal?action=logout" class="inline-flex items-center gap-2 text-gray-400 hover:text-frays-red text-sm transition-colors">
+                    <i class="ri-logout-box-line"></i>
+                    Sign Out
                 </a>
             </div>
             
-            <!-- Quick Actions -->
-            <div class="grid md:grid-cols-2 gap-6">
-                
-                <!-- Update My Books -->
-                <a href="/redirect.php?instance=<?= urlencode($firstInstance ?? 'default') ?>" 
-                   class="bg-gradient-to-br from-frays-red to-red-800 rounded-xl p-6 text-white hover:shadow-xl transition-all group">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-105 transition-transform">
-                            <i class="ri-calculator-line text-xl"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h2 class="text-lg font-bold">Update My Books</h2>
-                            <p class="text-white/70 text-sm">Access your accounting</p>
-                        </div>
-                        <i class="ri-arrow-right-line text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+            <!-- Update My Books -->
+            <a href="/redirect.php?instance=<?= urlencode($firstInstance ?? 'default') ?>" 
+               class="block bg-gradient-to-br from-frays-red to-red-800 rounded-xl p-5 mb-4 text-white hover:shadow-lg transition-all group">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                        <i class="ri-calculator-line text-xl"></i>
                     </div>
-                </a>
-                
-                <!-- Upload Documents -->
-                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:border-frays-red hover:shadow-lg transition-all">
-                    <form id="upload-form" enctype="multipart/form-data">
-                        <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
-                        <input type="hidden" name="fa_instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
-                        <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
-                        <input type="hidden" name="user_email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
-                        <input type="hidden" name="auto_ocr" value="1">
-                        <input type="hidden" name="doc_type" value="auto">
-                        
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 rounded-full bg-frays-parchment flex items-center justify-center">
-                                <i class="ri-upload-cloud-line text-xl text-frays-red"></i>
-                            </div>
-                            <div class="flex-1">
-                                <h2 class="text-lg font-bold text-black">Upload Documents</h2>
-                                <p class="text-gray-500 text-sm">AI auto-detects format</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Dropzone -->
-                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-frays-red cursor-pointer" id="dropzone">
-                            <i class="ri-cloud-upload-line text-2xl text-gray-300 mb-1"></i>
-                            <p class="text-sm text-gray-500">Drag files or click</p>
-                            <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
-                        </div>
-                        
-                        <!-- Progress -->
-                        <div id="upload-progress" class="hidden mt-4">
-                            <div class="flex justify-between text-sm mb-1">
-                                <span id="progress-text">Processing...</span>
-                                <span id="progress-percent">0%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div id="progress-bar" class="bg-frays-red h-2 rounded-full" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Results -->
-                        <div id="upload-results" class="hidden mt-4"></div>
-                        
-                        <!-- Submit -->
-                        <button type="submit" id="submit-btn" class="w-full mt-4 bg-frays-red text-white py-2.5 rounded-lg font-medium hover:opacity-90 transition-all">
-                            <i class="ri-upload-line"></i> Upload & Process
-                        </button>
-                    </form>
+                    <div class="flex-1">
+                        <h2 class="text-lg font-bold">Update My Books</h2>
+                        <p class="text-white/70 text-sm">Access your accounting</p>
+                    </div>
+                    <i class="ri-arrow-right-line text-white/60 text-xl group-hover:translate-x-1 transition-all"></i>
                 </div>
-                
+            </a>
+            
+            <!-- Upload Documents -->
+            <div class="bg-white border border-gray-200 rounded-xl p-5 hover:border-frays-red hover:shadow-md transition-all">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
+                    <input type="hidden" name="fa_instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
+                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
+                    <input type="hidden" name="user_email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
+                    <input type="hidden" name="auto_ocr" value="1">
+                    <input type="hidden" name="doc_type" value="auto">
+                    
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-full bg-frays-yellow/30 flex items-center justify-center flex-shrink-0">
+                            <i class="ri-upload-cloud-line text-lg text-frays-red"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-black">Upload Documents</h2>
+                            <p class="text-gray-500 text-xs">AI auto-detects format</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Dropzone -->
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-frays-red cursor-pointer mb-3" id="dropzone">
+                        <i class="ri-cloud-upload-line text-2xl text-gray-300 mb-1"></i>
+                        <p class="text-sm text-gray-500">Drag files or click</p>
+                        <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                    </div>
+                    
+                    <!-- Progress -->
+                    <div id="upload-progress" class="hidden mb-3">
+                        <div class="flex justify-between text-xs mb-1">
+                            <span id="progress-text">Processing...</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                            <div id="progress-bar" class="bg-frays-red h-1.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Results -->
+                    <div id="upload-results" class="hidden mb-3"></div>
+                    
+                    <!-- Submit -->
+                    <button type="submit" id="submit-btn" class="w-full bg-frays-yellow text-black py-2.5 rounded-lg font-medium hover:opacity-90 transition-all">
+                        <i class="ri-upload-line"></i> Upload & Process
+                    </button>
+                </form>
             </div>
+            
         </div>
     </section>
             
