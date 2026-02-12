@@ -11,10 +11,27 @@ require_once __DIR__ . '/../includes/fa-user-sync.php';
 
 $message = '';
 $error = '';
+$testResults = [];
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
+        
+        // Test database connections
+        if ($_POST['action'] === 'test_connections') {
+            try {
+                $testResults = testFAConnections();
+                $connected = 0;
+                $failed = 0;
+                foreach ($testResults as $r) {
+                    if (($r['status'] ?? '') === 'connected') $connected++;
+                    else $failed++;
+                }
+                $message = "Connection Test: {$connected} connected, {$failed} failed";
+            } catch (Exception $e) {
+                $error = 'Test error: ' . $e->getMessage();
+            }
+        }
         
         // Create database tables
         if ($_POST['action'] === 'create_tables') {
@@ -54,9 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 ob_start();
                 $sync = new FAUserSync();
-                $sync->syncAll();
+                $result = $sync->syncAll();
                 $output = ob_get_clean();
-                $message = 'User sync completed! Check output for details.';
+                $message = "Sync complete! New users: {$result['synced']}, Errors: {$result['errors']}";
             } catch (Exception $e) {
                 $error = 'Sync error: ' . $e->getMessage();
             }

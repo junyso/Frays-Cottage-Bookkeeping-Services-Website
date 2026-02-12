@@ -12,14 +12,14 @@ require_once __DIR__ . '/fa-database-creds.php';
 /**
  * Authenticate user against all FA instances
  * 
- * @param string $email User's email
+ * @param string $email User's email or username (fa_user_id)
  * @param string $password User's password
  * @return array|false User data or false if authentication fails
  */
 function authenticateUserUnified($email, $password) {
-    // First check in central unified_users table
     $db = getDBConnection();
     
+    // First check in central unified_users table by email
     $stmt = $db->prepare("
         SELECT * FROM unified_users 
         WHERE email = ? AND status = 'active'
@@ -27,37 +27,47 @@ function authenticateUserUnified($email, $password) {
     $stmt->execute([$email]);
     $user = $stmt->fetch();
     
+    // If not found by email, try to find by fa_user_id (username)
+    if (!$user) {
+        // Search through fa_instances JSON for matching fa_user_id
+        $stmt = $db->query("SELECT id, email, name, fa_instances FROM unified_users WHERE status = 'active'");
+        while ($row = $stmt->fetch()) {
+            $faInstances = json_decode($row['fa_instances'] ?? '{}', true);
+            foreach ($faInstances as $instanceKey => $instanceData) {
+                if (($instanceData['fa_user_id'] ?? '') === $email) {
+                    $user = $row;
+                    break 2;
+                }
+            }
+        }
+    }
+    
     if (!$user) {
         // User not in unified table, try all FA instances
         return authenticateAgainstAllFAInstances($email, $password);
     }
     
     // User found in unified table, verify password
-    // Try central password first (if set)
-    if (!empty($user['password_hash']) && strlen($user['password_hash']) < 40) {
-        // Plain text or MD5 from FA
-        $passwordHash = md5($password);
-        if ($user['password_hash'] === $passwordHash) {
-            return $user;
-        }
-    } elseif (!empty($user['password_hash'])) {
-        // Hashed password
-        if (password_verify($password, $user['password_hash'])) {
-            return $user;
-        }
-        
-        // Try MD5 fallback (older FA versions)
+    // Try MD5 first (FA format - 32 char hash)
+    if (!empty($user['password_hash']) && strlen($user['password_hash']) === 32) {
         if (md5($password) === $user['password_hash']) {
             return $user;
         }
     }
     
-    // Check FA instances for correct password
+    // Try bcrypt/hash (portal format)
+    if (!empty($user['password_hash']) && strlen($user['password_hash']) > 40) {
+        if (password_verify($password, $user['password_hash'])) {
+            return $user;
+        }
+    }
+    
+    // If local hash doesn't match, verify against FA databases
     $faInstances = json_decode($user['fa_instances'] ?? '{}', true);
     foreach ($faInstances as $instanceKey => $instanceData) {
         $faUser = authenticateAgainstFAInstance($instanceKey, $email, $password);
         if ($faUser) {
-            // Update password in central DB
+            // Update password in central DB to MD5 format
             updateUserPassword($user['id'], $password);
             return $user;
         }
