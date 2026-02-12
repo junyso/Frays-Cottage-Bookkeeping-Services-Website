@@ -148,7 +148,7 @@ function runSync() {
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
             
-            $stmt = $faPDO->query("SELECT id, user_id, real_name, email, role, password, inactive FROM 0_users WHERE inactive = 0");
+            $stmt = $faPDO->query("SELECT id, user_id, real_name, email, role_id AS role, password, inactive FROM 0_users WHERE inactive = 0");
             $users = $stmt->fetchAll();
             
             echo "✓ {$dbName} - " . count($users) . " users - ";
