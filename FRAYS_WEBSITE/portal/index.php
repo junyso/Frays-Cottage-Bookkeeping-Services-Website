@@ -903,10 +903,10 @@ $csrfToken = generateCSRFToken();
     <a href="https://wa.me/2673966011" target="_blank" class="fixed bottom-6 right-6 z-50 group">
         <div class="relative">
             <!-- Pulse Animation -->
-            <div class="absolute inset-0 rounded-full bg-frays-red animate-ping opacity-75"></div>
-            <div class="absolute inset-0 rounded-full bg-frays-red opacity-50 animate-pulse"></div>
+            <div class="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75"></div>
+            <div class="absolute inset-0 rounded-full bg-green-500 opacity-50 animate-pulse"></div>
             <!-- Button -->
-            <div class="relative bg-frays-red text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 hover:opacity-90 transition-all transform hover:scale-105">
+            <div class="relative bg-green-500 text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 hover:bg-green-600 transition-all transform hover:scale-105">
                 <i class="ri-whatsapp-line text-2xl"></i>
                 <span class="font-medium whitespace-nowrap hidden sm:block">Talk to Us, we are here to help you!</span>
             </div>
