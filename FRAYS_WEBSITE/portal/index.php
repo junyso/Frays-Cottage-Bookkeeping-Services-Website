@@ -328,47 +328,22 @@ $csrfToken = generateCSRFToken();
                 </a>
             </div>
             
-            <!-- FA Instance Banner -->
-            <?php 
-            $faInstances = $_SESSION['fa_instances'] ?? [];
-            $firstInstance = !empty($faInstances) ? array_key_first($faInstances) : 'default';
-            $instanceName = !empty($faInstances) ? ($faInstances[array_key_first($faInstances)]['name'] ?? array_key_first($faInstances)) : 'Default';
-            ?>
-            <?php if (!empty($faInstances)): ?>
-            <div class="bg-frays-parchment rounded-xl p-4 mb-8 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <i class="ri-building-4-line text-frays-red text-2xl"></i>
-                    <div>
-                        <p class="text-sm text-gray-500">Your FrontAccounting Instance</p>
-                        <p class="font-semibold text-black">
-                            <?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?>
-                        </p>
-                    </div>
-                </div>
-                <a href="/redirect.php?instance=<?= urlencode($firstInstance) ?>" 
-                   class="bg-frays-red text-white px-4 py-2 rounded-lg hover:opacity-90 transition-colors flex items-center gap-2">
-                    <i class="ri-arrow-right-line"></i>
-                    Open Accounting
-                </a>
-            </div>
-            <?php endif; ?>
-            
             <!-- Two Main Options -->
-            <div class="grid md:grid-cols-2 gap-8 mb-0">
+            <div class="grid md:grid-cols-2 gap-8">
                 
                 <!-- Option 1: Go to FA Instance -->
-                <a href="/redirect.php?instance=<?= urlencode($firstInstance) ?>" 
+                <a href="/redirect.php?instance=<?= urlencode($firstInstance ?? 'default') ?>" 
                    class="group bg-gradient-to-br from-frays-red to-red-800 rounded-2xl shadow-xl p-8 text-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center">
-                        <div class="w-24 h-24 mb-6 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <i class="ri-calculator-line text-5xl"></i>
+                        <div class="w-20 h-20 mb-4 rounded-full bg-white/20 flex items-center justify-center">
+                            <i class="ri-calculator-line text-4xl"></i>
                         </div>
-                        <h2 class="font-display text-3xl font-bold mb-4">Update My Books</h2>
-                        <p class="text-white/80 mb-6 text-lg">
-                            Access your FrontAccounting system to view reports, process transactions, and manage your business finances.
+                        <h2 class="font-display text-2xl font-bold mb-3">Update My Books</h2>
+                        <p class="text-white/80 text-sm mb-4">
+                            Go to your FrontAccounting system
                         </p>
-                        <span class="inline-flex items-center gap-2 bg-white text-frays-red px-6 py-3 rounded-lg font-semibold">
-                            <i class="ri-login-box-line"></i>
+                        <span class="inline-flex items-center gap-2 bg-white text-frays-red px-5 py-2 rounded-lg font-semibold">
+                            <i class="ri-arrow-right-line"></i>
                             Go to Accounting
                         </span>
                     </div>
@@ -378,14 +353,14 @@ $csrfToken = generateCSRFToken();
                 <a href="#upload-section" 
                    class="group bg-gradient-to-br from-frays-yellow to-yellow-600 rounded-2xl shadow-xl p-8 text-black hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex flex-col items-center text-center">
-                        <div class="w-24 h-24 mb-6 rounded-full bg-white/50 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <i class="ri-upload-cloud-line text-5xl text-frays-red"></i>
+                        <div class="w-20 h-20 mb-4 rounded-full bg-white/50 flex items-center justify-center">
+                            <i class="ri-upload-cloud-line text-4xl text-frays-red"></i>
                         </div>
-                        <h2 class="font-display text-3xl font-bold mb-4">Upload Documents</h2>
-                        <p class="text-black/70 mb-6 text-lg">
-                            Submit invoices, receipts, and business documents for AI-powered processing and automatic extraction.
+                        <h2 class="font-display text-2xl font-bold mb-3">Upload Documents</h2>
+                        <p class="text-black/70 text-sm mb-4">
+                            Submit invoices & receipts for AI processing
                         </p>
-                        <span class="inline-flex items-center gap-2 bg-frays-red text-white px-6 py-3 rounded-lg font-semibold">
+                        <span class="inline-flex items-center gap-2 bg-frays-red text-white px-5 py-2 rounded-lg font-semibold">
                             <i class="ri-upload-line"></i>
                             Upload Now
                         </span>
@@ -394,30 +369,8 @@ $csrfToken = generateCSRFToken();
                 
             </div>
             
-            <!-- Multiple FA Instances -->
-            <?php 
-            $allInstances = !empty($faInstances) ? array_keys($faInstances) : [];
-            if (count($allInstances) > 1): ?>
-            <div class="mt-8 bg-frays-parchment rounded-xl shadow-lg p-6">
-                <h3 class="font-semibold text-black mb-4 flex items-center gap-1">
-                    <i class="ri-links-line text-frays-red"></i>
-                    Your Other FrontAccounting Instances
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <?php foreach (array_slice($allInstances, 1) as $instanceKey): 
-                    $instanceName = $faInstances[$instanceKey]['name'] ?? $instanceKey;
-                    ?>
-                    <a href="/redirect.php?instance=<?= urlencode($instanceKey) ?>" 
-                       class="flex items-center gap-2 px-4 py-3 bg-white rounded-lg hover:bg-frays-yellow transition-colors">
-                        <i class="ri-building-line text-frays-red"></i>
-                        <span class="text-sm font-medium"><?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceName))) ?></span>
-                    </a>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-            
-            <!-- Upload Section with Integrated Document AI -->
+        </div>
+    </section>
             <div id="upload-section" class="bg-frays-parchment rounded-2xl shadow-xl p-4">
                 <h2 class="font-display text-2xl font-bold text-black mb-2 flex items-center gap-2">
                     <i class="ri-scan-line text-frays-red"></i>
@@ -441,9 +394,10 @@ $csrfToken = generateCSRFToken();
                     </div>
                 </div>
                 
+                <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
                 <form id="upload-form" enctype="multipart/form-data">
                     <!-- Hidden: User's FA Instance (auto-filled on login) -->
-                    <input type="hidden" name="fa_instance" id="fa-instance" value="<?= htmlspecialchars($firstInstance ?? '') ?>">
+                    <input type="hidden" name="fa_instance" id="fa-instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
                     <input type="hidden" name="user_id" id="user-id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
                     <input type="hidden" name="user_email" id="user-email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
                     
