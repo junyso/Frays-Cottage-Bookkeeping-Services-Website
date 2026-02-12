@@ -328,17 +328,25 @@ $csrfToken = generateCSRFToken();
             </div>
             <?php endif; ?>
             
-            <!-- Upload Section -->
+            <!-- Upload Section with Document AI -->
             <div id="upload-section" class="bg-frays-parchment rounded-2xl shadow-xl p-4">
-                <h2 class="font-display text-2xl font-bold text-black mb-6 flex items-center gap-1">
+                <h2 class="font-display text-2xl font-bold text flex items-center gap-black mb-2-1">
                     <i class="ri-upload-line text-frays-red"></i>
-                    Upload Documents
+                    Smart Document Upload
                 </h2>
+                <p class="text-gray-600 mb-6 text-sm">
+                    <i class="ri-magic-line text-frays-red"></i>
+                    AI-powered invoice & receipt processing with OCR
+                </p>
                 
-                <form method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-                    <input type="hidden" name="action" value="upload">
-                    
+                <!-- Document AI Status -->
+                <div id="docai-status" class="mb-4 p-3 rounded-lg bg-white border border-gray-200 text-sm">
+                    <span class="text-gray-500">Document AI Status:</span>
+                    <span id="docai-indicator" class="inline-block w-2 h-2 rounded-full bg-gray-300 ml-2"></span>
+                    <span id="docai-message" class="text-gray-600 ml-2">Checking...</span>
+                </div>
+                
+                <form id="upload-form" enctype="multipart/form-data">
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Client Code</label>
@@ -362,19 +370,236 @@ $csrfToken = generateCSRFToken();
                         </div>
                     </div>
                     
-                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red transition-colors cursor-pointer mb-6">
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red transition-colors cursor-pointer mb-6" id="dropzone">
                         <i class="ri-cloud-upload-line text-5xl text-gray-300 mb-4"></i>
                         <p class="text-gray-600 mb-2">Drag & drop files here or click to browse</p>
                         <p class="text-sm text-gray-400">PDF, JPG, PNG up to 10MB each</p>
                         <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                        <div id="file-list" class="mt-4 text-left"></div>
                     </div>
                     
-                    <button type="submit" class="w-full bg-frays-red text-white py-4 rounded-lg font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                    <!-- Processing Options -->
+                    <div class="bg-white rounded-lg p-4 mb-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" name="auto_ocr" value="1" checked class="rounded text-frays-red">
+                            <span class="text-sm text-gray-700">
+                                <i class="ri-scan-line text-frays-red"></i>
+                                Extract text with OCR
+                            </span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer mt-2">
+                            <input type="checkbox" name="auto_export" value="1" class="rounded text-frays-red">
+                            <span class="text-sm text-gray-700">
+                                <i class="ri-export-line text-frays-red"></i>
+                                Auto-export to CSV
+                            </span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer mt-2">
+                            <input type="checkbox" name="push_fa" value="1" class="rounded text-frays-red">
+                            <span class="text-sm text-gray-700">
+                                <i class="ri-building-line text-frays-red"></i>
+                                Push to FrontAccounting
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <!-- Progress -->
+                    <div id="upload-progress" class="hidden mb-4">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span id="progress-text">Processing...</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="progress-bar" class="bg-frays-red h-2.5 rounded-full transition-all" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Results -->
+                    <div id="upload-results" class="hidden mb-4"></div>
+                    
+                    <button type="submit" id="submit-btn" class="w-full bg-frays-red text-white py-4 rounded-lg font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-2">
                         <i class="ri-upload-line"></i>
-                        Upload Documents
+                        Process & Upload Documents
                     </button>
                 </form>
             </div>
+            
+            <script>
+            // Document AI Integration
+            const API_URL = '/api/document-ai.php';
+            
+            // Check Document AI status on load
+            async function checkDocAIStatus() {
+                try {
+                    const response = await fetch(API_URL + '?health');
+                    const data = await response.json();
+                    const indicator = document.getElementById('docai-indicator');
+                    const message = document.getElementById('docai-message');
+                    
+                    if (data.status === 'running') {
+                        indicator.className = 'inline-block w-2 h-2 rounded-full bg-green-500';
+                        message.textContent = 'Connected - Ready for processing';
+                        message.className = 'text-green-600 ml-2';
+                    } else {
+                        indicator.className = 'inline-block w-2 h-2 rounded-full bg-yellow-500';
+                        message.textContent = 'Checking...';
+                    }
+                } catch (error) {
+                    document.getElementById('docai-indicator').className = 'inline-block w-2 h-2 rounded-full bg-red-500';
+                    document.getElementById('docai-message').textContent = 'Document AI not connected';
+                    document.getElementById('docai-message').className = 'text-red-600 ml-2';
+                }
+            }
+            
+            // File selection handling
+            document.getElementById('dropzone').addEventListener('click', function() {
+                document.getElementById('fileInput').click();
+            });
+            
+            document.getElementById('fileInput').addEventListener('change', function(e) {
+                const list = document.getElementById('file-list');
+                list.innerHTML = '';
+                
+                Array.from(e.target.files).forEach((file, i) => {
+                    list.innerHTML += `
+                        <div class="flex items-center gap-2 p-2 bg-white rounded mb-2">
+                            <i class="ri-file-line text-frays-red"></i>
+                            <span class="text-sm flex-1 truncate">${file.name}</span>
+                            <span class="text-xs text-gray-400">${(file.size / 1024).toFixed(1)} KB</span>
+                        </div>
+                    `;
+                });
+            });
+            
+            // Drag and drop
+            const dropzone = document.getElementById('dropzone');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => {
+                    dropzone.classList.add('border-frays-red', 'bg-frays-parchment/30');
+                });
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => {
+                    dropzone.classList.remove('border-frays-red', 'bg-frays-parchment/30');
+                });
+            });
+            
+            dropzone.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                document.getElementById('fileInput').files = files;
+                
+                // Trigger change event
+                const event = new Event('change');
+                document.getElementById('fileInput').dispatchEvent(event);
+            });
+            
+            // Form submission
+            document.getElementById('upload-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const files = document.getElementById('fileInput').files;
+                
+                if (files.length === 0) {
+                    alert('Please select at least one file');
+                    return;
+                }
+                
+                // Show progress
+                document.getElementById('upload-progress').classList.remove('hidden');
+                document.getElementById('submit-btn').disabled = true;
+                document.getElementById('progress-text').textContent = 'Uploading and processing...';
+                
+                let completed = 0;
+                let results = [];
+                
+                // Process each file
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const fileFormData = new FormData();
+                    fileFormData.append('document', file);
+                    fileFormData.append('client_code', formData.get('client_code'));
+                    fileFormData.append('doc_type', formData.get('doc_type'));
+                    fileFormData.append('auto_ocr', formData.get('auto_ocr') ? '1' : '0');
+                    fileFormData.append('auto_export', formData.get('auto_export') ? '1' : '0');
+                    fileFormData.append('push_fa', formData.get('push_fa') ? '1' : '0');
+                    
+                    try {
+                        const response = await fetch(API_URL + '/process', {
+                            method: 'POST',
+                            body: fileFormData
+                        });
+                        
+                        const data = await response.json();
+                        results.push({
+                            filename: file.name,
+                            success: data.success,
+                            data: data.data || data.error
+                        });
+                    } catch (error) {
+                        results.push({
+                            filename: file.name,
+                            success: false,
+                            error: error.message
+                        });
+                    }
+                    
+                    completed++;
+                    const percent = Math.round((completed / files.length) * 100);
+                    document.getElementById('progress-bar').style.width = percent + '%';
+                    document.getElementById('progress-percent').textContent = percent + '%';
+                }
+                
+                // Show results
+                document.getElementById('upload-progress').classList.add('hidden');
+                document.getElementById('submit-btn').disabled = false;
+                
+                const resultsDiv = document.getElementById('upload-results');
+                resultsDiv.classList.remove('hidden');
+                
+                let html = '<div class="space-y-2">';
+                results.forEach(r => {
+                    if (r.success) {
+                        html += `
+                            <div class="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
+                                <i class="ri-check-line text-green-600"></i>
+                                <span class="text-sm text-green-800 flex-1">${r.filename}</span>
+                                <span class="text-xs text-green-600">Processed</span>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="flex items-center gap-2 p-3 bg-red-50 rounded-lg">
+                                <i class="ri-error-warning-line text-red-600"></i>
+                                <span class="text-sm text-red-800 flex-1">${r.filename}</span>
+                                <span class="text-xs text-red-600">${r.error || 'Failed'}</span>
+                            </div>
+                        `;
+                    }
+                });
+                html += '</div>';
+                resultsDiv.innerHTML = html;
+                
+                // Clear file input
+                document.getElementById('fileInput').value = '';
+                document.getElementById('file-list').innerHTML = '';
+            });
+            
+            // Initialize
+            checkDocAIStatus();
+            </script>
         </div>
     </section>
     <?php endif; ?>
