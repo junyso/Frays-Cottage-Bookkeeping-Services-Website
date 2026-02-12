@@ -313,79 +313,79 @@ $csrfToken = generateCSRFToken();
     
     <?php else: ?>
     <!-- DASHBOARD - After Login -->
-    <section class="pt-0 md:pt-0 pb-0 px-4 sm:px-6 lg:px-8 bg-white">
-        <div class="max-w-6xl mx-auto">
+    <section class="pt-4 pb-12 px-4">
+        <div class="max-w-4xl mx-auto">
             
-            <!-- Welcome Header -->
-            <div class="text-center mb-8">
-                <h1 class="font-display text-4xl font-bold text-black mb-2">
+            <!-- Welcome -->
+            <div class="text-center mb-10">
+                <h1 class="font-display text-3xl font-bold text-black mb-2">
                     Welcome back, <?= htmlspecialchars($_SESSION['user_name'] ?? 'User') ?>! 👋
                 </h1>
-                <p class="text-gray-600 text-lg mb-4">What would you like to do today?</p>
-                <a href="/portal?action=logout" class="inline-flex items-center gap-2 text-gray-500 hover:text-frays-red transition-colors text-sm">
-                    <i class="ri-logout-box-line"></i>
-                    Sign Out
+                <a href="/portal?action=logout" class="text-gray-400 hover:text-frays-red text-sm">
+                    <i class="ri-logout-box-line"></i> Sign Out
                 </a>
             </div>
             
-            <!-- Two Main Options -->
-            <div class="grid md:grid-cols-2 gap-8">
+            <!-- Quick Actions -->
+            <div class="grid md:grid-cols-2 gap-6 mb-12">
                 
-                <!-- Option 1: Go to FA Instance -->
+                <!-- Update My Books -->
                 <a href="/redirect.php?instance=<?= urlencode($firstInstance ?? 'default') ?>" 
-                   class="group bg-gradient-to-br from-frays-red to-red-800 rounded-2xl shadow-xl p-8 text-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-20 h-20 mb-4 rounded-full bg-white/20 flex items-center justify-center">
-                            <i class="ri-calculator-line text-4xl"></i>
+                   class="bg-gradient-to-br from-frays-red to-red-800 rounded-2xl p-8 text-white hover:shadow-2xl transition-all group">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i class="ri-calculator-line text-2xl"></i>
                         </div>
-                        <h2 class="font-display text-2xl font-bold mb-3">Update My Books</h2>
-                        <p class="text-white/80 text-sm mb-4">
-                            Go to your FrontAccounting system
-                        </p>
-                        <span class="inline-flex items-center gap-2 bg-white text-frays-red px-5 py-2 rounded-lg font-semibold">
-                            <i class="ri-arrow-right-line"></i>
-                            Go to Accounting
-                        </span>
+                        <i class="ri-arrow-right-line text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                    </div>
+                    <h2 class="text-xl font-bold mb-1">Update My Books</h2>
+                    <p class="text-white/70 text-sm">Access your accounting system</p>
+                </a>
+                
+                <!-- Upload Documents -->
+                <div onclick="scrollToUpload()" 
+                     class="bg-white border-2 border-gray-200 rounded-2xl p-8 cursor-pointer hover:border-frays-red hover:shadow-lg transition-all group">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-14 h-14 rounded-full bg-frays-parchment flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i class="ri-upload-cloud-line text-2xl text-frays-red"></i>
+                        </div>
+                        <i class="ri-arrow-down-line text-gray-400 group-hover:text-frays-red group-hover:translate-y-1 transition-all"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-black mb-1">Upload Documents</h2>
+                    <p class="text-gray-500 text-sm">Submit invoices & receipts for AI processing</p>
+                </div>
+                
             </div>
             
-        </div>
-    </section>
-    
-    <!-- Document Upload Section -->
-    <section class="px-4 py-8">
-        <div class="max-w-2xl mx-auto">
-            <div class="bg-white rounded-xl shadow-lg border border-frays-yellow/30 overflow-hidden">
-                
-                <!-- Header -->
-                <div class="bg-gradient-to-r from-frays-red to-red-800 px-6 py-4">
-                    <h2 class="font-display text-xl font-bold text-white flex items-center gap-2">
-                        <i class="ri-upload-cloud-line"></i>
+            <!-- Upload Section -->
+            <div id="upload-section" class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
+                    <h3 class="font-semibold text-black flex items-center gap-2">
+                        <i class="ri-upload-cloud-line text-frays-red"></i>
                         Upload Documents
-                    </h2>
-                    <p class="text-white/70 text-sm mt-1">AI-powered processing • Invoice extraction • Linked to your books</p>
+                    </h3>
                 </div>
                 
                 <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
                 <form id="upload-form" enctype="multipart/form-data" class="p-6">
-                    <!-- Hidden fields -->
-                    <input type="hidden" name="fa_instance" id="fa-instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
-                    <input type="hidden" name="user_id" id="user-id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
-                    <input type="hidden" name="user_email" id="user-email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
+                    <input type="hidden" name="fa_instance" value="<?= htmlspecialchars(!empty($faInstances) ? array_key_first($faInstances) : '') ?>">
+                    <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['user_id'] ?? '') ?>">
+                    <input type="hidden" name="user_email" value="<?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>">
                     
-                    <!-- Quick Settings Row -->
-                    <div class="flex flex-wrap gap-4 mb-6">
-                        <div class="flex-1 min-w-[150px]">
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Client</label>
-                            <div class="flex items-center gap-2 px-3 py-2 bg-frays-parchment rounded-lg">
+                    <!-- Settings Row -->
+                    <div class="flex gap-4 mb-6">
+                        <div class="flex-1">
+                            <label class="text-xs text-gray-500 mb-1 block">Client</label>
+                            <div class="flex items-center gap-2 px-4 py-2.5 bg-gray-50 rounded-lg">
                                 <i class="ri-building-line text-frays-red"></i>
                                 <span class="text-sm font-medium">
-                                    <?= !empty($faInstances) ? htmlspecialchars($faInstances[array_key_first($faInstances)]['name'] ?? array_key_first($faInstances)) : 'Select...' ?>
+                                    <?= !empty($faInstances) ? htmlspecialchars($faInstances[array_key_first($faInstances)]['name'] ?? array_key_first($faInstances)) : 'Select' ?>
                                 </span>
                             </div>
                         </div>
-                        <div class="flex-1 min-w-[120px]">
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Type</label>
-                            <select name="doc_type" class="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:ring-2 focus:ring-frays-red">
+                        <div class="w-40">
+                            <label class="text-xs text-gray-500 mb-1 block">Type</label>
+                            <select name="doc_type" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm">
                                 <option value="invoice">Invoice</option>
                                 <option value="receipt">Receipt</option>
                                 <option value="waybill">Waybill</option>
@@ -394,18 +394,18 @@ $csrfToken = generateCSRFToken();
                             </select>
                         </div>
                         <div class="flex items-end">
-                            <label class="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg border border-gray-200 hover:bg-frays-parchment transition-colors">
+                            <label class="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50">
                                 <input type="checkbox" name="auto_ocr" value="1" checked class="rounded text-frays-red">
-                                <span class="text-sm text-gray-700">OCR</span>
+                                <span class="text-sm">OCR</span>
                             </label>
                         </div>
                     </div>
                     
                     <!-- Dropzone -->
-                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red transition-colors cursor-pointer mb-4" id="dropzone">
-                        <i class="ri-cloud-upload-line text-4xl text-gray-300 mb-3"></i>
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-frays-red cursor-pointer mb-4" id="dropzone">
+                        <i class="ri-cloud-upload-line text-3xl text-gray-300 mb-2"></i>
                         <p class="text-gray-600 text-sm">Drag files here or click to browse</p>
-                        <p class="text-xs text-gray-400 mt-1">PDF, JPG, PNG up to 10MB</p>
+                        <p class="text-xs text-gray-400 mt-1">PDF, JPG, PNG</p>
                         <input type="file" name="documents[]" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
                         <div id="file-list" class="mt-4 text-left"></div>
                     </div>
@@ -417,7 +417,7 @@ $csrfToken = generateCSRFToken();
                             <span id="progress-percent">0%</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div id="progress-bar" class="bg-frays-red h-2 rounded-full transition-all" style="width: 0%"></div>
+                            <div id="progress-bar" class="bg-frays-red h-2 rounded-full" style="width: 0%"></div>
                         </div>
                     </div>
                     
@@ -425,9 +425,8 @@ $csrfToken = generateCSRFToken();
                     <div id="upload-results" class="hidden mb-4"></div>
                     
                     <!-- Submit -->
-                    <button type="submit" id="submit-btn" class="w-full bg-frays-red text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-all flex items-center justify-center gap-2">
-                        <i class="ri-upload-line"></i>
-                        Process Documents
+                    <button type="submit" id="submit-btn" class="w-full bg-frays-red text-white py-3 rounded-lg font-medium hover:opacity-90 transition-all">
+                        <i class="ri-upload-line"></i> Process Documents
                     </button>
                 </form>
             </div>
@@ -435,30 +434,10 @@ $csrfToken = generateCSRFToken();
     </section>
             
             <script>
-            // Document AI Integration
             const API_URL = '/api/document-ai.php';
             
-            // Check Document AI status on load
-            async function checkDocAIStatus() {
-                try {
-                    const response = await fetch(API_URL + '?health');
-                    const data = await response.json();
-                    const indicator = document.getElementById('docai-indicator');
-                    const message = document.getElementById('docai-message');
-                    
-                    if (data.status === 'running') {
-                        indicator.className = 'inline-block w-2 h-2 rounded-full bg-green-500';
-                        message.textContent = 'Connected - Ready for processing';
-                        message.className = 'text-green-600 ml-2';
-                    } else {
-                        indicator.className = 'inline-block w-2 h-2 rounded-full bg-yellow-500';
-                        message.textContent = 'Checking...';
-                    }
-                } catch (error) {
-                    document.getElementById('docai-indicator').className = 'inline-block w-2 h-2 rounded-full bg-red-500';
-                    document.getElementById('docai-message').textContent = 'Document AI not connected';
-                    document.getElementById('docai-message').className = 'text-red-600 ml-2';
-                }
+            function scrollToUpload() {
+                document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' });
             }
             
             // File selection handling
@@ -609,8 +588,6 @@ $csrfToken = generateCSRFToken();
                 document.getElementById('file-list').innerHTML = '';
             });
             
-            // Initialize
-            checkDocAIStatus();
             </script>
         </div>
     </section>
@@ -674,36 +651,6 @@ $csrfToken = generateCSRFToken();
     // =============================================
     
     const API_URL = '/api/document-ai.php';
-    
-    // Check Document AI status on load
-    async function checkDocAIStatus() {
-        try {
-            const response = await fetch(API_URL + '?health');
-            const data = await response.json();
-            
-            const ocrStatus = document.getElementById('ocr-status');
-            const pdfStatus = document.getElementById('pdf-status');
-            
-            if (data.features && data.features.ocr) {
-                ocrStatus.textContent = '🔍 OCR: Ready';
-                ocrStatus.className = 'text-green-600';
-            } else {
-                ocrStatus.textContent = '🔍 OCR: Limited';
-                ocrStatus.className = 'text-yellow-600';
-            }
-            
-            if (data.features && data.features.pdf_text) {
-                pdfStatus.textContent = '📄 PDF: Ready';
-                pdfStatus.className = 'text-green-600';
-            } else {
-                pdfStatus.textContent = '📄 PDF: Basic';
-                pdfStatus.className = 'text-yellow-600';
-            }
-            
-        } catch (error) {
-            console.log('Document AI status check failed:', error);
-        }
-    }
     
     // File selection handling with preview
     document.getElementById('dropzone').addEventListener('click', function() {
@@ -868,8 +815,6 @@ $csrfToken = generateCSRFToken();
         document.getElementById('file-list').innerHTML = '';
     });
     
-    // Initialize
-    checkDocAIStatus();
     </script>
     
     <!-- Floating WhatsApp Button -->
