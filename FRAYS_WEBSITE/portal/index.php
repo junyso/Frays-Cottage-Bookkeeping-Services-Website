@@ -381,19 +381,6 @@ $csrfToken = generateCSRFToken();
                     AI-powered document processing with OCR • Runs on port 8080
                 </p>
                 
-                <!-- Document AI Status -->
-                <div id="docai-status" class="mb-4 p-3 rounded-lg bg-white border border-gray-200 text-sm">
-                    <div class="flex items-center gap-2">
-                        <span class="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        <span class="text-green-700 font-medium">Document AI Connected</span>
-                    </div>
-                    <div class="mt-2 text-xs text-gray-500" id="docai-features">
-                        <span id="ocr-status">🔍 OCR: Checking...</span> •
-                        <span id="pdf-status">📄 PDF: Checking...</span> •
-                        <span id="fa-status">🏢 FA: Integrated</span>
-                    </div>
-                </div>
-                
                 <?php $faInstances = $_SESSION['fa_instances'] ?? []; ?>
                 <form id="upload-form" enctype="multipart/form-data">
                     <!-- Hidden: User's FA Instance (auto-filled on login) -->
@@ -409,10 +396,10 @@ $csrfToken = generateCSRFToken();
                             </label>
                             <?php if (!empty($_SESSION['fa_instances'])): ?>
                                 <div class="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-600">
-                                    <?php foreach ($_SESSION['fa_instances'] as $instance): ?>
+                                    <?php foreach ($faInstances as $instanceKey => $instanceData): ?>
                                         <div class="flex items-center gap-2">
                                             <i class="ri-building-4-line text-frays-red"></i>
-                                            <span class="font-medium"><?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instance))) ?></span>
+                                            <span class="font-medium"><?= htmlspecialchars(ucwords(str_replace(['-', '_'], ' ', $instanceData['name'] ?? $instanceKey))) ?></span>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -688,12 +675,53 @@ $csrfToken = generateCSRFToken();
     <?php endif; ?>
     
     <!-- Footer -->
-    <footer class="bg-frays-parchment py-2">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-600 text-sm mb-2">© <?= date('Y') ?> Frays Cottage Bookkeeping Services. All rights reserved.</p>
-            <a href="https://www.frayscottage.co.bw/" target="_blank" class="text-frays-red text-xs hover:text-frays-yellow transition-colors">
-                Designed by Frays Cottage
-            </a>
+    <footer class="bg-frays-parchment py-8 md:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 mb-8 md:mb-12">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="mb-3 md:mb-4">
+                        <img src="/assets/images/logo.png" alt="Bookkeeping Services Logo" class="h-14 md:h-20 w-auto">
+                    </div>
+                    <p class="text-gray-600 text-xs md:text-sm">Professional bookkeeping and accounting services for businesses across Botswana.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-black mb-3 md:mb-4 text-sm md:text-base">Services</h4>
+                    <ul class="space-y-1.5 md:space-y-2 text-gray-600 text-xs md:text-sm">
+                        <li>Bookkeeping</li>
+                        <li>Tax Compliance</li>
+                        <li>Financial Reporting</li>
+                        <li>Payroll Services</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-black mb-3 md:mb-4 text-sm md:text-base">Quick Links</h4>
+                    <ul class="space-y-1.5 md:space-y-2 text-gray-600 text-xs md:text-sm">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/portal">Client Portal</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-3 md:mb-4 text-sm md:text-base">Connect With Us</h4>
+                    <div class="flex gap-2 md:gap-3">
+                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-frays-yellow flex items-center justify-center hover:opacity-80">
+                            <i class="ri-facebook-fill text-frays-red text-sm md:text-base"></i>
+                        </a>
+                        <a href="#" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-frays-yellow flex items-center justify-center hover:opacity-80">
+                            <i class="ri-linkedin-fill text-frays-red text-sm md:text-base"></i>
+                        </a>
+                        <a href="https://wa.me/2673966011" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-frays-yellow flex items-center justify-center hover:opacity-80">
+                            <i class="ri-whatsapp-fill text-frays-red text-sm md:text-base"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-frays-yellow pt-6 md:pt-8 text-center text-gray-600 text-xs md:text-sm">
+                © <?= date('Y') ?> Frays Cottage Bookkeeping Services. All rights reserved.
+            </div>
         </div>
     </footer>
     
