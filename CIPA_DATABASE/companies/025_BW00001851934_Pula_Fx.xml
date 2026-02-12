@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<company_profile>
+    <registration_number>BW00001851934</registration_number>
+    <name>Pula Fx Proprietary Limited</name>
+    <status>PENDING_DATA_EXTRACTION</status>
+    <urgency>URGENT - Annual Return Due</urgency>
+    <last_updated>2026-02-12</last_updated>
+
+    <basic_info>
+        <entity_type>Proprietary Limited</entity_type>
+        <incorporation_date></incorporation_date>
+        <jurisdiction>Botswana</jurisdiction>
+        <status>Active</status>
+    </basic_info>
+
+    <registered_office>
+        <address_line_1></address_line_1>
+        <address_line_2></address_line_2>
+        <city></city>
+        <postal_code></postal_code>
+        <country>Botswana</country>
+    </registered_office>
+
+    <directors>
+        <director>
+            <name></name>
+            <id_number></id_number>
+            <nationality></nationality>
+            <appointment_date></appointment_date>
+            <resignation_date></resignation_date>
+            <status></status>
+        </director>
+    </directors>
+
+    <shareholders>
+        <shareholder>
+            <name></name>
+            <id_number></id_number>
+            <share_class></share_class>
+            <number_of_shares></number_of_shares>
+            <total_value></total_value>
+            <percentage_ownership></percentage_ownership>
+        </shareholder>
+    </shareholders>
+
+    <share_capital>
+        <authorized_capital>
+            <amount></amount>
+            <currency>BWP</currency>
+        </authorized_capital>
+        <issued_capital>
+            <amount></amount>
+            <currency>BWP</currency>
+        </issued_capital>
+        <paid_up_capital>
+            <amount></amount>
+            <currency>BWP</currency>
+        </paid_up_capital>
+    </share_capital>
+
+    <annual_returns>
+        <annual_return>
+            <year>2026</year>
+            <due_date>2026-02-28</due_date>
+            <filing_date></filing_date>
+            <status>PENDING</status>
+            <penalties>0</penalties>
+        </annual_return>
+    </annual_returns>
+
+    <compliance_notes>
+        Annual return processing required. CIPA portal access needed for data extraction.
+    </compliance_notes>
+</company_profile>
