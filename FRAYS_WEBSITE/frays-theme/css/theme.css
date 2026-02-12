@@ -1,0 +1,191 @@
+/**
+ * Frays Cottage Theme Template
+ * 
+ * Copy this folder to any new project for consistent branding.
+ * 
+ * Usage:
+ *   <link href="frays-theme/css/theme.css" rel="stylesheet">
+ *   <script src="frays-theme/js/theme.js"></script>
+ * 
+ * Colors:
+ *   --frays-red: #990000
+ *   --frays-yellow: #CCCC66
+ *   --frays-parchment: #F1F1D4
+ */
+
+:root {
+  /* Primary Colors */
+  --frays-red: #990000;
+  --frays-red-light: #aa0000;
+  --frays-red-dark: #770000;
+  
+  --frays-yellow: #CCCC66;
+  --frays-yellow-light: #ddddaa;
+  --frays-yellow-dark: #999944;
+  
+  --frays-parchment: #F1F1D4;
+  --frays-parchment-light: #fafaea;
+  --frays-parchment-dark: #e8e8c4;
+  
+  /* Neutrals */
+  --frays-black: #000000;
+  --frays-white: #FFFFFF;
+  --frays-gray-100: #f5f5f5;
+  --frays-gray-200: #eeeeee;
+  --frays-gray-300: #e0e0e0;
+  --frays-gray-400: #bdbdbd;
+  --frays-gray-500: #9e9e9e;
+  --frays-gray-600: #757575;
+  --frays-gray-700: #616161;
+  --frays-gray-800: #424242;
+  --frays-gray-900: #212121;
+  
+  /* Fonts */
+  --font-display: 'Playfair Display', serif;
+  --font-sans: 'Lato', sans-serif;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* Base Styles */
+body {
+  color: var(--frays-black);
+  background-color: var(--frays-white);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--frays-black);
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: var(--frays-yellow);
+  color: var(--frays-black);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: var(--transition-normal);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: var(--frays-red);
+  color: var(--frays-white);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: var(--transition-normal);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Card Styles */
+.card {
+  background-color: var(--frays-white);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  border: 1px solid var(--frays-parchment);
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+  transition: var(--transition-normal);
+}
+
+/* Section Backgrounds */
+.section-white {
+  background-color: var(--frays-white);
+}
+
+.section-parchment {
+  background-color: var(--frays-parchment);
+}
+
+.section-red {
+  background-color: var(--frays-red);
+  color: var(--frays-white);
+}
+
+/* Contact Bar */
+.contact-bar {
+  background-color: var(--frays-red);
+  color: var(--frays-white);
+  padding: 0.5rem 1rem;
+}
+
+.contact-bar a {
+  color: var(--frays-white);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.contact-bar a:hover {
+  color: var(--frays-yellow);
+}
+
+/* Form Styles */
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--frays-gray-300);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: var(--transition-fast);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--frays-red);
+  box-shadow: 0 0 0 3px rgba(153, 0, 0, 0.1);
+}
+
+/* Badge Styles */
+.badge-yellow {
+  background-color: var(--frays-yellow);
+  color: var(--frays-black);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.badge-red {
+  background-color: var(--frays-red);
+  color: var(--frays-white);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Utility Classes */
+.text-frays-red { color: var(--frays-red); }
+.text-frays-yellow { color: var(--frays-yellow); }
+.text-frays-parchment { color: var(--frays-parchment); }
+.bg-frays-red { background-color: var(--frays-red); }
+.bg-frays-yellow { background-color: var(--frays-yellow); }
+.bg-frays-parchment { background-color: var(--frays-parchment); }
