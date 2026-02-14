@@ -1,0 +1,36 @@
+# Document AI Enhanced - Apache Configuration
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /DOCUMENT_AIEnhanced/
+    
+    # Prevent directory listing
+    Options -Indexes
+    
+    # Block access to sensitive files
+    <FilesMatch "\.(json|log|env)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+    
+    # PHP settings
+    <IfModule mod_php7.c>
+        php_value upload_max_filesize 20M
+        php_value post_max_size 25M
+        php_value max_execution_time 300
+        php_value max_input_time 300
+    </IfModule>
+    
+    <IfModule mod_php.c>
+        php_value upload_max_filesize 20M
+        php_value post_max_size 25M
+        php_value max_execution_time 300
+        php_value max_input_time 300
+    </IfModule>
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
